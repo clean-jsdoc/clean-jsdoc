@@ -50,6 +50,14 @@ const defaultSections = [
     SECTION_TYPE.Global
 ];
 
+var HTML_MINIFY_OPTIONS = {
+  collapseWhitespace: true,
+  removeComments: true,
+  html5: true,
+  minifyJS: true,
+  minifyCSS: true
+};
+
 function copyStaticFolder() {
     const staticDir = themeOpts.asset_paths || [];
 
@@ -87,7 +95,7 @@ function copyStaticFolder() {
 }
 
 function find(spec) {
-    return helper.find(data, spec);
+  return helper.find(data, spec);
 }
 
 function tutoriallink(tutorial) {
@@ -99,7 +107,7 @@ function tutoriallink(tutorial) {
 }
 
 function getAncestorLinks(doclet) {
-    return helper.getAncestorLinks(data, doclet);
+  return helper.getAncestorLinks(data, doclet);
 }
 
 function hashToLink(doclet, hash) {
@@ -131,24 +139,25 @@ function needsSignature(doclet) {
             }
         }
     }
+  }
 
-    return needsSig;
+  return needsSig;
 }
 
 function getSignatureAttributes(item) {
     const attributes = [];
 
-    if (item.optional) {
-        attributes.push('opt');
-    }
+  if (item.optional) {
+    attributes.push('opt');
+  }
 
-    if (item.nullable === true) {
-        attributes.push('nullable');
-    } else if (item.nullable === false) {
-        attributes.push('non-null');
-    }
+  if (item.nullable === true) {
+    attributes.push('nullable');
+  } else if (item.nullable === false) {
+    attributes.push('non-null');
+  }
 
-    return attributes;
+  return attributes;
 }
 
 function updateItemName(item) {
@@ -164,7 +173,7 @@ function updateItemName(item) {
             attributes.join(', '));
     }
 
-    return itemName;
+  return itemName;
 }
 
 function addParamAttributes(params) {
@@ -182,17 +191,17 @@ function buildItemTypeStrings(item) {
         });
     }
 
-    return types;
+  return types;
 }
 
 function buildAttribsString(attribs) {
     let attribsString = '';
 
-    if (attribs && attribs.length) {
-        attribsString = htmlsafe(util.format('(%s) ', attribs.join(', ')));
-    }
+  if (attribs && attribs.length) {
+    attribsString = htmlsafe(util.format('(%s) ', attribs.join(', ')));
+  }
 
-    return attribsString;
+  return attribsString;
 }
 
 function addNonParamAttributes(items) {
@@ -202,13 +211,13 @@ function addNonParamAttributes(items) {
         types = types.concat(buildItemTypeStrings(item));
     });
 
-    return types;
+  return types;
 }
 
 function addSignatureParams(f) {
     const params = f.params ? addParamAttributes(f.params) : [];
 
-    f.signature = util.format('%s(%s)', f.signature || '', params.join(', '));
+  f.signature = util.format('%s(%s)', f.signature || '', params.join(', '));
 }
 
 function addSignatureReturns(f) {
@@ -269,13 +278,13 @@ function shortenPaths(files, commonPrefix) {
 }
 
 function getPathFromDoclet(doclet) {
-    if (!doclet.meta) {
-        return null;
-    }
+  if (!doclet.meta) {
+    return null;
+  }
 
-    return doclet.meta.path && doclet.meta.path !== 'null' ?
-        path.join(doclet.meta.path, doclet.meta.filename) :
-        doclet.meta.filename;
+  return doclet.meta.path && doclet.meta.path !== 'null' ?
+    path.join(doclet.meta.path, doclet.meta.filename) :
+    doclet.meta.filename;
 }
 
 function generate(type, title, docs, filename, resolveLinks) {
@@ -367,9 +376,8 @@ function attachModuleSymbols(doclets, modules) {
     });
 }
 
-function buildMenuNav(menu) {
-    if (menu === undefined) {
-        return '';
+          return symbol;
+        });
     }
 
     let m = '<ul>';
@@ -448,7 +456,7 @@ function getTheme() {
     const baseThemeName = 'clean-jsdoc-theme';
     const themeSrc = `${baseThemeName}-${theme}.css`.trim();
 
-    return themeSrc;
+  return theme;
 }
 
 function getLayoutOptions() {
@@ -550,9 +558,41 @@ function buildMemberNav({ items, itemHeading, itemsSeen, linktoFn, sectionName }
                 itemsNav
                 }</ul> </div>`;
         }
-    }
 
-    return nav;
+        if (methods.length) {
+          methods.forEach(function(method) {
+            const itemChild = {
+              name: method.longName,
+              link: linktoFn(method.longname, method.name)
+            };
+
+            currentItem.children.push(itemChild);
+
+            var name = method.longname.split(
+              method.scope === 'static' ? '.' : '#'
+            );
+            var first = name[0];
+            var last = name[1];
+
+            name = first + ' &rtrif; ' + last;
+
+            if (hasSearch) {
+              searchListArray.push({
+                title: method.longname,
+                link: linktoFn(method.longname, name),
+                description: item.classdesc
+              });
+            }
+          });
+        }
+        itemsSeen[item.longname] = true;
+      }
+
+      navProps.items.push(currentItem);
+    });
+  }
+
+  return navProps;
 }
 
 function linktoTutorial(_, name) {
@@ -772,7 +812,10 @@ exports.publish = function(taffyData, opts, tutorials) {
     // don't call registerLink() on this one! 'index' is also a valid longname
     const globalUrl = helper.getUniqueFilename('global');
 
-    helper.registerLink('global', globalUrl);
+  // claim some special filenames in advance, so the All-Powerful Overseer of Filename Uniqueness
+  // doesn't try to hand them out later
+  var indexUrl = helper.getUniqueFilename('index');
+  // don't call registerLink() on this one! 'index' is also a valid longname
 
     // set up templating
     view.layout = conf.default.layoutFile ?
@@ -780,12 +823,15 @@ exports.publish = function(taffyData, opts, tutorials) {
             path.basename(conf.default.layoutFile)) :
         'layout.tmpl';
 
-    // set up tutorials for helper
-    helper.setTutorials(tutorials);
+  helper.registerLink('global', globalUrl);
 
-    data = helper.prune(data);
-    data.sort('longname, version, since');
-    helper.addEventListeners(data);
+  // set up templating
+  view.layout = conf.default.layoutFile ?
+    path.getResourcePath(
+      path.dirname(conf.default.layoutFile),
+      path.basename(conf.default.layoutFile)
+    ) :
+    'layout.tmpl';
 
     let sourceFiles = {};
     const sourceFilePaths = [];
@@ -832,13 +878,22 @@ exports.publish = function(taffyData, opts, tutorials) {
                 sourceFilePaths.push(sourcePath);
             }
         }
-    });
 
     // update outdir if necessary, then create outdir
     const [packageInfo] = find({ 'kind': 'package' }) || [];
 
-    if (packageInfo && packageInfo.name) {
-        outdir = path.join(outdir, packageInfo.name, packageInfo.version || '');
+    // build a list of source files
+    var sourcePath;
+
+    if (doclet.meta) {
+      sourcePath = getPathFromDoclet(doclet);
+      sourceFiles[sourcePath] = {
+        resolved: sourcePath,
+        shortened: null
+      };
+      if (sourceFilePaths.indexOf(sourcePath) === -1) {
+        sourceFilePaths.push(sourcePath);
+      }
     }
 
     fs.mkPath(outdir);
@@ -927,19 +982,21 @@ exports.publish = function(taffyData, opts, tutorials) {
     data().each(doclet => {
         const url = helper.createLink(doclet);
 
-        helper.registerLink(doclet.longname, url);
+    staticFilePaths.forEach(function(filePath) {
+      var extraStaticFiles = staticFileScanner.scan(
+        [filePath],
+        10,
+        staticFileFilter
+      );
 
         // add a shortened version of the full path
         let docletPath;
 
-        if (doclet.meta) {
-            docletPath = getPathFromDoclet(doclet);
-            docletPath = sourceFiles[docletPath].shortened;
-            if (docletPath) {
-                doclet.meta.shortpath = docletPath;
-            }
-        }
+        fs.mkPath(toDir);
+        fs.copyFileSync(fileName, toDir);
+      });
     });
+  }
 
     data().each(doclet => {
         const url = helper.longnameToUrl[doclet.longname];
@@ -961,21 +1018,25 @@ exports.publish = function(taffyData, opts, tutorials) {
     data().each(doclet => {
         doclet.ancestors = getAncestorLinks(doclet);
 
-        if (doclet.kind === 'member') {
-            addSignatureTypes(doclet);
-            addAttribs(doclet);
-        }
+    // add a shortened version of the full path
+    var docletPath;
 
-        if (doclet.kind === 'constant') {
-            addSignatureTypes(doclet);
-            addAttribs(doclet);
-            doclet.kind = 'member';
-        }
-    });
+    if (doclet.meta) {
+      docletPath = getPathFromDoclet(doclet);
+      docletPath = sourceFiles[docletPath].shortened;
+      if (docletPath) {
+        doclet.meta.shortpath = docletPath;
+      }
+    }
+  });
 
     const members = helper.getMembers(data);
 
-    members.tutorials = tutorials.children;
+    if (url.indexOf('#') > -1) {
+      doclet.id = helper.longnameToUrl[doclet.longname].split(/#/).pop();
+    } else {
+      doclet.id = doclet.name;
+    }
 
     // output pretty-printed source files by default
     const outputSourceFiles = Boolean(conf.default && conf.default.outputSourceFiles !== false);
@@ -1004,9 +1065,9 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.codepen = themeOpts.codepen || undefined;
     attachModuleSymbols(find({ 'longname': { 'left': 'module:' } }), members.modules);
 
-    // generate the pretty-printed source files first so other pages can link to them
-    if (outputSourceFiles) {
-        generateSourceFiles(sourceFiles, opts.encoding);
+    if (doclet.kind === 'member') {
+      addSignatureTypes(doclet);
+      addAttribs(doclet);
     }
 
     if (members.globals.length) {
@@ -1043,6 +1104,30 @@ exports.publish = function(taffyData, opts, tutorials) {
         if (myModules.length) {
             generate('Module', myModules[0].name, myModules, helper.longnameToUrl[longname]);
         }
+      ])
+      .concat(files),
+    indexUrl
+  );
+
+  // set up the lists that we'll use to generate pages
+  var classes = taffy(members.classes);
+  var modules = taffy(members.modules);
+  var namespaces = taffy(members.namespaces);
+  var mixins = taffy(members.mixins);
+  var externals = taffy(members.externals);
+  var interfaces = taffy(members.interfaces);
+
+  Object.keys(helper.longnameToUrl).forEach(function(longname) {
+    var myModules = helper.find(modules, { longname: longname });
+
+    if (myModules.length) {
+      generate(
+        'Module',
+        myModules[0].name,
+        myModules,
+        helper.longnameToUrl[longname]
+      );
+    }
 
         const myClasses = helper.find(classes, { longname });
 
@@ -1103,5 +1188,5 @@ exports.publish = function(taffyData, opts, tutorials) {
         });
     }
 
-    saveChildren(tutorials);
+  saveChildren(tutorials);
 };

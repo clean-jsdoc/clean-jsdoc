@@ -5,6 +5,7 @@
  * @class
  */
 class Alive {
+    
     constructor() {
         /**
          * amount of energy
@@ -12,12 +13,23 @@ class Alive {
          * @defaultvalue null
          */
         this.energy = null;
+        /**
+        * This is a number array.
+        * @constant
+        * @type Object
+        * @default
+        */
+       this.NUMBER_ARRAY = {
+        google: "Google",
+        games: "Games"
+       }
     }
     /**
      * @param {Environment} environment The environment when this
      *  instance of {@link Alive} is surviving
      * @return {Energy} The energy wasted in this surviving instance
      * @method
+     * @deprecated
      */
     survive() {
         return null;

@@ -25,21 +25,23 @@
     font-display: swap;
 }
 
-/*
-* Padding horizontal normal
-*/
-
-.p-h-n {
-    padding: 0.4rem 1rem;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.main-content {
-    /**
-    * This should match with the width of the nav / sidebar.
-    */
-    margin-left: 18.75rem;
-    overflow-x: auto;
-    padding: 1rem 2rem;
+html,
+body {
+    min-height: 100%;
+    width: 100%;
+    line-height: 1.75;
+}
+
+body {
+    font-family: 'body';
+    overflow-x: hidden;
+    position: relative;
 }
 
 .navbar {
@@ -72,35 +74,32 @@
     width: 2rem;
 }
 
-.navbar-ham div {
-    height: 2.1rem;
-    overflow: hidden;
-    position: relative;
-    width: 3rem;
+h3 {
+    font-size: 1.5rem;
 }
 
-.navbar-ham .first {
-    top: 0.5rem;
+h4 {
+    font-size: 1.25rem;
 }
 
-.navbar-ham .second {
-    top: 1rem;
+h5 {
+    font-size: 1rem;
 }
 
-.navbar-ham .third {
-    top: 1.5rem;
+h6 {
+    font-size: 1rem;
 }
 
-.navbar-ham.expanded .first {
-    transform: rotate(45deg) translate(0.3125rem, 0.3125rem);
+img {
+    max-width: 100%;
 }
 
-.navbar-ham.expanded .second {
-    transform: translateX(200%);
+a {
+    text-decoration: none;
 }
 
-.navbar-ham.expanded .third {
-    transform: rotate(135deg) translate(-0.4rem, 0.3125rem);
+a:hover {
+    text-decoration: underline;
 }
 
 .footer {
@@ -108,55 +107,235 @@
     font-style: italic;
     margin-left: 18.75rem;
     margin-top: 1rem;
-    padding: 1rem 2rem;
 }
 
 .navbar h1, .navbar h2, .navbar h3, .navbar h4, .navbar h5, .navbar h6 {
     border: 0;
     margin: 0;
+}
+
+.code-caption {
+    font-size: 0.875rem;
+}
+
+.prettyprint {
+    font-size: 0.875rem;
+    overflow: auto;
+}
+
+pre.prettyprint {
+    margin-top: 3rem;
+}
+
+.prettyprint.source {
+    width: inherit;
+}
+
+.prettyprint code {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.75;
+    padding: 0 0 1rem;
+}
+
+.prettyprint .compact {
     padding: 0;
 }
 
-.navbar-heading {
+h4.name {
+    margin-top: 0.5rem;
+}
+
+.params,
+.props,
+table {
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    margin: 0;
+    width: 100%;
+}
+
+table td:first-child,
+.params td:first-child,
+table thead th:first-child,
+.params thead th:first-child,
+.props thead th:first-child {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+table td:last-child,
+.params td:last-child,
+table thead th:last-child,
+.params thead th:last-child,
+.props thead th:last-child {
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+table th,
+.params th {
+    position: sticky;
+    top: 0;
+}
+
+.params .name,
+.props .name,
+.name code {
+    font-family: 'code';
+    font-size: 1rem;
+}
+
+.params td,
+.params th,
+.props td,
+.props th,
+th,
+td {
+    display: table-cell;
+    margin: 0;
+    padding: 1rem 2rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+.params thead tr,
+.props thead tr {
+    font-weight: bold;
+}
+
+/* stylelint-disable */
+.params .params thead tr,
+.props .props thead tr {
+    font-weight: bold;
+}
+
+.params td.description > p:first-child,
+.props td.description > p:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.params td.description > p:last-child,
+.props td.description > p:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+dl.param-type {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* stylelint-enable */
+
+.param-type dt,
+.param-type dd {
+    display: inline-block;
+}
+
+.param-type dd {
+    font-family: 'code';
+    font-size: 1rem;
+}
+
+code {
+    border-radius: 0.3rem;
+    font-family: 'code';
+    font-size: 1rem;
+    padding: 0.1rem 0.4rem;
+}
+
+.mt-20 {
+    margin-top: 1.5rem;
+}
+
+.codepen-form {
+    bottom: 0;
+    position: absolute;
+    right: 0.6125rem;
+}
+
+.body-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+}
+
+.sidebar-container {
+    position: fixed;
+    display: flex;
+    padding: 1rem;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 25rem;
+    z-index: 10;
+}
+
+.sidebar {
+    border-radius: 1rem;
+    flex: 1;
+    padding: 1.5rem 0;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     padding: 2rem 1rem;
 }
 
-.navbar-heading a:hover {
+.sidebar-title {
+    margin: 0;
+    padding: 0 2rem;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-family: heading;
+}
+
+.sidebar-title:hover {
     text-decoration: none;
 }
 
-.navbar-heading-text {
-    font-size: 1.8rem;
-}
-
-.search-box {
-    margin-bottom: 1rem;
-    padding: 0 1rem;
+.sidebar-items-container {
+    margin-top: 5rem;
+    overflow: auto;
+    flex: 1;
     position: relative;
 }
 
-.search-box-input-container {
-    align-items: center;
-    display: flex;
-    padding: 0.5rem 1rem;
+.sidebar-section-title {
+    padding: 0.5rem 2rem;
+    font-family: heading;
+    font-size: 1.25rem;
+    border-radius: 1rem;
 }
 
-.search-icon {
+.with-arrow {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+}
+
+.with-arrow div {
+    flex: 1;
+}
+
+.with-arrow svg {
     height: 1rem;
     width: 1rem;
 }
 
-.search-box-input {
-    background-color: transparent;
-    border: 0;
-    display: inline-block;
-    font-family: 'body';
-    font-size: 1rem;
-    margin-right: 0.5rem;
-    outline: 0;
+.sidebar-section-children-container {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.sidebar-section-children a {
+    display: block;
     width: 100%;
+    padding: 0.25rem 2rem;
 }
 
 .search-item-container {
@@ -171,75 +350,128 @@
     opacity: 0.9;
 }
 
-.search-item-ul {
-    list-style: none;
-    margin: 0 1rem;
-    max-height: 18.75rem;
-    overflow: auto;
+.with-arrow[data-isopen='false'] + .sidebar-section-children-container {
+    height: 0;
+    overflow: hidden;
 }
 
-.search-item-ul li {
+.with-arrow[data-isopen='true'] + .sidebar-section-children-container {
+    height: auto;
+}
+
+.toc-container {
+    position: fixed;
+    top: 0;
+    right: 4rem;
+    bottom: 0;
+    width: 16rem;
+    z-index: 10;
+}
+
+.toc-content {
+    padding-top: 10rem;
     display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.search-item-ul a {
+#eed4d2a0bfd64539bb9df78095dec881 {
+    margin: 2rem 0;
     flex: 1;
     font-size: 1rem;
     padding: 0.4rem 1.1rem;
 }
 
-.sidebar-main-content {
-    margin: 1rem;
-    overflow: auto;
+.toc-list {
+    padding-left: 1rem;
+    list-style: none;
 }
 
-.accordion {
-    margin: 1rem 0;
+.toc-link {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.toc-link.is-active-link {
+    font-family: heading;
 }
 
 .accordion-heading {
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
-    padding-right: 1rem;
+    justify-content: center;
 }
 
-.accordion-heading svg {
+.navbar {
+    display: flex;
+    padding: 1rem 4rem 1rem 2rem;
+    flex: 1;
+    max-width: 60rem;
+}
+
+.navbar-left-items {
+    display: flex;
+    flex: 1;
+}
+
+.navbar-right-items {
+    display: flex;
+}
+
+.icon-button svg {
     height: 1rem;
     width: 1rem;
 }
 
-.accordion-content {
-    list-style: none;
-    margin: 1rem 0;
+.icon-button {
+    background: transparent;
+    position: relative;
+    display: inline-flex;
+    border: 0;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.navbar-right-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0.25rem;
+}
+
+.navbar-item {
+    border-radius: 0.5rem;
     overflow: hidden;
-    padding: 0;
+}
+
+.navbar-item a {
+    display: inline-block;
+    padding: 1rem 2rem;
+    text-decoration: none;
     transition: 0.3s;
 }
 
-.accordion.collapsed .accordion-content {
-    height: 0;
-    margin: 0;
+.font-size-tooltip {
+    display: flex;
+    align-items: center;
+    margin: 0 -0.5rem;
 }
 
-.accordion svg {
-    transition: 0.3s;
-}
-
-.accordion.collapsed svg {
-    transform: rotate(180deg);
-}
-
-.accordion-list {
-    margin: 0.5rem 1rem;
+.font-size-tooltip .icon-button.disabled {
+    pointer-events: none;
 }
 
 .accordion-heading.child {
     padding: 0.5rem 1rem;
 }
 
-.accordion [data-type=method] {
-    margin: 0.5rem 1rem;
+.p-h-n {
+    padding: 0.4rem 1rem;
 }
 
 .accordion.child {
@@ -247,8 +479,10 @@
     padding: 0;
 }
 
-.methods.accordion-content {
-    margin: 0;
+.footer .wrapper {
+    flex: 1;
+    padding: 1rem 2rem;
+    max-width: 70rem;
 }
 
 .menu-li {
@@ -257,6 +491,9 @@
 
 pre {
     position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin: 2rem 0;
 }
 
 .prettyprint.source .pre-top-bar-container {
@@ -267,6 +504,7 @@ pre {
     position: absolute;
     right: 0;
     top: 0;
+    z-index: 1;
 }
 
 .code-copy-icon-container {
@@ -301,18 +539,18 @@ form.codepen-form {
 }
 
 .code-lang-name {
-    font-family: 'code';
-    font-size: 12px;
+    font-family: 'body';
+    font-size: 0.75rem;
 }
 
 .tooltip {
     font-family: 'body';
     border-radius: 5px;
     opacity: 0;
-    padding: 3px 8px;
+    padding: 0.1875rem 0.5rem;
     position: absolute;
-    right: 30px;
-    top: -2px;
+    right: 2rem;
+    top: 0.3125rem;
     transform: scale(0);
     transition: 0.3s;
 }
@@ -341,7 +579,52 @@ blockquote {
     padding: 0.0625rem 1.25rem;
 }
 
-.allow-overflow {
+.mobile-menu-icon-container {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 2rem;
+    z-index: 30;
+}
+
+.mobile-menu-icon-container .icon-button svg {
+    height: 2rem;
+    width: 2rem;
+}
+
+.mobile-sidebar-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding: 1rem;
+    z-index: 25;
+
+    display: none;
+}
+
+.mobile-sidebar-container.show {
+    display: block;
+}
+
+.mobile-sidebar-wrapper {
+    border-radius: 1rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 2rem;
+}
+
+.mobile-sidebar-items-c {
+    flex: 1;
     overflow: auto;
 }
 
@@ -360,8 +643,7 @@ blockquote {
 
     .main-content,
     .footer {
-        margin-left: 0 !important;
-        padding: 1rem;
+        margin-top: 2rem;
     }
     .method-member-container {
         overflow: auto;

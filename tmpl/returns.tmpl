@@ -8,12 +8,12 @@ if (data.description) {
 <?js } ?>
 
 <?js if (data.type && data.type.names) {?>
-    <div class="member-item-container flex">
-        <strong><?js= data.description ? '' : 'Return '?>Type</strong>
-        <ul>
-            <li>
-                <?js= this.partial('type.tmpl', data.type.names) ?>
-            </li>
-        </ul>
-    </div>
+<dl class="param-type">
+    <dt>
+        Type:&nbsp;
+    </dt>
+    <dd>
+        <?js= this.partial('type.tmpl', data.type.names) ?>
+    </dd>
+</dl>
 <?js } ?>

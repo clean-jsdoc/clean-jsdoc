@@ -2,8 +2,36 @@ function hideSearchList() {
     document.getElementById('search-item-ul').style.display = 'none';
 }
 
-function showSearchList() {
-    document.getElementById('search-item-ul').style.display = 'block';
+function listenKey(event) {
+  if (event.key === 'Escape') {
+    hideSearch();
+    // eslint-disable-next-line no-undef
+    window.removeEventListener('keyup', listenKey);
+  }
+}
+
+function showSearch() {
+  var container = document.querySelector(searchContainerID);
+  var input = document.querySelector(searchInputID);
+
+  // eslint-disable-next-line no-undef
+  window.onhashchange = hideSearch;
+
+  // eslint-disable-next-line no-undef
+  if (window.location.hash !== searchHash) {
+    // eslint-disable-next-line no-undef
+    history.pushState(null, null, searchHash);
+  }
+
+  if (container) {
+    container.style.display = 'flex';
+    // eslint-disable-next-line no-undef
+    window.addEventListener('keyup', listenKey);
+  }
+
+  if (input) {
+    input.focus();
+  }
 }
 
 function checkClick(e) {
@@ -12,9 +40,45 @@ function checkClick(e) {
             hideSearchList();
         }, 60);
 
-        /* eslint-disable-next-line */
-        window.removeEventListener('click', checkClick);
+  fetch(url)
+    .then(function(d) {
+      return d.json();
+    })
+    .then(function(d) {
+      searchData = d.list;
+      if (typeof obj.onSuccess === 'function') {
+        obj.onSuccess(d.list);
+      }
+    })
+    .catch(function(error) {
+      console.error(error);
+      if (typeof obj.onError === 'function') {
+        obj.onError();
+      }
+    });
+}
+
+// eslint-disable-next-line no-unused-vars
+function onClickSearchItem(event) {
+  var target = event.currentTarget;
+
+  if (target) {
+    var href = target.getAttribute('href') || '';
+    var id = href.split('#')[1] || '';
+    var element = document.getElementById(id);
+
+    if (!element) {
+      id = decodeURI(id);
+      element = document.getElementById(id);
     }
+
+    if (element) {
+      setTimeout(function() {
+        // eslint-disable-next-line no-undef
+        bringElementIntoView(element); // defined in core.js
+      }, 100);
+    }
+  }
 }
 
 function search(list, _, keys, searchKey) {
@@ -49,6 +113,31 @@ function search(list, _, keys, searchKey) {
             return `${html}<li>${obj.item.link}</li>`;
         }, '');
     }
+    var output = buildSearchResult(res);
+
+    resultBox.innerHTML = output;
+  }
+
+  if (!searchData) {
+    resultBox.innerHTML = 'Loading...';
+
+    fetchAllData({
+      onSuccess: function(list) {
+        var result = getSearchResult(list, keys, value);
+
+        onSuccess(result);
+      },
+      onError: function() {
+        resultBox.innerHTML = 'Failed to load result.';
+      }
+    });
+
+    return;
+  }
+
+  var result = getSearchResult(searchData, keys, value);
+
+  onSuccess(result);
 }
 
 /* eslint-disable-next-line */
@@ -63,6 +152,7 @@ function setupSearch(list) {
         }
         else { hideSearchList(); }
     });
+  }
 
     inputBox.addEventListener('focus', () => {
         showSearchList();
@@ -70,7 +160,29 @@ function setupSearch(list) {
             search(list, null, keys, inputBox.value);
         }
 
-        /* eslint-disable-next-line */
-        window.addEventListener('click', checkClick);
+  if (searchWrapper) {
+    searchWrapper.addEventListener('click', function(event) {
+      event.stopPropagation();
     });
+  }
+
+  if (input) {
+    input.addEventListener('keyup', debouncedSearch);
+  }
+
+  // eslint-disable-next-line no-undef
+  if (window.location.hash === searchHash) {
+    showSearch();
+  }
 }
+
+// eslint-disable-next-line no-undef
+window.addEventListener('DOMContentLoaded', onDomContentLoaded);
+
+// eslint-disable-next-line no-undef
+window.addEventListener('hashchange', function() {
+  // eslint-disable-next-line no-undef
+  if (window.location.hash === searchHash) {
+    showSearch();
+  }
+});
