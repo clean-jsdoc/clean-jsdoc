@@ -21,6 +21,10 @@ a, a:active, a:focus {
     font-weight: normal;
 }
 
+.light hr {
+    color: #f7f7f7;
+}
+
 .light h1,
 .light h2,
 .light h3,
