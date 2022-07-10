@@ -27,15 +27,15 @@ describe('Line numbers', () => {
     });
 
     it('should have properly named hyperlinks', async () => {
-        const foundLine = await browser.$('.selected');
+        const foundLine = await browser.$('li.selected');
         const idName = await foundLine.getAttribute('id');
 
         expect(idName).toEqual(SOURCE_LINE);
     });
 
     it('should be hightlighted', async () => {
-        const foundLine = await browser.$('.selected');
-        const ordinaryLine = await foundLine.previousElement();
+        const foundLine = await browser.$('li.selected>code');
+        const ordinaryLine = await browser.$('.source.linenums>ol>li');
         const lineStyle = await foundLine.getCSSProperty('background-color');
         const plainStyle = await ordinaryLine.getCSSProperty('background-color');
 

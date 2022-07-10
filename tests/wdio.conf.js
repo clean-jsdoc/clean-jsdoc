@@ -7,6 +7,7 @@ exports.config = {
     'key': process.env.BROWSERSTACK_ACCESS_KEY,
     'specs': ['./tests/specs/desktop/**'],
     'capabilities': [
+/*
         {
             'browserName': 'IE',
             'browserVersion': '11.0',
@@ -28,6 +29,7 @@ exports.config = {
                 'localIdentifier': process.env.BROWSERSTACK_LOCAL_IDENTIFIER
             }
         },
+*/
         {
             'browserName': 'Chrome',
             'browserVersion': 'latest',
