@@ -1,4 +1,4 @@
-(function() {
+function numberSourceLines() {
     const source = document.getElementsByClassName('prettyprint source linenums');
     let i = 0;
     let lineNumber = 0;
@@ -21,4 +21,4 @@
             }
         }
     }
-})();
+}

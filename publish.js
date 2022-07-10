@@ -7,6 +7,7 @@ const { taffy } = require('taffydb');
 const template = require('jsdoc/template');
 const util = require('util');
 const fse = require('fs-extra');
+const { nanoid } = require('nanoid');
 const babel = require('@babel/core');
 const glob = require('glob');
 const minify = require('minify');
@@ -25,6 +26,7 @@ const externalAssets = themeOpts.remote_assets || [];
 let outdir = path.normalize(env.opts.destination);
 let data;
 let view;
+const hasSearch = themeOpts.search === undefined ? true : Boolean(themeOpts.search);
 const SECTION_TYPE = {
     'Classes': 'Classes',
     'Modules': 'Modules',
@@ -49,14 +51,6 @@ const defaultSections = [
     SECTION_TYPE.Interfaces,
     SECTION_TYPE.Global
 ];
-
-var HTML_MINIFY_OPTIONS = {
-  collapseWhitespace: true,
-  removeComments: true,
-  html5: true,
-  minifyJS: true,
-  minifyCSS: true
-};
 
 function copyStaticFolder() {
     const staticDir = themeOpts.asset_paths || [];
@@ -95,7 +89,7 @@ function copyStaticFolder() {
 }
 
 function find(spec) {
-  return helper.find(data, spec);
+    return helper.find(data, spec);
 }
 
 function tutoriallink(tutorial) {
@@ -107,7 +101,7 @@ function tutoriallink(tutorial) {
 }
 
 function getAncestorLinks(doclet) {
-  return helper.getAncestorLinks(data, doclet);
+    return helper.getAncestorLinks(data, doclet);
 }
 
 function hashToLink(doclet, hash) {
@@ -139,25 +133,24 @@ function needsSignature(doclet) {
             }
         }
     }
-  }
 
-  return needsSig;
+    return needsSig;
 }
 
 function getSignatureAttributes(item) {
     const attributes = [];
 
-  if (item.optional) {
-    attributes.push('opt');
-  }
+    if (item.optional) {
+        attributes.push('opt');
+    }
 
-  if (item.nullable === true) {
-    attributes.push('nullable');
-  } else if (item.nullable === false) {
-    attributes.push('non-null');
-  }
+    if (item.nullable === true) {
+        attributes.push('nullable');
+    } else if (item.nullable === false) {
+        attributes.push('non-null');
+    }
 
-  return attributes;
+    return attributes;
 }
 
 function updateItemName(item) {
@@ -173,7 +166,7 @@ function updateItemName(item) {
             attributes.join(', '));
     }
 
-  return itemName;
+    return itemName;
 }
 
 function addParamAttributes(params) {
@@ -191,17 +184,17 @@ function buildItemTypeStrings(item) {
         });
     }
 
-  return types;
+    return types;
 }
 
 function buildAttribsString(attribs) {
     let attribsString = '';
 
-  if (attribs && attribs.length) {
-    attribsString = htmlsafe(util.format('(%s) ', attribs.join(', ')));
-  }
+    if (attribs && attribs.length) {
+        attribsString = htmlsafe(util.format('(%s) ', attribs.join(', ')));
+    }
 
-  return attribsString;
+    return attribsString;
 }
 
 function addNonParamAttributes(items) {
@@ -211,13 +204,13 @@ function addNonParamAttributes(items) {
         types = types.concat(buildItemTypeStrings(item));
     });
 
-  return types;
+    return types;
 }
 
 function addSignatureParams(f) {
     const params = f.params ? addParamAttributes(f.params) : [];
 
-  f.signature = util.format('%s(%s)', f.signature || '', params.join(', '));
+    f.signature = util.format('%s(%s)', f.signature || '', params.join(', '));
 }
 
 function addSignatureReturns(f) {
@@ -278,13 +271,13 @@ function shortenPaths(files, commonPrefix) {
 }
 
 function getPathFromDoclet(doclet) {
-  if (!doclet.meta) {
-    return null;
-  }
+    if (!doclet.meta) {
+        return null;
+    }
 
-  return doclet.meta.path && doclet.meta.path !== 'null' ?
-    path.join(doclet.meta.path, doclet.meta.filename) :
-    doclet.meta.filename;
+    return doclet.meta.path && doclet.meta.path !== 'null' ?
+        path.join(doclet.meta.path, doclet.meta.filename) :
+        doclet.meta.filename;
 }
 
 function generate(type, title, docs, filename, resolveLinks) {
@@ -319,6 +312,7 @@ function generateSourceFiles(sourceFiles, encoding) {
         try {
             source = {
                 'kind': 'source',
+                'title': sourceOutfile.replace('.html', ''),
                 'code': helper.htmlsafe(fs.readFileSync(sourceFiles[file].resolved, encoding))
             };
         } catch (e) {
@@ -376,8 +370,9 @@ function attachModuleSymbols(doclets, modules) {
     });
 }
 
-          return symbol;
-        });
+function buildMenuNav(menu) {
+    if (menu === undefined) {
+        return '';
     }
 
     let m = '<ul>';
@@ -453,10 +448,8 @@ function overlayScrollbarOptions() {
 function getTheme() {
     const themeName = themeOpts.theme && themeOpts.theme.toLowerCase();
     const theme = !themeName || themeName === 'dynamic' ? 'light' : themeName;
-    const baseThemeName = 'clean-jsdoc-theme';
-    const themeSrc = `${baseThemeName}-${theme}.css`.trim();
 
-  return theme;
+    return theme;
 }
 
 function getLayoutOptions() {
@@ -475,13 +468,29 @@ function getLayoutOptions() {
     };
 }
 
-function buildMemberNav({ items, itemHeading, itemsSeen, linktoFn, sectionName }) {
-    let nav = '';
+function getBaseURL() {
+    const url = themeOpts.base_url || '/';
+
+    return url;
+}
+
+function buildSidebarMembers({ items, itemHeading, itemsSeen, linktoFn, sectionName }) {
+    const navProps = {
+        'name': itemHeading,
+        'items': [],
+        'id': nanoid()
+    };
 
     if (items.length) {
-        let itemsNav = '';
-
         items.forEach(item => {
+            const currentItem = {
+                'name': item.name,
+                'anchor': item.longname ?
+                    linktoFn(item.longname, item.name) :
+                    linktoFn('', item.name),
+                'children': []
+            };
+
             const methods =
                 [SECTION_TYPE.Tutorials, SECTION_TYPE.Global].includes(sectionName) ?
                 [] :
@@ -490,117 +499,66 @@ function buildMemberNav({ items, itemHeading, itemsSeen, linktoFn, sectionName }
                     'memberof': item.longname
                 });
 
-            if (!hasOwnProp.call(item, 'longname')) {
-                itemsNav += `<li>${linktoFn('', item.name)}`;
-                itemsNav += '</li>';
-            } else if (!hasOwnProp.call(itemsSeen, item.longname)) {
+            if (!hasOwnProp.call(itemsSeen, item.longname)) {
+                currentItem.anchor = linktoFn(
+                    item.longname,
+                    item.name.replace(/^module:/u, '')
+                );
 
-                /**
-                 * Only have accordion class name if it have any child.
-                 * Otherwise it didn't makes any sense.
-                 */
-                const accordionClassName = methods.length ? '"accordion collapsed child"' : '"accordion-list"';
-                const accordionId = Math.floor(Math.random() * 10000000);
-                const linkTitle = linktoFn(item.longname, item.name.replace(/^(module:)/iu, ''));
-
-                itemsNav += `<li class=${accordionClassName} id="${accordionId}">`;
-
-                if (methods.length) {
-                    itemsNav += `<div class="accordion-heading child">${
-                        linkTitle
-                        }<svg><use xlink:href="#down-icon"></use></svg>` +
-                        '</div>';
-                } else {
-                    itemsNav += linkTitle;
-                }
-
-                if (haveSearch) {
-                    searchListArray.push(JSON.stringify({
+                if (hasSearch) {
+                    searchListArray.push({
                         'title': item.name,
-                        'link': linkto(item.longname, item.name)
-                    }));
+                        'link': linktoFn(item.longname, item.name),
+                        'description': item.description
+                    });
                 }
 
                 if (methods.length) {
-                    itemsNav += '<ul class="methods accordion-content">';
-
                     methods.forEach(method => {
+                        const itemChild = {
+                            'name': method.longName,
+                            'link': linktoFn(method.longname, method.name)
+                        };
+
+                        currentItem.children.push(itemChild);
                         let name = method.longname.split(method.scope === 'static' ? '.' : '#');
                         const [first, last] = name;
                         const identifier = last ? ` &rtrif; ${last}` : '';
 
                         name = `${first.replace(/^(module:)\w+~/iu, '')}${identifier}`;
 
-                        if (haveSearch) {
-                            searchListArray.push(JSON.stringify({
+                        if (hasSearch) {
+                            searchListArray.push({
                                 'title': method.longname,
-                                'link': linkto(method.longname, name)
-                            }));
+                                'link': linktoFn(method.longname, name),
+                                'description': item.classdesc
+                            });
                         }
-                        itemsNav += '<li data-type="method">';
-                        itemsNav += linkto(method.longname, method.name);
-                        itemsNav += '</li>';
                     });
-
-                    itemsNav += '</ul>';
                 }
-                itemsNav += '</li>';
                 itemsSeen[item.longname] = true;
             }
+
+            navProps.items.push(currentItem);
         });
+    }
 
-        if (itemsNav !== '') {
-            nav += `<div class="accordion collapsed" id="${
-                Math.floor(Math.random() * 10000000)
-                }" > <h3 class="accordion-heading">${
-                itemHeading}<svg><use xlink:href="#down-icon"></use></svg>` +
-                `</h3><ul class="accordion-content">${
-                itemsNav
-                }</ul> </div>`;
-        }
-
-        if (methods.length) {
-          methods.forEach(function(method) {
-            const itemChild = {
-              name: method.longName,
-              link: linktoFn(method.longname, method.name)
-            };
-
-            currentItem.children.push(itemChild);
-
-            var name = method.longname.split(
-              method.scope === 'static' ? '.' : '#'
-            );
-            var first = name[0];
-            var last = name[1];
-
-            name = first + ' &rtrif; ' + last;
-
-            if (hasSearch) {
-              searchListArray.push({
-                title: method.longname,
-                link: linktoFn(method.longname, name),
-                description: item.classdesc
-              });
-            }
-          });
-        }
-        itemsSeen[item.longname] = true;
-      }
-
-      navProps.items.push(currentItem);
-    });
-  }
-
-  return navProps;
+    return navProps;
 }
 
-function linktoTutorial(_, name) {
+function linktoTutorial(longName, name) {
     return tutoriallink(name);
 }
 
 function linktoExternal(longName, name) {
     return linkto(longName, name.replace(/(^"|"$)/gu, ''));
+}
+
+function buildNavbar() {
+    return {
+        'menu': themeOpts.menu || undefined,
+        'search': hasSearch
+    };
 }
 
 /**
@@ -617,38 +575,36 @@ function linktoExternal(longName, name) {
  * @param {array<object>} members.interfaces
  * @return {string} The HTML for the navigation sidebar.
  */
-function buildNav(members) {
+function buildSidebar(members) {
     const title = themeOpts.title || 'README';
     const isHTML = RegExp.prototype.test.bind(/(<([^>]+)>)/iu);
-    let nav;
+    const nav = {
+        'sections': []
+    };
 
     if (!isHTML(title)) {
-        nav = '<div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">' +
-            `${title}</h2></a></div>`;
+        nav.title = {
+            title,
+            'isHTML': false
+        };
     } else {
-        nav = `<h2><a href="index.html">${title}</a></h2>`;
+        nav.title = {
+            title,
+            'isHTML': true
+        };
     }
 
-    if (haveSearch) {
-         nav += buildSearch();
-    }
-
-    nav += '<div class="sidebar-main-content" id="sidebar-main-content">';
     const seen = {};
     const seenTutorials = {};
     const seenGlobal = {};
 
-    const menu = themeOpts.menu || undefined;
-    const menuLocation = themeOpts.menuLocation || 'up';
     const sectionsOrder =
         themeOpts.sections ?
             themeOpts.sections.map(s => `${s.charAt(0).toUpperCase()}${s.slice(1).toLowerCase()}`) :
             defaultSections;
 
     const sections = {
-        [SECTION_TYPE.Menu]: buildMenuNav(menu),
-
-        [SECTION_TYPE.Modules]: buildMemberNav({
+        [SECTION_TYPE.Modules]: buildSidebarMembers({
             'itemHeading': 'Modules',
             'items': members.modules,
             'itemsSeen': seen,
@@ -656,7 +612,7 @@ function buildNav(members) {
             'sectionName': SECTION_TYPE.Modules
         }),
 
-        [SECTION_TYPE.Classes]: buildMemberNav({
+        [SECTION_TYPE.Classes]: buildSidebarMembers({
             'itemHeading': 'Classes',
             'items': members.classes,
             'itemsSeen': seen,
@@ -664,7 +620,7 @@ function buildNav(members) {
             'sectionName': SECTION_TYPE.Classes
         }),
 
-        [SECTION_TYPE.Externals]: buildMemberNav({
+        [SECTION_TYPE.Externals]: buildSidebarMembers({
             'itemHeading': 'Externals',
             'items': members.externals,
             'itemsSeen': seen,
@@ -672,7 +628,7 @@ function buildNav(members) {
             'sectionName': SECTION_TYPE.Externals
         }),
 
-        [SECTION_TYPE.Events]: buildMemberNav({
+        [SECTION_TYPE.Events]: buildSidebarMembers({
             'itemHeading': 'Events',
             'items': members.events,
             'itemsSeen': seen,
@@ -680,7 +636,7 @@ function buildNav(members) {
             'sectionName': SECTION_TYPE.Events
         }),
 
-        [SECTION_TYPE.Namespaces]: buildMemberNav({
+        [SECTION_TYPE.Namespaces]: buildSidebarMembers({
             'itemHeading': 'Namespaces',
             'items': members.namespaces,
             'itemsSeen': seen,
@@ -688,7 +644,7 @@ function buildNav(members) {
             'sectionName': SECTION_TYPE.Namespaces
         }),
 
-        [SECTION_TYPE.Mixins]: buildMemberNav({
+        [SECTION_TYPE.Mixins]: buildSidebarMembers({
             'itemHeading': 'Mixins',
             'items': members.mixins,
             'itemsSeen': seen,
@@ -696,7 +652,7 @@ function buildNav(members) {
             'sectionName': SECTION_TYPE.Mixins
         }),
 
-        [SECTION_TYPE.Tutorials]: buildMemberNav({
+        [SECTION_TYPE.Tutorials]: buildSidebarMembers({
             'itemHeading': 'Tutorials',
             'items': members.tutorials,
             'itemsSeen': seenTutorials,
@@ -704,7 +660,7 @@ function buildNav(members) {
             'sectionName': SECTION_TYPE.Tutorials
         }),
 
-        [SECTION_TYPE.Interfaces]: buildMemberNav({
+        [SECTION_TYPE.Interfaces]: buildSidebarMembers({
             'itemHeading': 'Interfaces',
             'items': members.interfaces,
             'itemsSeen': seen,
@@ -712,7 +668,7 @@ function buildNav(members) {
             'sectionName': SECTION_TYPE.Interfaces
         }),
 
-        [SECTION_TYPE.Global]: buildMemberNav({
+        [SECTION_TYPE.Global]: buildSidebarMembers({
             'itemHeading': 'Global',
             'items': members.globals,
             'itemsSeen': seenGlobal,
@@ -721,16 +677,10 @@ function buildNav(members) {
         })
     };
 
-    if (menuLocation === 'up') {
-        nav += sections.Menu;
-    }
-
     sectionsOrder.forEach(section => {
         if (SECTION_TYPE[section] !== undefined) {
             logger.info('Adding %s section', section);
-            if (section !== 'Menu') {
-                nav += sections[section];
-            }
+                nav.sections.push(sections[section]);
         } else {
             const errorMsg = `While building nav. Section name: '${section}' is not recognized.
             Accepted sections are: ${defaultSections.join(', ')}`;
@@ -739,11 +689,6 @@ function buildNav(members) {
         }
     });
 
-    if (menuLocation === 'down') {
-        nav += sections.Menu;
-    }
-
-    nav += '</div>';
 
     return nav;
 }
@@ -812,10 +757,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     // don't call registerLink() on this one! 'index' is also a valid longname
     const globalUrl = helper.getUniqueFilename('global');
 
-  // claim some special filenames in advance, so the All-Powerful Overseer of Filename Uniqueness
-  // doesn't try to hand them out later
-  var indexUrl = helper.getUniqueFilename('index');
-  // don't call registerLink() on this one! 'index' is also a valid longname
+    helper.registerLink('global', globalUrl);
 
     // set up templating
     view.layout = conf.default.layoutFile ?
@@ -823,15 +765,12 @@ exports.publish = function(taffyData, opts, tutorials) {
             path.basename(conf.default.layoutFile)) :
         'layout.tmpl';
 
-  helper.registerLink('global', globalUrl);
+    // set up tutorials for helper
+    helper.setTutorials(tutorials);
 
-  // set up templating
-  view.layout = conf.default.layoutFile ?
-    path.getResourcePath(
-      path.dirname(conf.default.layoutFile),
-      path.basename(conf.default.layoutFile)
-    ) :
-    'layout.tmpl';
+    data = helper.prune(data);
+    data.sort('longname, version, since');
+    helper.addEventListeners(data);
 
     let sourceFiles = {};
     const sourceFilePaths = [];
@@ -878,22 +817,13 @@ exports.publish = function(taffyData, opts, tutorials) {
                 sourceFilePaths.push(sourcePath);
             }
         }
+    });
 
     // update outdir if necessary, then create outdir
     const [packageInfo] = find({ 'kind': 'package' }) || [];
 
-    // build a list of source files
-    var sourcePath;
-
-    if (doclet.meta) {
-      sourcePath = getPathFromDoclet(doclet);
-      sourceFiles[sourcePath] = {
-        resolved: sourcePath,
-        shortened: null
-      };
-      if (sourceFilePaths.indexOf(sourcePath) === -1) {
-        sourceFilePaths.push(sourcePath);
-      }
+    if (packageInfo && packageInfo.name) {
+        outdir = path.join(outdir, packageInfo.name, packageInfo.version || '');
     }
 
     fs.mkPath(outdir);
@@ -968,8 +898,6 @@ exports.publish = function(taffyData, opts, tutorials) {
                 const sourcePath = fs.toDir(filePath);
                 const toDir = fs.toDir(fileName.replace(sourcePath, outdir));
 
-
-                logger.info(`3. Creating path: ${toDir}`);
                 fs.mkPath(toDir);
                 fs.copyFileSync(fileName, toDir);
             });
@@ -982,21 +910,19 @@ exports.publish = function(taffyData, opts, tutorials) {
     data().each(doclet => {
         const url = helper.createLink(doclet);
 
-    staticFilePaths.forEach(function(filePath) {
-      var extraStaticFiles = staticFileScanner.scan(
-        [filePath],
-        10,
-        staticFileFilter
-      );
+        helper.registerLink(doclet.longname, url);
 
         // add a shortened version of the full path
         let docletPath;
 
-        fs.mkPath(toDir);
-        fs.copyFileSync(fileName, toDir);
-      });
+        if (doclet.meta) {
+            docletPath = getPathFromDoclet(doclet);
+            docletPath = sourceFiles[docletPath].shortened;
+            if (docletPath) {
+                doclet.meta.shortpath = docletPath;
+            }
+        }
     });
-  }
 
     data().each(doclet => {
         const url = helper.longnameToUrl[doclet.longname];
@@ -1018,25 +944,21 @@ exports.publish = function(taffyData, opts, tutorials) {
     data().each(doclet => {
         doclet.ancestors = getAncestorLinks(doclet);
 
-    // add a shortened version of the full path
-    var docletPath;
+        if (doclet.kind === 'member') {
+            addSignatureTypes(doclet);
+            addAttribs(doclet);
+        }
 
-    if (doclet.meta) {
-      docletPath = getPathFromDoclet(doclet);
-      docletPath = sourceFiles[docletPath].shortened;
-      if (docletPath) {
-        doclet.meta.shortpath = docletPath;
-      }
-    }
-  });
+        if (doclet.kind === 'constant') {
+            addSignatureTypes(doclet);
+            addAttribs(doclet);
+            doclet.kind = 'member';
+        }
+    });
 
     const members = helper.getMembers(data);
 
-    if (url.indexOf('#') > -1) {
-      doclet.id = helper.longnameToUrl[doclet.longname].split(/#/).pop();
-    } else {
-      doclet.id = doclet.name;
-    }
+    members.tutorials = tutorials.children;
 
     // output pretty-printed source files by default
     const outputSourceFiles = Boolean(conf.default && conf.default.outputSourceFiles !== false);
@@ -1060,14 +982,27 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.theme = getTheme();
     view.layoutOptions = getLayoutOptions();
     // once for all
-    view.nav = buildNav(members);
-    view.searchList = searchListArray;
+    view.sidebar = buildSidebar(members);
+    view.navbar = buildNavbar();
     view.codepen = themeOpts.codepen || undefined;
+    view.baseURL = getBaseURL();
     attachModuleSymbols(find({ 'longname': { 'left': 'module:' } }), members.modules);
 
-    if (doclet.kind === 'member') {
-      addSignatureTypes(doclet);
-      addAttribs(doclet);
+    // output search file if search
+
+    if (hasSearch) {
+        fs.mkPath(path.join(outdir, 'data'));
+        fs.writeFileSync(
+            path.join(outdir, 'data', 'search.json'),
+            JSON.stringify({
+                'list': searchListArray
+            })
+        );
+    }
+
+    // generate the pretty-printed source files first so other pages can link to them
+    if (outputSourceFiles) {
+        generateSourceFiles(sourceFiles, opts.encoding);
     }
 
     if (members.globals.length) {
@@ -1104,30 +1039,6 @@ exports.publish = function(taffyData, opts, tutorials) {
         if (myModules.length) {
             generate('Module', myModules[0].name, myModules, helper.longnameToUrl[longname]);
         }
-      ])
-      .concat(files),
-    indexUrl
-  );
-
-  // set up the lists that we'll use to generate pages
-  var classes = taffy(members.classes);
-  var modules = taffy(members.modules);
-  var namespaces = taffy(members.namespaces);
-  var mixins = taffy(members.mixins);
-  var externals = taffy(members.externals);
-  var interfaces = taffy(members.interfaces);
-
-  Object.keys(helper.longnameToUrl).forEach(function(longname) {
-    var myModules = helper.find(modules, { longname: longname });
-
-    if (myModules.length) {
-      generate(
-        'Module',
-        myModules[0].name,
-        myModules,
-        helper.longnameToUrl[longname]
-      );
-    }
 
         const myClasses = helper.find(classes, { longname });
 
@@ -1188,5 +1099,5 @@ exports.publish = function(taffyData, opts, tutorials) {
         });
     }
 
-  saveChildren(tutorials);
+    saveChildren(tutorials);
 };

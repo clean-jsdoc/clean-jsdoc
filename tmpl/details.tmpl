@@ -24,7 +24,7 @@ var detailsKeys = [
 
 // // Check if the default value is an object or array; if so, apply code highlighting
 if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvaluetype === 'array')) {
-    data.defaultvalue = "<pre class='prettyprint'><code class='nohljsln compact'>" + data.defaultvalue + "</code></pre>";
+    data.defaultvalue = "<pre class=\"prettyprint\"><code class=\"nohljsln compact\">" + data.defaultvalue + "</code></pre>";
 }
 
 // Check whether to print details or not
@@ -42,7 +42,7 @@ for(; loopVar < detailsKeys.length; loopVar += 1) {
     if (properties && properties.length && properties.forEach) {
 ?>
 
-    <strong>Properties</strong>
+    <strong class="subsection-title">Properties</strong>
 
     <?js= this.partial('properties.tmpl', data) ?>
 
@@ -119,10 +119,12 @@ for(; loopVar < detailsKeys.length; loopVar += 1) {
 
     <?js if (data.deprecated) { ?>
         <div class="details-item-container">
-            <dt class="important tag-deprecated bold">Deprecated</dt><?js
-                if (data.deprecated === true) { ?><dd class="tag-deprecated"><ul><li>Yes</li></ul></dd><?js }
-                else { ?><dd><ul><li><?js= data.deprecated ?></li></ul></dd><?js }
-            ?>
+            <dt></dt>
+            <?js if (data.deprecated) { ?>
+              <dd class="important tag-deprecated bold"><ul><li>Deprecated</li></ul></dd>
+            <?js } else { ?>
+              <dd><ul><li><?js= data.deprecated ?></li></ul></dd>
+            <?js } ?>
         </div>
     <?js } ?>
 
@@ -153,9 +155,9 @@ for(; loopVar < detailsKeys.length; loopVar += 1) {
 
     <?js if (data.defaultvalue) {?>
         <div class="details-item-container">
-            <dt class="tag-default">Default Value:</dt>
-            <dd class="tag-default"><ul class="dummy">
-                    <li <?js= defaultObjectClass ?> ><code><?js= data.defaultvalue ?></code></li>
+            <dt class="tag-default bold">Default Value:</dt>
+            <dd class="tag-default"><ul>
+                    <li data-skip-pre-process="true"><?js= data.defaultvalue ?></li>
                 </ul></dd>
         </div>
     <?js } ?>
@@ -187,9 +189,9 @@ for(; loopVar < detailsKeys.length; loopVar += 1) {
 <?js if (data.meta && self.outputSourceFiles) {?>
     <dl class="details">
         <div class="details-item-container">
-            <dt class="tag-source">Source:</dt>
+            <dt class="tag-source">Source</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <?js= self.linkto(meta.shortpath) ?>, <?js= self.linkto(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?>
+                <?js= self.linkto(meta.shortpath) ?>,&nbsp;<?js= self.linkto(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?>
             </li></ul></dd>
         </div>
     </dl>

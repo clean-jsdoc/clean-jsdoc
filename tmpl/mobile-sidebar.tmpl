@@ -1,11 +1,12 @@
 <div class="mobile-menu-icon-container">
-    <button class="icon-button" id="mobile-menu" data-isopen="false" aria-label="menu">
+    <button type="button" class="icon-button" id="mobile-menu" data-isopen="false" aria-label="menu">
         <svg><use xlink:href="#menu-icon"></use></svg>
     </button>
 </div>
 
 <div id="mobile-sidebar" class="mobile-sidebar-container">
     <div class="mobile-sidebar-wrapper">
+        <?js= this.partial('sidebar-github.tmpl')?>
         <?js= this.partial('sidebar-title.tmpl') ?>
         <div class="mobile-nav-links">
             <?js= this.partial('navbar-menu.tmpl', '-mobile') ?>

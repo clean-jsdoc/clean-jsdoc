@@ -6,7 +6,7 @@
         data.menu.forEach(function(item) {
             var className = item.class || '';
             var id = item.id || '';
-            var target = item.target || '';
+            var target = item.target || '_blank';
             className += ' navbar-item'
             if(id) {
                 id += idSuffix
@@ -14,7 +14,7 @@
             ?>
             
 <div class="<?js=className ?>"> 
-    <a id="<?js= id ?>" href="<?js= item.link ?>" target="<?js= target ?>">
+    <a <?js if(id) { ?> id="<?js= id ?>" <?js }?> href="<?js= item.link ?>" target="<?js= target ?>" aria-label="<?js= item.title?>">
         <?js= item.title?>
     </a>
 </div>
