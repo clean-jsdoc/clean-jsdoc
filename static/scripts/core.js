@@ -544,22 +544,46 @@ function fixTable() {
   }
 }
 
-function onMobileMenuClick(event) {
+function hideMobileMenu() {
   const mobileMenuContainer = document.querySelector('#mobile-sidebar');
-  const target = event.currentTarget;
+  const target = document.querySelector('#mobile-menu');
   const svgUse = target.querySelector('use');
-  const isOpen = target.getAttribute('data-isopen') === 'true';
 
   if (mobileMenuContainer) {
-    if (isOpen) {
-      mobileMenuContainer.classList.remove('show');
-      target.setAttribute('data-isopen', 'false');
-      svgUse.setAttribute('xlink:href', '#menu-icon');
-    } else {
-      mobileMenuContainer.classList.add('show');
-      target.setAttribute('data-isopen', 'true');
-      svgUse.setAttribute('xlink:href', '#close-icon');
-    }
+    mobileMenuContainer.classList.remove('show');
+  }
+  if (target) {
+    target.setAttribute('data-isopen', 'false');
+  }
+  if (svgUse) {
+    svgUse.setAttribute('xlink:href', '#menu-icon');
+  }
+}
+
+function showMobileMenu() {
+  const mobileMenuContainer = document.querySelector('#mobile-sidebar');
+  const target = document.querySelector('#mobile-menu');
+  const svgUse = target.querySelector('use');
+
+  if (mobileMenuContainer) {
+    mobileMenuContainer.classList.add('show');
+  }
+  if (target) {
+    target.setAttribute('data-isopen', 'true');
+  }
+  if (svgUse) {
+    svgUse.setAttribute('xlink:href', '#close-icon');
+  }
+}
+
+function onMobileMenuClick() {
+  const target = document.querySelector('#mobile-menu');
+  const isOpen = target.getAttribute('data-isopen') === 'true';
+
+  if (isOpen) {
+    hideMobileMenu();
+  } else {
+    showMobileMenu();
   }
 }
 
