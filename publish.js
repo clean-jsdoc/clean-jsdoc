@@ -18,7 +18,6 @@ const hasOwnProp = Object.prototype.hasOwnProperty;
 const themeOpts = env && env.opts && env.opts.theme_opts || {};
 const defaultOpts = env && env.conf.templates && env.conf.templates.default || {};
 const searchListArray = [];
-const haveSearch = themeOpts.search === undefined ? true : Boolean(themeOpts.search);
 const staticStyles = [];
 const staticScripts = [];
 const externalAssets = themeOpts.remote_assets || [];
@@ -36,8 +35,7 @@ const SECTION_TYPE = {
     'Mixins': 'Mixins',
     'Tutorials': 'Tutorials',
     'Interfaces': 'Interfaces',
-    'Global': 'Global',
-    'Menu': 'Menu'
+    'Global': 'Global'
 };
 
 const defaultSections = [
@@ -124,8 +122,12 @@ function needsSignature(doclet) {
         needsSig = true;
     }
     // typedefs that contain functions get a signature, too
-    else if (doclet.kind === 'typedef' && doclet.type && doclet.type.names &&
-        doclet.type.names.length) {
+    else if (
+        doclet.kind === 'typedef' &&
+        doclet.type &&
+        doclet.type.names &&
+        doclet.type.names.length
+    ) {
         for (let i = 0, l = doclet.type.names.length; i < l; i++) {
             if (doclet.type.names[i].toLowerCase() === 'function') {
                 needsSig = true;
@@ -243,8 +245,20 @@ function addSignatureReturns(f) {
         returnTypesString = util.format(' &rarr; %s{%s}', attribsString, returnTypes.join('|'));
     }
 
-    f.signature = `<span class="signature">${f.signature || ''}</span>` +
-        `<span class="type-signature">${returnTypesString}</span>`;
+    let signatureOutput = '';
+
+    if (f.signature) {
+        signatureOutput = `<span class="signature">${
+            f.signature || ''
+            }</span>`;
+    }
+    if (returnTypesString) {
+        signatureOutput += `<span class="type-signature">${
+            returnTypesString
+            }</span>`;
+    }
+
+    f.signature = signatureOutput;
 }
 
 function addSignatureTypes(f) {
@@ -345,18 +359,14 @@ function attachModuleSymbols(doclets, modules) {
 
     return modules.map(module => {
         if (symbols[module.longname]) {
-
-            /*
-             * Only show symbols that have a description. Make an exception for classes, because
-             * we want to show the constructor-signature heading no matter what.
-             */
-            module.modules =
-                symbols[module.longname]
-                    .filter(symbol => {
-                        return symbol.description || symbol.kind === 'class';
-                    })
-                    .map(symbol => {
-                        symbol = doop(symbol);
+            module.modules = symbols[module.longname]
+                // Only show symbols that have a description. Make an exception for classes, because
+                // we want to show the constructor-signature heading no matter what.
+                .filter(symbol => {
+                    return symbol.description || symbol.kind === 'class';
+                })
+                .map(symbol => {
+                    symbol = doop(symbol);
 
                         if (symbol.kind === 'class' || symbol.kind === 'function') {
                             symbol.name = `${symbol.name.replace('module:', '(require("')}"))`;
@@ -368,53 +378,6 @@ function attachModuleSymbols(doclets, modules) {
 
         return module;
     });
-}
-
-function buildMenuNav(menu) {
-    if (menu === undefined) {
-        return '';
-    }
-
-    let m = '<ul>';
-
-    menu.forEach(item => {
-        // Setting default value for optional parameter
-        let c = item.class && `${item.class} ` || '';
-        const id = item.id || '';
-        const target = item.target || '';
-
-        c += 'menu-link';
-
-      m += `<li class="menu-li"><a href="${item.link}" class="${c}"`;
-
-      if (id) {
-          m += ` id="${id}"`;
-      }
-      if (target) {
-          m += ` target="${target}"`;
-      }
-
-      m += `>${item.title}</a></li>`;
-    });
-
-    m += '</ul>';
-
-    return m;
-}
-
-function buildSearch() {
-    let searchHTML = '<div class="search-box" id="search-box">' +
-        '<div class="search-box-input-container">' +
-        '<input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" />' +
-        '<svg class="search-icon" aria-labelledby="search-icon"><use xlink:href="#search-icon"></use></svg>' +
-        '</div>';
-
-    const searchItemContainer =
-        '<div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div>';
-
-    searchHTML += searchItemContainer;
-
-    return searchHTML;
 }
 
 function overlayScrollbarOptions() {

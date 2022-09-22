@@ -68,8 +68,8 @@ function toggleTheme() {
 function setAccordionIdToLocalStorage(id) {
 
   /**
-     * @type {object}
-     */
+   * @type {object}
+   */
   const ids = JSON.parse(localStorage.getItem(accordionLocalStorageKey));
 
   ids[id] = id;
@@ -83,8 +83,8 @@ function setAccordionIdToLocalStorage(id) {
 function removeAccordionIdFromLocalStorage(id) {
 
   /**
-     * @type {object}
-     */
+   * @type {object}
+   */
   const ids = JSON.parse(localStorage.getItem(accordionLocalStorageKey));
 
   delete ids[id];
@@ -99,8 +99,8 @@ function removeAccordionIdFromLocalStorage(id) {
 function getAccordionIdsFromLocalStorage() {
 
   /**
-     * @type {object}
-     */
+   * @type {object}
+   */
   const ids = JSON.parse(localStorage.getItem(accordionLocalStorageKey));
 
   return ids || {};
@@ -122,7 +122,7 @@ function toggleAccordion(element) {
 function initAccordion() {
   if (
     localStorage.getItem(accordionLocalStorageKey) === undefined ||
-        localStorage.getItem(accordionLocalStorageKey) === null
+    localStorage.getItem(accordionLocalStorageKey) === null
   ) {
     localStorage.setItem(accordionLocalStorageKey, '{}');
   }
@@ -149,6 +149,16 @@ function bringElementIntoView(element, updateHistory = true) {
     return;
   }
 
+  /**
+   * tocbotInstance is defined in layout.tmpl
+   * It is defined when we are initializing tocbot.
+   *
+   */
+  // eslint-disable-next-line no-undef
+  if (tocbotInstance) {
+    // eslint-disable-next-line no-undef
+    setTimeout(() => tocbotInstance.updateTocListActiveElement(element), 60);
+  }
   const navbar = document.querySelector('.navbar-container');
   const body = document.querySelector('.main-content');
   const elementTop = element.getBoundingClientRect().top;
@@ -278,7 +288,7 @@ function copyFunction(id) {
   }
 
   // copy
-  copy(element.innerText);
+  copy(element.innerText.trim().replace(/(^\t)/gmu, ''));
 
   // show tooltip
   showTooltip(`tooltip-${id}`);
@@ -296,22 +306,18 @@ function getPreTopBar(id, lang = '') {
 
   // template of copy to clipboard icon container
   const copyToClipboard =
-        `<button type="button" aria-label="copy code" class="icon-button copy-code" onclick="copyFunction('${
-        id
-        }')"><svg class="sm-icon" alt="click to copy"><use xlink:href="#copy-icon"></use></svg>${
-        tooltip
-        }</button>`;
+    `<button type="button" aria-label="copy code" class="icon-button copy-code" onclick="copyFunction('${id
+    }')"><svg class="sm-icon" alt="click to copy"><use xlink:href="#copy-icon"></use></svg>${tooltip
+    }</button>`;
 
   const langNameDiv =
-        `<div class="code-lang-name-container"><div class="code-lang-name">${
-        lang.toLocaleUpperCase()
-        }</div></div>`;
+    `<div class="code-lang-name-container"><div class="code-lang-name">${lang.toLocaleUpperCase()
+    }</div></div>`;
 
   const topBar =
-        `<div class="pre-top-bar-container">${
-        langNameDiv
-        }${copyToClipboard
-        }</div>`;
+    `<div class="pre-top-bar-container">${langNameDiv
+    }${copyToClipboard
+    }</div>`;
 
   return topBar;
 }
@@ -373,6 +379,7 @@ function processAllPre() {
 
     pre.style.maxHeight = `${preMaxHeight}px`;
     pre.id = id;
+    pre.classList.add('prettyprint');
     pre.parentNode.insertBefore(div, pre);
     div.appendChild(pre);
   });
@@ -383,13 +390,12 @@ function highlightAndBringLineIntoView() {
   const lineNumber = window.location.hash.replace('#line', '');
 
   try {
-    // const selector = `[data-line-number="${lineNumber}"`;
-    const element = document.querySelector(`#line${lineNumber}`);
+    const selector = `[data-line-number="${lineNumber}"`;
 
-    if (element) {
-      element.scrollIntoView();
-      element.parentNode.classList.add('selected');
-    }
+    const element = document.querySelector(selector);
+
+    element.scrollIntoView();
+    element.parentNode.classList.add('selected');
   } catch (_) {}
 }
 
@@ -430,7 +436,7 @@ function updateFontSize(fontSize) {
     }
     updateFontSize(n);
   } else {
-    localStorage.setItem(fontSizeInLocalStorage, fontSize);
+    updateFontSize(fontSize);
   }
 })();
 
@@ -457,9 +463,8 @@ function fontSizeTooltip() {
 
   return `
   <div class="font-size-tooltip">
-    <button type="button" aria-label="decrease-font-size" class="icon-button ${
-  fontSize >= MAX_FONT_SIZE ? 'disabled' : ''
-}" onclick="decrementFont(event)">
+    <button type="button" aria-label="decrease-font-size" class="icon-button ${fontSize >= MAX_FONT_SIZE ? 'disabled' : ''
+    }" onclick="decrementFont(event)">
       <svg>
         <use xlink:href="#minus-icon"></use>
       </svg>
@@ -467,9 +472,8 @@ function fontSizeTooltip() {
     <div class="font-size-text" id="b77a68a492f343baabea06fad81f651e">
       ${fontSize}
     </div>
-    <button type="button" aria-label="increase-font-size" class="icon-button ${
-  fontSize <= MIN_FONT_SIZE ? 'disabled' : ''
-}" onclick="incrementFont(event)">
+    <button type="button" aria-label="increase-font-size" class="icon-button ${fontSize <= MIN_FONT_SIZE ? 'disabled' : ''
+    }" onclick="incrementFont(event)">
       <svg>
         <use xlink:href="#add-icon"></use>
       </svg>
@@ -505,6 +509,12 @@ function initTooltip() {
   });
 
   // eslint-disable-next-line no-undef
+  tippy('.codepen-button', {
+    'content': 'Open code in CodePen',
+    'placement': 'left'
+  });
+
+  // eslint-disable-next-line no-undef
   tippy('.copy-code', {
     'content': 'Copy this code',
     'placement': 'left'
@@ -525,7 +535,7 @@ function fixTable() {
   let table;
 
   // eslint-disable-next-line no-undef
-  if (window.innerWidth > 900) {
+  if (!tables || !tables.length || window.innerWidth > 900) {
     // Only fixing table if width is smaller than 900px
     return;
   }
@@ -701,3 +711,12 @@ function onDomContentLoaded() {
 
 // eslint-disable-next-line no-undef
 window.addEventListener('DOMContentLoaded', onDomContentLoaded);
+
+// eslint-disable-next-line no-undef
+window.addEventListener('hashchange', event => {
+  const url = new URL(event.newURL);
+
+  if (url.hash !== '') {
+    bringIdToViewOnMount(url.hash);
+  }
+});

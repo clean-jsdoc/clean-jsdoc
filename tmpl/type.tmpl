@@ -1,9 +1,13 @@
 <?js
     var data = obj;
     var self = this;
-    data.forEach(function(name, i) {
-    const prettyName = name.replace(/^(module:)\w+~/iu, '')
-?>
-<span class="param-type"><code><?js= self.linkto(name, self.htmlsafe(prettyName)) ?></code></span>
-<?js if (i < data.length-1) { ?>|<?js } ?>
-<?js }); ?>
+    data.forEach(function(name, i) { ?>
+        <?js 
+            const prettyName = name.replace(/^(module:)\w+~/iu, '')
+            let linkto = self.linkto(name, self.htmlsafe(prettyName))
+            linkto = linkto.replace(/\|/gu,'|<wbr>')
+            linkto = linkto.replace(/\./gu,'.<wbr>')
+        ?>
+        <span class="param-type"><?js= linkto ?></span>
+        <?js if (i < data.length-1) { ?>|<wbr><?js } ?>
+    <?js }); ?>

@@ -180,9 +180,10 @@ article ol {
 }
 
 blockquote {
-    font-size: .875rem;
-    padding: .0625rem 1.25rem;
-    border-radius: 1rem
+    font-size: 0.875rem;
+    padding: 0.0625rem 1.25rem;
+    border-radius: 1rem;
+    margin: 0.5rem 0;
 }
 
 .details {
@@ -356,14 +357,14 @@ td {
     font-weight: 700
 }
 
-.params td.description > p:first-child,
-.props td.description > p:first-child {
+.params td.description>p:first-child,
+.props td.description>p:first-child {
     margin-top: 0;
     padding-top: 0;
 }
 
-.params td.description > p:last-child,
-.props td.description > p:last-child {
+.params td.description>p:last-child,
+.props td.description>p:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
 }
@@ -497,13 +498,13 @@ code {
     text-decoration: none
 }
 
-.with-arrow[data-isopen=false]+.sidebar-section-children-container {
+.with-arrow[data-isopen='false']+.sidebar-section-children-container {
     height: 0;
     overflow: hidden
 }
 
-.with-arrow[data-isopen=true]+.sidebar-section-children-container {
-    height: auto
+.with-arrow[data-isopen='true']+.sidebar-section-children-container {
+    height: auto;
 }
 
 .toc-container {
@@ -667,7 +668,7 @@ code {
 }
 
 .source-page+.footer {
-    margin-top: 3rem
+    margin-top: 3rem;
 }
 
 .footer .wrapper {
@@ -689,8 +690,11 @@ pre {
 .hljs .hljs-ln-numbers {
     width: 2rem;
     white-space: nowrap;
-    user-select: none;
-    padding-left: 1.5rem
+    padding-left: 1.5rem;
+}
+
+.hljs-ln-line.hljs-ln-numbers::before {
+    content: attr(data-line-number);
 }
 
 .pre-div {
@@ -709,7 +713,6 @@ pre {
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 1;
 }
 
 .code-copy-icon-container {
@@ -724,8 +727,8 @@ pre {
 }
 
 .code-copy-icon-container>div {
-    margin-top: .25rem;
-    position: relative
+    margin-top: 0.25rem;
+    position: relative;
 }
 
 .sm-icon {
@@ -786,6 +789,12 @@ pre {
     position: absolute;
     top: 1rem;
     right: 1rem
+}
+
+.search-result-c-text {
+    display: flex;
+    justify-content: center;
+    user-select: none;
 }
 
 .search-result-c {
@@ -899,7 +908,22 @@ pre {
     padding: 1rem
 }
 
-@media screen and (max-width:100em) {
+.tag-default {
+    overflow: auto
+}
+
+/* scroll bar */
+::-webkit-scrollbar {
+    width: 0.3125rem;
+    height: 0.3125rem;
+}
+
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-track {
+    border-radius: 1rem;
+}
+
+@media screen and (max-width: 100em) {
     .toc-container {
         display: none
     }

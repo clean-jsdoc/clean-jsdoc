@@ -1,15 +1,16 @@
-let searchData;
 const searchId = 'LiBfqbJVcV';
 const searchHash = `#${searchId}`;
-const searchContainerID = '#PkfLWpAbet';
-const searchWrapperID = '#iCxFxjkHbP';
-const searchCloseButtonID = '#VjLlGakifb';
-const searchInputID = '#vpcKVYIppa';
-const searchResultCID = '#fWwVHRuDuN';
+const searchContainer = document.querySelector('#PkfLWpAbet');
+const searchWrapper = document.querySelector('#iCxFxjkHbP');
+const searchCloseButton = document.querySelector('#VjLlGakifb');
+const searchInput = document.querySelector('#vpcKVYIppa');
+const resultBox = document.querySelector('#fWwVHRuDuN');
+
+function showResultText(text) {
+  resultBox.innerHTML = `<span class="search-result-c-text">${text}</span>`;
+}
 
 function hideSearch() {
-  const container = document.querySelector(searchContainerID);
-
   // eslint-disable-next-line no-undef
   if (window.location.hash === searchHash) {
     // eslint-disable-next-line no-undef
@@ -19,16 +20,16 @@ function hideSearch() {
   // eslint-disable-next-line no-undef
   window.onhashchange = null;
 
-  if (container) {
-    container.style.display = 'none';
+  if (searchContainer) {
+    searchContainer.style.display = 'none';
   }
 }
 
-function listenKey(event) {
+function listenCloseKey(event) {
   if (event.key === 'Escape') {
     hideSearch();
     // eslint-disable-next-line no-undef
-    window.removeEventListener('keyup', listenKey);
+    window.removeEventListener('keyup', listenCloseKey);
   }
 }
 
@@ -41,9 +42,6 @@ function showSearch() {
     hideMobileMenu();
   } catch (_) {}
 
-  const container = document.querySelector(searchContainerID);
-  const input = document.querySelector(searchInputID);
-
   // eslint-disable-next-line no-undef
   window.onhashchange = hideSearch;
 
@@ -53,36 +51,29 @@ function showSearch() {
     history.pushState(null, null, searchHash);
   }
 
-  if (container) {
-    container.style.display = 'flex';
+  if (searchContainer) {
+    searchContainer.style.display = 'flex';
     // eslint-disable-next-line no-undef
-    window.addEventListener('keyup', listenKey);
+    window.addEventListener('keyup', listenCloseKey);
   }
 
-  if (input) {
-    input.focus();
+  if (searchInput) {
+    searchInput.focus();
   }
 }
 
-function fetchAllData(obj = {}) {
+async function fetchAllData() {
   // eslint-disable-next-line no-undef
-  const url = `${baseURL}data/search.json`;
+  const { hostname, protocol, port } = location;
 
-  fetch(url)
-    .then(d => {
-      return d.json();
-    })
-    .then(d => {
-      searchData = d.list;
-      if (typeof obj.onSuccess === 'function') {
-        obj.onSuccess(d.list);
-      }
-    })
-    .catch(error => {
-      if (typeof obj.onError === 'function') {
-        obj.onError();
-      }
-    });
+  // eslint-disable-next-line no-undef
+  const base = `${protocol}//${hostname}${port !== '' ? `:${port}` : ''}${baseURL}`;
+  // eslint-disable-next-line no-undef
+  const url = new URL('data/search.json', base);
+  const result = await fetch(url);
+  const { list } = await result.json();
+
+  return list;
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -91,12 +82,12 @@ function onClickSearchItem(event) {
 
   if (target) {
     const href = target.getAttribute('href') || '';
-    let id = href.split('#')[1] || '';
-    let element = document.getElementById(id);
+    let elementId = href.split('#')[1] || '';
+    let element = document.getElementById(elementId);
 
     if (!element) {
-      id = decodeURI(id);
-      element = document.getElementById(id);
+      elementId = decodeURI(elementId);
+      element = document.getElementById(elementId);
     }
 
     if (element) {
@@ -112,19 +103,15 @@ function buildSearchResult(result) {
   let output = '';
 
   for (const res of result) {
-    const data = res.item;
+    const { title, description } = res.item;
 
     const link = res.item.link.replace('<a href="', '').replace(/">.*/u, '');
 
     output += `
 
     <a onclick="onClickSearchItem(event)" href="${link}" class="search-result-item">
-      <div class="search-result-item-title">
-          ${data.title}
-      </div>
-      <div class="search-result-item-p">
-          ${data.description ? data.description : 'No description available.'}
-      </div>
+      <div class="search-result-item-title">${title}</div>
+      <div class="search-result-item-p">${description || 'No description available.'}</div>
     </a>
     `;
   }
@@ -143,19 +130,18 @@ function getSearchResult(list, keys, searchKey) {
         keys
     };
 
-    // var op = Object.assign({}, defaultOptions, options);
-    const op = defaultOptions;
+    const options = { ...defaultOptions };
 
     // eslint-disable-next-line no-undef
-    const searchIndex = Fuse.createIndex(op.keys, list);
+    const searchIndex = Fuse.createIndex(options.keys, list);
 
     // eslint-disable-next-line no-undef
-    const fuse = new Fuse(list, op, searchIndex);
+    const fuse = new Fuse(list, options, searchIndex);
 
-    let result = fuse.search(searchKey);
+    const result = fuse.search(searchKey);
 
     if (result.length > 20) {
-        result = result.slice(0, 20);
+        return result.slice(0, 20);
     }
 
   return result;
@@ -165,25 +151,26 @@ function debounce(func, wait, immediate) {
   let timeout;
 
   return function(...args) {
-    // eslint-disable-next-line consistent-this, no-invalid-this
-    const context = this;
 
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       timeout = null;
       if (!immediate) {
-        func.apply(context, args);
+        // eslint-disable-next-line consistent-this, no-invalid-this
+        func.apply(this, args);
       }
     }, wait);
     if (immediate && !timeout) {
-      func.apply(context, args);
+      // eslint-disable-next-line consistent-this, no-invalid-this
+      func.apply(this, args);
     }
   };
 }
 
-function search(event) {
+let searchData;
+
+async function search(event) {
   const { value } = event.target;
-  const resultBox = document.querySelector(searchResultCID);
   const keys = ['title', 'description'];
 
   if (!resultBox) {
@@ -191,52 +178,38 @@ function search(event) {
   }
 
   if (!value) {
-    resultBox.innerHTML = 'Type anything to view search result';
+    showResultText('Type anything to view search result');
 
     return;
   }
 
-  function onSuccess(res) {
-    if (res.length === 0) {
-      resultBox.innerHTML =
-                'No result found! Try some different combination.';
+    if (!searchData) {
+    showResultText('Loading...');
+
+    try {
+      // eslint-disable-next-line require-atomic-updates
+      searchData = await fetchAllData();
+    } catch (e) {
+      showResultText('Failed to load result.');
 
       return;
     }
-    const output = buildSearchResult(res);
-
-    resultBox.innerHTML = output;
-  }
-
-  if (!searchData) {
-    resultBox.innerHTML = 'Loading...';
-
-    fetchAllData({
-      'onSuccess'(list) {
-        const result = getSearchResult(list, keys, value);
-
-        onSuccess(result);
-      },
-      'onError'() {
-        resultBox.innerHTML = 'Failed to load result.';
-      }
-    });
-
-    return;
   }
 
   const result = getSearchResult(searchData, keys, value);
 
-  onSuccess(result);
+  if (!result.length) {
+    showResultText('No result found! Try some different combination.');
+
+    return;
+  }
+
+  // eslint-disable-next-line require-atomic-updates
+  resultBox.innerHTML = buildSearchResult(result);
 }
 
 function onDomContentLoaded() {
-  const input = document.querySelector(searchInputID);
   const searchButton = document.querySelectorAll('.search-button');
-  const searchContainer = document.querySelector(searchContainerID);
-  const searchWrapper = document.querySelector(searchWrapperID);
-  const searchCloseButton = document.querySelector(searchCloseButtonID);
-
   const debouncedSearch = debounce(search, 300);
 
   if (searchCloseButton) {
@@ -259,8 +232,8 @@ function onDomContentLoaded() {
     });
   }
 
-  if (input) {
-    input.addEventListener('keyup', debouncedSearch);
+  if (searchInput) {
+    searchInput.addEventListener('keyup', debouncedSearch);
   }
 
   // eslint-disable-next-line no-undef

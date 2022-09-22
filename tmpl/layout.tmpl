@@ -60,7 +60,20 @@
     <link type="text/css" rel="stylesheet" media="screen" href="styles/clean-jsdoc-colorscheme.css">
     <link type="text/css" rel="stylesheet" media="screen" href="styles/clean-jsdoc-theme-light.css">
     <link type="text/css" rel="stylesheet" media="screen" href="styles/clean-jsdoc-theme-dark.css">
+    <script>
+      var baseURL = "/"
+      var locationPathname = ""
 
+      // Global variables
+      <?js if (this.baseURL) { ?>
+        baseURL = "<?js= this.baseURL ?>"
+        baseURL = baseURL.replace(/https?:\/\//i, '')
+        baseURL = baseURL.substr(baseURL.indexOf("/"))
+      <?js } else { ?>
+        locationPathname = document.location.pathname
+        baseURL = locationPathname.substr(0, locationPathname.lastIndexOf("/") + 1)
+      <?js } ?>
+    </script>
     <?js if(this.layoutOptions.themeName.toLowerCase() === 'dynamic') { ?>
     <script>
       if (window.matchMedia) {
@@ -228,10 +241,22 @@
 </script>
 <script src="scripts/third-party/popper.js" defer></script>
 <script src="scripts/third-party/tippy.js" defer></script>
-<script src="scripts/third-party/tocbot.js" defer></script>
+<script src="scripts/third-party/tocbot.js"></script>
 <script src="scripts/third-party/prettify.min.js"></script>
 <script src="scripts/third-party/lang-css.js"></script>
 <script src="scripts/linenumber.js"></script>
 <script src="scripts/core.js"></script>
+<script>
+  var tocbotInstance = tocbot.init({
+    tocSelector: '#eed4d2a0bfd64539bb9df78095dec881',
+    contentSelector: '.main-content',
+    headingSelector: 'h1, h2, h3',
+    hasInnerContainers: true,
+    scrollContainer: '.main-content',
+    headingsOffset: 130,
+    onClick: bringLinkToView
+  });
+
+</script>
 </body>
 </html>
