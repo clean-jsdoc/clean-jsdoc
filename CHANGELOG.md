@@ -27,7 +27,7 @@
 ### Fixed
 - several causes of improper HTML: [6c34f1c], [26f6b23]
 
-[doc sections]: https://heredocs.io/clean-jsdoc-theme/#sections_option
+[doc sections]: https://rdipardo.github.io/clean-jsdoc-theme/#sections_option
 [453a2a3]: https://github.com/rdipardo/clean-jsdoc-theme/commit/453a2a3
 [6c34f1c]: https://github.com/rdipardo/clean-jsdoc-theme/commit/6c34f1c
 [26f6b23]: https://github.com/rdipardo/clean-jsdoc-theme/commit/26f6b23
@@ -41,8 +41,8 @@
 
 ### Added
 - two new options from upstream:
-  + [`codepen`][] - adds an ["Edit on CodePen" button](https://heredocs.io/clean-jsdoc-theme/#codepen_option) to code examples
-  + [`menuLocation`][] - sets the position of the [user-defined link menu](https://heredocs.io/clean-jsdoc-theme/#basic)
+  + [`codepen`][] - adds an ["Edit on CodePen" button](https://rdipardo.github.io/clean-jsdoc-theme/#codepen_option) to code examples
+  + [`menuLocation`][] - sets the position of the [user-defined link menu](https://rdipardo.github.io/clean-jsdoc-theme/#basic)
 
 ## 4.0.1
 
