@@ -31,6 +31,7 @@
     * [sections](#sections_option)
     * [menu](#menu_option)
     * [meta](#meta_option)
+    * [asset_paths](#asset_paths_option)
     * [remote_assets](#remote_assets_option)
     * [remote_scripts](#remote_scripts_option)
     * [overlay_scrollbar](#overlay_scrollbar_option)
@@ -149,24 +150,23 @@ _All options must be defined under `opts.theme_opts` in your `.jsdoc.json`_
 |:--------------:|:----------------------------------------------------|:------------:|:----------------------------------:|:---------------------------------------------:|
 | `theme`        | the overall style theme                             | string       | `"light"`                          | `"light"`, `"dark"`, `"dynamic"` &#91;1&#93;  |
 | `search`       | enable fuzzy search using [Fuse.js][]               | bool         | `true`                             | `true`, `false`                               |
-| `menuLocation` | sets the location of the optional [external links menu](#menu_option) relative to the doc navigation menu &#91;2&#93; | string | `"up"` | `"up"`, `"down"` |
+| `base_url`     | the root domain of your documentation website       | URL          | `/`                                | any valid URL &#91;2&#93;                     |
 | `langNames`    | display language names in code blocks               | bool         | `true`                             | `true`, `false`                               |
 | `title`        | the name of the home link to display on the nav bar | HTML string  | `"README"`                         | any valid HTML markup, or just a plain string |
 | `footer`       | a footer to display in the page layout              | HTML string  | JSDoc version, date and theme info | any valid HTML markup                         |
 | `inline_style` | inline CSS for the `head` of the page layout        | CSS string   | `null`                             | any valid CSS markup                          |
-| `asset_paths`  | a list of folders to search for scripts and CSS files  | &#91;"path/to/assets", ...&#93;   | `[]`       | >=1 path, relative to your `.jsdoc.json` &#91;3&#93; |
+
 
 <hr/>
 
 &#91;1&#93; sets the theme according to the value of the `prefers-color-scheme` `@media` query; it falls back to `"light"`
 
-&#91;2&#93; "up" == above navigation menu, "down" == below. Requires the <a href="#menu_option">menu option</a> to be set
+&#91;2&#93; must begin with the `https://` protocol and end with a trailing slash (`/`)
 
-&#91;3&#93; non-existent paths, or paths outside the working directory, will be ignored with a warning message
 
 ### Advanced
 
-#### `"project": {}` <a id="project_option"></a>
+#### `"project": {}` <a id="project_option" aria-label="project-option"></a>
 
 Details of your project, e.g.
 
@@ -190,7 +190,7 @@ Details of your project, e.g.
 | `version` | the semantic version number                                          | string | "1.0.0" |
 
 
-#### `"sections": [...]` <a id="sections_option"></a>
+#### `"sections": [...]` <a id="sections_option" aria-label="sections-option"></a>
 
 Documentation headings to include in the navigation menu, e.g.
 
@@ -224,7 +224,7 @@ Unlisted labels will be ignored with a warning message.
 Leave this option undefined to include _all_ sections detected by `jsdoc`.
 
 
-#### `"menu": [{}, ...]` <a id="menu_option"></a>
+#### `"menu": [{}, ...]` <a id="menu_option" aria-label="menu-option"></a>
 
 A list of hyperlinks to add to the navigation bar, e.g.
 
@@ -254,7 +254,7 @@ A list of hyperlinks to add to the navigation bar, e.g.
 | `id`     | CSS id selector       |
 
 
-#### `"meta": [{}, ...]` <a id="meta_option"></a>
+#### `"meta": [{}, ...]` <a id="meta_option" aria-label="meta-option"></a>
 
 A list of `meta` tag attributes to add to the `head` of each page, e.g.
 
@@ -275,7 +275,25 @@ A list of `meta` tag attributes to add to the `head` of each page, e.g.
 Any valid combinaton of [HTML metadata attributes][].
 
 
-#### `"remote_assets": [{}, ...]`  <a id="remote_assets_option"></a>
+#### `"asset_paths": ["path/to/assets", ...]` <a id="asset_paths_option" aria-label="asset-paths-option"></a>
+
+A list of local folders to search for static content files. Paths are relative
+to the current working directory, e.g.
+
+```json
+  "asset_paths": [
+      "img",
+      "css/themes",
+      "js/lib/jquery"
+    ]
+```
+
+##### Required properties
+None. If a path does not exist, or exists outside the working directory, it will
+be ignored with a warning message.
+
+
+#### `"remote_assets": [{}, ...]` <a id="remote_assets_option" aria-label="remote-assets-option"></a>
 A list of `link` tag attributes for asset resources, e.g.
 
 ```json5
@@ -298,12 +316,11 @@ A list of `link` tag attributes for asset resources, e.g.
 |:-------:|:------:|
 | `href`  | URL    |
 
-##### Optional properties <a id="optional_asset_attrs"></a>
+##### Optional properties <a id="optional_asset_attrs" aria-label="optional-asset-properties"></a>
 | name          | purpose                                         | type   |
 |:-------------:|:-----------------------------------------------:|:------:|
 | `integrity`   | A Subresource Integrity hash in base64 encoding | string |
 | `crossorigin` | The CORS policy for the resource                | string |
-<br/>
 
 Some assets will need additional [link attributes][] to load properly.
 
@@ -312,7 +329,7 @@ icons from the file extension in the `href`. Support for more media types
 may be added in future releases.
 
 
-#### `"remote_scripts": [{}, ...]` <a id="remote_scripts_option"></a>
+#### `"remote_scripts": [{}, ...]` <a id="remote_scripts_option" aria-label="remote-scripts-option"></a>
 A list of `script` tag attributes for third-party JavaScript sources. e.g.
 
 ```json5
@@ -336,7 +353,7 @@ A list of `script` tag attributes for third-party JavaScript sources. e.g.
 Mostly the same as [`remote_assets`](#optional_asset_attrs)
 
 
-#### `"overlay_scrollbar": { "options": {} }` <a id="overlay_scrollbar_option"></a>
+#### `"overlay_scrollbar": { "options": {} }` <a id="overlay_scrollbar_option" aria-label="overlay-scrollbar-option"></a>
 Includes the [OverlayScrollbars] plugin.
 
 ##### Required properties
@@ -346,7 +363,7 @@ None. Simply passing an empty object will activate this feature.
 Any option supported by [OverlayScrollbars].
 
 
-#### `"codepen": { "options": {} }` <a id="codepen_option"></a>
+#### `"codepen": { "options": {} }` <a id="codepen_option" aria-label="codepen-option"></a>
 Puts an "Edit on CodePen" button next to code snippets in `@example` sections.
 
 ```json
