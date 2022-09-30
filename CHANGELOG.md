@@ -1,3 +1,18 @@
+## 4.3.0
+
+### Fixed
+- prevent IE from wrapping list items [44d814e]
+- enforce the background colour of the mobile hamburger button (circumvents a
+  Firefox quirk) [0a4ef85]
+
+### Changed
+- moved development of the IE-compatible version to [a new LTS branch]
+- multiple style improvements
+
+[0a4ef85]: https://github.com/rdipardo/clean-jsdoc-theme/commit/0a4ef85
+[44d814e]: https://github.com/rdipardo/clean-jsdoc-theme/commit/44d814e
+[a new LTS branch]: https://github.com/rdipardo/clean-jsdoc-theme/tree/lts
+
 ## 4.2.2
 
 ### Fixed

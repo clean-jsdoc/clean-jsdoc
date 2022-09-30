@@ -1,6 +1,6 @@
 {
     "name": "@rdipardo/clean-jsdoc",
-    "version": "4.2.2",
+    "version": "4.3.0",
     "description": "A fork of clean-jsdoc-theme with some backported features and IE 11 support",
     "main": "publish.js",
     "scripts": {
