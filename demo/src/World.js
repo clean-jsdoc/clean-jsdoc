@@ -22,15 +22,15 @@ import * as util from './utils.js'
  * It has transforms for multiple coordinate systems.
  *
  * The world is defined by an object with 6 properties:
- *
- *          WorldOptions = {
- *              minX: integer,
- *              maxX: integer,
- *              minY: integer,
- *              maxY: integer,
- *              minZ: integer,
- *              maxZ: integer,
- *          }
+ * @example
+ * WorldOptions = {
+ *   minX: integer,
+ *   maxX: integer,
+ *   minY: integer,
+ *   maxY: integer,
+ *   minZ: integer,
+ *   maxZ: integer,
+ * }
  */
 class World {
     maxX = 16
