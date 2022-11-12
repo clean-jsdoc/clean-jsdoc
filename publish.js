@@ -384,15 +384,14 @@ function overlayScrollbarOptions() {
     const overlayOptions = themeOpts.overlay_scrollbar || undefined;
 
     if (overlayOptions) {
-        const scriptPath = path.join(__dirname, 'node_modules/overlayscrollbars/js');
-        const stylePath = path.join(__dirname, 'node_modules/overlayscrollbars/css');
+        const scriptPath = path.join(__dirname, 'node_modules/overlayscrollbars/browser');
+        const stylePath = path.join(__dirname, 'node_modules/overlayscrollbars/styles');
 
         if (fse.existsSync(scriptPath) && fse.existsSync(stylePath)) {
             const scriptsOut = path.join(outdir, 'scripts/third-party');
             const styleOut = path.join(outdir, 'styles/third-party');
 
-            // TODO: let users choose the jQuery version
-            glob.sync(`${scriptPath}/!(jquery)*min*`)
+            glob.sync(`${scriptPath}/*es6*{min,map}*`)
                 .forEach(src => {
                     fse.copySync(src, path.join(scriptsOut, path.basename(src)));
                 });

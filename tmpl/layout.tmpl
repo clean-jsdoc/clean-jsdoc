@@ -103,7 +103,7 @@
     <?js } ?>
 
     <?js if(this.layoutOptions.wantOverlay) { ?>
-    <link type="text/css" rel="stylesheet" media="screen" href="styles/third-party/OverlayScrollbars.min.css">
+    <link type="text/css" rel="stylesheet" media="screen" href="styles/third-party/overlayscrollbars.min.css">
     <?js } ?>
 
     <?js if(this.externalAssets.length) { ?>
@@ -192,7 +192,7 @@
 <?js } ?>
 
 <?js if(this.layoutOptions.wantOverlay) { ?>
-<script src="scripts/third-party/OverlayScrollbars.min.js"></script>
+<script src="scripts/third-party/overlayscrollbars.browser.es6.min.js"></script>
 <script>
   var options = JSON.parse('<?js= this.overlayScrollbar ?>')
   var optString = (function f(o) {
@@ -209,7 +209,7 @@
   })(options)
   console.log('Loaded OverlayScrollbars.js with options:', optString || 'none')
   document.addEventListener("DOMContentLoaded", function () {
-      OverlayScrollbars(document.querySelectorAll('body'), options)
+      OverlayScrollbarsGlobal.OverlayScrollbars(document.body, options)
   })
 </script>
 <?js } ?>
