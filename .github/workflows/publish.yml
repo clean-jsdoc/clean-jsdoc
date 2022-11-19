@@ -14,7 +14,7 @@ jobs:
     - name: Set up node env
       uses: actions/setup-node@v3
       with:
-        node-version: '16.x'
+        node-version: current
         cache: 'npm'
     - name: Install dependencies
       run: npm i && npm i --save-dev jsdoc
@@ -47,7 +47,7 @@ jobs:
     - name: Set up node env
       uses: actions/setup-node@v3
       with:
-        node-version: '16.x'
+        node-version: current
         registry-url: https://npm.pkg.github.com/
         cache: 'npm'
     - name: Publish to GH Packages
