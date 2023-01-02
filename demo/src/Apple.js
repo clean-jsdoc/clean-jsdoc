@@ -10,10 +10,20 @@ class Apple extends Alive {
         super();
         /**
          * Donec imperdiet dignissim
-         * @type {string}
+         * @type {String}
          */
         this.color = null;
     }
+
+
+    /**
+     * Generate the Fibonacci sequence of numbers.
+     *
+     * @yields {number} The next number in the Fibonacci sequence.
+     */
+    *fib() { }
+
+
 }
 
 /**
@@ -21,3 +31,10 @@ class Apple extends Alive {
  * @event Apple#beEaten
  * @type {Energy}
  */
+
+/**
+ * Generate the Fibonacci sequence of numbers.
+ *
+ * @yields {number} The next number in the Fibonacci sequence.
+ */
+function* fibonacci() { }

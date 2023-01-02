@@ -6,7 +6,6 @@
 ?>
 
 <?js
-
     // we only need to check this once
     if (typeof isGlobalPage === 'undefined') {
         isGlobalPage = (doc.kind === 'globalobj');
@@ -40,6 +39,11 @@
         <?js } ?>
     <?js } else if (doc.kind === 'module' && doc.modules) { ?>
         <?js doc.modules.forEach(function(module) { ?>
+            <?js if (module.name && self.displayModuleHeader) { ?>
+                <h1 id="<?js= module.name ?>-title" class="has-anchor">
+                    <?js= module.name ?>
+                </h1>
+            <?js } ?>
             <?js if (module.classdesc) { ?>
                 <div class="class-description"><?js= module.classdesc ?></div>
                 <hr/>
@@ -59,7 +63,7 @@
         <?js doc.modules.forEach(function(module) { ?>
             <?js= self.partial('method.tmpl', module) ?>
         <?js }) ?>
-    <?js } else if (doc.kind === 'class') { ?>
+    <?js } else if (doc.kind === 'class' || (doc.kind === 'namespace' && doc.signature)) { ?>
         <?js= self.partial('method.tmpl', doc) ?>
     <?js } else { ?>
         <?js if (doc.description) { ?>
@@ -108,7 +112,19 @@
         <?js }); ?></dl>
     <?js } ?>
 
-     <?js
+    <?js
+        var interfaces = self.find({kind: 'interface', memberof: doc.longname});
+        if (!isGlobalPage && interfaces && interfaces.length) {
+    ?>
+        <h2 id="interfaces" class="subsection-title has-anchor">Interfaces</h2>
+
+        <dl><?js interfaces.forEach(function(i) { ?>
+            <dt><?js= self.linkto(i.longname, i.name) ?></dt>
+            <dd><?js if (i.summary) { ?><?js= i.summary ?><?js } ?></dd>
+        <?js }); ?></dl>
+    <?js } ?>
+
+    <?js
         var mixins = self.find({kind: 'mixin', memberof: doc.longname});
         if (!isGlobalPage && mixins && mixins.length) {
     ?>

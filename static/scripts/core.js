@@ -531,20 +531,13 @@ function initTooltip() {
 }
 
 function fixTable() {
-  const tables = document.querySelectorAll('table');
-  let table;
+    const tables = document.querySelectorAll('table');
 
-  // eslint-disable-next-line no-undef
-  if (!tables || !tables.length || window.innerWidth > 900) {
-    // Only fixing table if width is smaller than 900px
-    return;
-  }
-
-  for (table of tables) {
-    if (table.classList.contains('hljs-ln')) {
-      // don't want to wrap code blocks.
-      return;
-    }
+    for (const table of tables) {
+        if (table.classList.contains('hljs-ln')) {
+            // don't want to wrap code blocks.
+            return;
+        }
 
     const div = document.createElement('div');
 

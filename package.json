@@ -55,7 +55,8 @@
         "glob": "^8.0.3",
         "minify": "^6.0.1",
         "nanoid": "^3.3.4",
-        "overlayscrollbars": "^2.0.0"
+        "overlayscrollbars": "^2.0.0",
+        "showdown": "^2.1.0"
     },
     "resolutions": {
         "**/ua-parser-js": "0.7.28"

@@ -25,6 +25,10 @@
     font-display: swap;
 }
 
+:root {
+    --outer-wrapper-max-width: 65rem;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -360,14 +364,14 @@ td {
     font-weight: 700
 }
 
-.params td.description>p:first-child,
-.props td.description>p:first-child {
+.params td.description > p:first-child,
+.props td.description > p:first-child {
     margin-top: 0;
     padding-top: 0;
 }
 
-.params td.description>p:last-child,
-.props td.description>p:last-child {
+.params td.description > p:last-child,
+.props td.description > p:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
 }
@@ -501,12 +505,12 @@ code {
     text-decoration: none
 }
 
-.with-arrow[data-isopen='false']+.sidebar-section-children-container {
+.with-arrow[data-isopen='false'] + .sidebar-section-children-container {
     height: 0;
     overflow: hidden
 }
 
-.with-arrow[data-isopen='true']+.sidebar-section-children-container {
+.with-arrow[data-isopen='true'] + .sidebar-section-children-container {
     height: auto;
 }
 
@@ -585,7 +589,7 @@ code {
     display: flex;
     padding: 1rem 4rem 1rem 2rem;
     flex: 1;
-    max-width: 60rem;
+    max-width: var(--outer-wrapper-max-width);
 }
 
 .navbar-left-items {
@@ -654,8 +658,8 @@ code {
 
 .main-wrapper {
     width: 100%;
-    max-width: 60rem;
-    padding: 0 2.5rem 1rem
+    max-width: var(--outer-wrapper-max-width);
+    padding: 0 4rem 1rem;
 }
 
 .p-h-n {
@@ -670,13 +674,14 @@ code {
     justify-content: center
 }
 
-.source-page+.footer {
+.source-page + .footer {
     margin-top: 3rem;
 }
 
 .footer .wrapper {
     flex: 1;
-    max-width: 70rem;
+    padding: 1rem 2rem;
+    max-width: var(--outer-wrapper-max-width);
 }
 
 pre {
@@ -729,7 +734,7 @@ pre {
     width: 1.875rem;
 }
 
-.code-copy-icon-container>div {
+.code-copy-icon-container > div {
     margin-top: 0.25rem;
     position: relative;
 }
@@ -912,7 +917,7 @@ pre {
 }
 
 .tag-default {
-    overflow: auto
+    overflow: auto;
 }
 
 /* scroll bar */
@@ -998,7 +1003,7 @@ pre {
         display: none
     }
 
-    .source-page+.footer,
+    .source-page + .footer,
     .footer {
         margin-top: 2rem
     }
