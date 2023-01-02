@@ -30,7 +30,7 @@
             "project": {
                 "title": "clean-jsdoc",
                 "version": "4.3.0",
-                "repo": "https://github.com/rdipardo/clean-jsdoc-theme"
+                "repo": "https://github.com/clean-jsdoc/clean-jsdoc"
             },
             "sections": [
                 "modules",
@@ -67,7 +67,7 @@
             "asset_paths" : [ "img", "../does/not/exist" ],
             "remote_assets": [
                 {
-                    "href": "https://raw.githubusercontent.com/rdipardo/clean-jsdoc-theme/c66f2cb8e2592b7a0185bf2e6160bcdd698063dd/img/html-5.png",
+                    "href": "https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/c66f2cb8e2592b7a0185bf2e6160bcdd698063dd/img/html-5.png",
                     "type": "image/x-icon"
                 }
             ],

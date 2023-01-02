@@ -11,10 +11,10 @@
 
 <div align="center">
 
-![light_code_example](https://raw.githubusercontent.com/rdipardo/clean-jsdoc-theme/v5/img/light_code_example.png)
-![light_doc_page](https://raw.githubusercontent.com/rdipardo/clean-jsdoc-theme/v5/img/light_doc_example.png)
-![dark_code_example](https://raw.githubusercontent.com/rdipardo/clean-jsdoc-theme/v5/img/dark_code_example.png)
-![dark_doc_page](https://raw.githubusercontent.com/rdipardo/clean-jsdoc-theme/v5/img/dark_doc_example.png)
+![light_code_example](https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/light_code_example.png)
+![light_doc_page](https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/light_doc_example.png)
+![dark_code_example](https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/dark_code_example.png)
+![dark_doc_page](https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/dark_doc_example.png)
 </div>
 
 <hr/>
@@ -58,7 +58,7 @@ line to a `.npmrc` file in your `$HOME` directory:
 Add this line to a `.npmrc` file at the root of your project:
 
 ~~~text
-@rdipardo:registry=https://npm.pkg.github.com
+@clean-jsdoc:registry=https://npm.pkg.github.com
 ~~~
 
 Install `jsdoc`:
@@ -72,19 +72,19 @@ Install the template assets:
 **as a GitHub package:**
 
 ```text
-npm i --save-dev @rdipardo/clean-jsdoc
+npm i --save-dev @clean-jsdoc/clean-jsdoc
 ```
 
 **. . . or, directly from the source tree:**
 
 ```text
-npm i --save-dev rdipardo/clean-jsdoc-theme
+npm i --save-dev clean-jsdoc/clean-jsdoc
 ```
 
 Now run:
 
 ```text
-npx jsdoc path/to/source/files -t node_modules/@rdipardo/clean-jsdoc -r README.md
+npx jsdoc path/to/source/files -t node_modules/@clean-jsdoc/clean-jsdoc -r README.md
 ```
 
 ### Workflow Integration
@@ -95,7 +95,7 @@ If you installed the GitHub package:
 
 ```json
   "opts": {
-    "template": "node_modules/@rdipardo/clean-jsdoc"
+    "template": "node_modules/@clean-jsdoc/clean-jsdoc"
   }
 ```
 
@@ -118,7 +118,7 @@ For example:
         "dictionaries": ["jsdoc", "closure"]
     },
     "opts": {
-        "template": "node_modules/@rdipardo/clean-jsdoc",
+        "template": "node_modules/@clean-jsdoc/clean-jsdoc",
         /* see below */
         "theme_opts": {},
         "encoding": "utf8",
@@ -174,7 +174,7 @@ Details of your project, e.g.
   "project": {
       "title": "clean-jsdoc",
       "version": "4.0.0",
-      "repo": "https://github.com/rdipardo/clean-jsdoc-theme"
+      "repo": "https://github.com/clean-jsdoc/clean-jsdoc"
   }
 ```
 
@@ -387,7 +387,7 @@ Any valid [CodePen prefill option](https://blog.codepen.io/documentation/prefill
 To preview a small demo website, first run:
 
 ```text
-git clone https://github.com/rdipardo/clean-jsdoc-theme.git clean-jsdoc
+git clone https://github.com/clean-jsdoc/clean-jsdoc.git
 cd clean-jsdoc
 npm i && npm i jsdoc --no-save
 ```
@@ -423,17 +423,17 @@ Distributed under the terms of the [MIT license][Read the MIT].
 [HTML metadata attributes]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#Attributes
 [link attributes]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#Attributes
 <!-- badges -->
-[Package Workflow]: https://github.com/rdipardo/clean-jsdoc-theme/actions/workflows/publish.yml/badge.svg
-[Package]: https://github.com/rdipardo/clean-jsdoc-theme/actions/workflows/publish.yml
-[Chrome, Firefox, IE, Safari on macOS Workflow]: https://github.com/rdipardo/clean-jsdoc-theme/workflows/Chrome,%20Firefox,%20IE,%20Safari%20on%20macOS/badge.svg?branch=develop
-[Chrome, Firefox, IE, Safari on macOS]: https://github.com/rdipardo/clean-jsdoc-theme/actions?query=workflow%3AIE
-[Chrome on Android, Safari on iOS Workflow]: https://github.com/rdipardo/clean-jsdoc-theme/workflows/Chrome%20on%20Android,%20Safari%20on%20iOS/badge.svg?branch=develop
-[Chrome on Android, Safari on iOS]: https://github.com/rdipardo/clean-jsdoc-theme/actions?query=workflow%3AAndroid
+[Package Workflow]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/publish.yml/badge.svg
+[Package]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/publish.yml
+[Chrome, Firefox, IE, Safari on macOS Workflow]: https://github.com/clean-jsdoc/clean-jsdoc/workflows/Chrome,%20Firefox,%20IE,%20Safari%20on%20macOS/badge.svg?branch=develop
+[Chrome, Firefox, IE, Safari on macOS]: https://github.com/clean-jsdoc/clean-jsdoc/actions?query=workflow%3AIE
+[Chrome on Android, Safari on iOS Workflow]: https://github.com/clean-jsdoc/clean-jsdoc/workflows/Chrome%20on%20Android,%20Safari%20on%20iOS/badge.svg?branch=develop
+[Chrome on Android, Safari on iOS]: https://github.com/clean-jsdoc/clean-jsdoc/actions?query=workflow%3AAndroid
 [BrowserStack Status]: https://automate.browserstack.com/public-build/RkZCVWlFUndVc1c0dHFnLzA2V2pjZCtGTXBFc0N1ek9PeHpqWU1ZU1Z5cz0tLTBXbUxRbXVUQ21CSXRDQkRPcEoweVE9PQ==--2c08531eadafcbbf252ba6fce89db02023862cad
 [BrowserStack Status Badge]: https://automate.browserstack.com/badge.svg?badge_key=RkZCVWlFUndVc1c0dHFnLzA2V2pjZCtGTXBFc0N1ek9PeHpqWU1ZU1Z5cz0tLTBXbUxRbXVUQ21CSXRDQkRPcEoweVE9PQ==--2c08531eadafcbbf252ba6fce89db02023862cad
-[Read the MIT]: https://github.com/rdipardo/clean-jsdoc-theme/blob/master/LICENSE
-[Releases]: https://github.com/rdipardo/clean-jsdoc-theme/releases
-[Current Release]: https://img.shields.io/github/package-json/v/rdipardo/clean-jsdoc-theme?logo=github
+[Read the MIT]: https://github.com/clean-jsdoc/clean-jsdoc/blob/master/LICENSE
+[Releases]: https://github.com/clean-jsdoc/clean-jsdoc/releases
+[Current Release]: https://img.shields.io/github/package-json/v/clean-jsdoc/clean-jsdoc?logo=github
 [GitHub Package Registry]: https://docs.github.com/en/packages/guides/configuring-npm-for-use-with-github-packages#authenticating-with-a-personal-access-token
 [currently]: https://github.community/t/download-from-github-package-registry-without-authentication/14407/2
 [authenticate with the registry]: https://docs.github.com/en/packages/guides/configuring-npm-for-use-with-github-packages#installing-a-package

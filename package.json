@@ -1,7 +1,7 @@
 {
-    "name": "@rdipardo/clean-jsdoc",
+    "name": "@clean-jsdoc/clean-jsdoc",
     "version": "4.3.0",
-    "description": "A fork of clean-jsdoc-theme with some backported features and IE 11 support",
+    "description": "A fork of clean-jsdoc-theme with dynamic theme switching and some backported features",
     "main": "publish.js",
     "scripts": {
         "lint": "eslint --fix *.js static/scripts tests/specs",
@@ -21,12 +21,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/rdipardo/clean-jsdoc-theme.git"
+        "url": "git+https://github.com/clean-jsdoc/clean-jsdoc.git"
     },
     "author": "Robert Di Pardo",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/rdipardo/clean-jsdoc-theme/issues"
+        "url": "https://github.com/clean-jsdoc/clean-jsdoc/issues"
     },
     "homepage": "https://rdipardo.github.io/clean-jsdoc-theme",
     "keywords": [
