@@ -17,7 +17,6 @@ const {
     getTheme,
     getLayoutOptions,
     overlayScrollbarOptions,
-    moduleHeader,
     copyStaticFolder,
     getProcessedYield,
     pathExists
@@ -72,6 +71,7 @@ function hashToLink(doclet, hash, dependencies) {
     }
 
     let url = helper.createLink(doclet, dependencies);
+
     url = url.replace(/(#.+|$)/u, hash);
 
     return `<a href="${url}">${hash}</a>`;
@@ -267,7 +267,6 @@ function getPathFromDoclet({ meta }) {
 }
 
 function generate(title, docs, filename, resolveLinks) {
-    let html;
     const docData = {
         env,
         title,
@@ -275,11 +274,9 @@ function generate(title, docs, filename, resolveLinks) {
     };
 
     const outpath = path.join(outdir, filename);
+    let html = view.render('container.tmpl', docData);
 
-
-    html = view.render('container.tmpl', docData);
-
-    if (resolveLinks) {
+    if (resolveLinks !== false) {
         // turn {@link foo} into <a href="foodoc.html">foo</a>
         html = helper.resolveLinks(html);
     }
@@ -391,7 +388,7 @@ function buildSidebarMembers({ items, itemHeading, itemsSeen, linktoFn, sectionN
                         'kind': 'function',
                         'memberof': item.longname,
                         'inherited': {
-                            '!is': Boolean(themeOpts.exclude_inherited)
+                            '!is': false
                         }
                     });
 
@@ -826,7 +823,6 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.overlayScrollbar = overlayScrollbarOptions(themeOpts, outdir);
     view.theme = getTheme(themeOpts);
     view.layoutOptions = getLayoutOptions(themeOpts, defaultOpts, outdir);
-    view.displayModuleHeader = moduleHeader(themeOpts);
     // once for all
     view.sidebar = buildSidebar(members);
     view.navbar = buildNavbar();
@@ -857,12 +853,9 @@ exports.publish = function(taffyData, opts, tutorials) {
     // index page displays information from package.json and lists files
     const files = find({ 'kind': 'file' });
     const packages = find({ 'kind': 'package' });
-    // added by clean-jsdoc-theme-devs
-    const homepageTitle = themeOpts.homepageTitle || 'Home';
-    const includeFilesListInHomepage = themeOpts.includeFilesListInHomepage || false;
 
     generate(
-        homepageTitle,
+        'Home',
         packages
             .concat([
                 {
@@ -871,7 +864,7 @@ exports.publish = function(taffyData, opts, tutorials) {
                     'longname': opts.mainpagetitle ? opts.mainpagetitle : 'Main Page'
                 }
             ])
-            .concat(includeFilesListInHomepage ? files : []),
+            .concat(files),
         indexUrl
     );
 

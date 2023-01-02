@@ -1,4 +1,6 @@
-/** @module color/mixer */
+/** @module color/mixer
+ *  @name colors
+ */
 module.exports = {
     /** Blend two `colours` together. */
     blend: function (color1, color2) { },

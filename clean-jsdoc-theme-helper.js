@@ -8,12 +8,6 @@ const showdown = require('showdown');
 const mdToHTMLConverter = new showdown.Converter();
 const pathExists = fse.existsSync;
 
-function moduleHeader(themeOpts) {
-    const displayModuleHeader = themeOpts.displayModuleHeader || false;
-
-    return displayModuleHeader;
-}
-
 function codepen(themeOpts) {
     const codepenOpts = themeOpts.codepen || {};
 
@@ -124,6 +118,7 @@ function getProcessedYield(yields) {
 function getLayoutOptions(themeOpts, defaultOpts, outdir) {
     const themeName = themeOpts.theme || 'light';
     const hideLangNames = themeOpts.langNames !== undefined && !env.opts.theme_opts.langNames;
+    const displayModuleHeader = themeOpts.moduleNames || false;
     const noSearch = themeOpts.search !== undefined && !env.opts.theme_opts.search;
     const wantDate = defaultOpts.includeDate !== false;
     const wantOverlay = overlayScrollbarOptions(themeOpts, outdir) !== undefined;
@@ -131,6 +126,7 @@ function getLayoutOptions(themeOpts, defaultOpts, outdir) {
     return {
         themeName,
         hideLangNames,
+        displayModuleHeader,
         noSearch,
         wantDate,
         wantOverlay
@@ -138,7 +134,6 @@ function getLayoutOptions(themeOpts, defaultOpts, outdir) {
 }
 
 module.exports = {
-    moduleHeader,
     codepen,
     getBaseURL,
     getMetaTagData,

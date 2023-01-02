@@ -152,9 +152,10 @@ _All options must be defined under `opts.theme_opts` in your `.jsdoc.json`_
 | `search`       | enable fuzzy search using [Fuse.js][]               | bool         | `true`                             | `true`, `false`                               |
 | `base_url`     | the root domain of your documentation website       | URL          | `/`                                | any valid URL &#91;2&#93;                     |
 | `langNames`    | display language names in code blocks               | bool         | `true`                             | `true`, `false`                               |
+| `moduleNames`  | show the module's name in the page's top heading    | bool         | `false`                            | `true`, `false`                               |
 | `title`        | the name of the home link to display on the nav bar | HTML string  | `"README"`                         | any valid HTML markup, or just a plain string |
 | `footer`       | a footer to display in the page layout              | HTML string  | JSDoc version, date and theme info | any valid HTML markup                         |
-| `inline_style` | inline CSS for the `head` of the page layout        | CSS string   | `null`                             | any valid CSS markup                          |
+| `inline_style` | inline CSS for the `<head`> of the page layout      | CSS string   | `null`                             | any valid CSS markup                          |
 
 
 <hr/>
@@ -232,7 +233,7 @@ A list of hyperlinks to add to the navigation bar, e.g.
   "menu": [
     {
       "title": "Website",
-      "link": "https://heredocs.io",
+      "link": "https://rdipardo.bitbucket.io",
       "target": "_blank",
       "class": "some-class",
       "id": "some-id"

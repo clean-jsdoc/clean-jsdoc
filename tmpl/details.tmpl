@@ -191,7 +191,9 @@ for(; loopVar < detailsKeys.length; loopVar += 1) {
         <div class="details-item-container">
             <dt class="tag-source">Source</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <?js= self.linkto(meta.shortpath) ?>,&nbsp;<?js= self.linkto(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?>
+                <?js= self.linkto(meta.shortpath) ?>
+                <a href="#" aria-hidden="true">,&nbsp;</a>
+                <?js= self.linkto(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?>
             </li></ul></dd>
         </div>
     </dl>

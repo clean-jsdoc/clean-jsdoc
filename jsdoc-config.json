@@ -26,7 +26,7 @@
         "theme_opts": {
             "theme": "dynamic",
             "langNames": false,
-            "menuLocation": "down",
+            "moduleNames": true,
             "project": {
                 "title": "clean-jsdoc",
                 "version": "4.3.0",
@@ -57,7 +57,7 @@
                 },
                 {
                     "name": "description",
-                    "content": "A fork of clean-jsdoc-theme with some backported features and IE 11 support"
+                    "content": "Fork of clean-jsdoc-theme with dynamic theme switching and some backported features"
                 },
                 {
                     "name": "attribution",
@@ -76,7 +76,6 @@
                     "autoUpdate": false
                 }
             },
-            "inline_style": ".readme img { max-width: 900px; }",
             "codepen": {
                 "options": {
                     "editors": "001",
