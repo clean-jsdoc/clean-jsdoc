@@ -8,7 +8,7 @@ on:
     types: [opened]
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: Set up BrowserStack env
       uses: browserstack/github-actions/setup-env@master

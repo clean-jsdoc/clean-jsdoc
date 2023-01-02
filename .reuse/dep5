@@ -1,0 +1,46 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: @clean-jsdoc/clean-jsdoc
+Upstream-Contact: Robert Di Pardo <https://github.com/rdipardo>
+Source: https://github.com/clean-jsdoc/clean-jsdoc.git
+
+Files: static/fonts/*Nunito*
+Copyright: 2014 The Nunito Project Authors (https://github.com/googlefonts/NunitoFont)
+License: LicenseRef-Nunito
+
+Files: static/fonts/*Quicksand*
+Copyright: 2011 The Quicksand Project Authors (https://github.com/andrew-paglinawan/QuicksandFamily), with Reserved Font Name “Quicksand”
+License: LicenseRef-Quicksand
+
+Files: static/fonts/*SourceCodePro*
+Copyright: 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'
+License: LicenseRef-SourceCodePro
+
+Files: static/scripts/third-party/fuse.js
+Copyright: 2021 Kiro Risk (http://kiro.me)
+License: Apache-2.0
+
+Files: static/scripts/third-party/lang-css.js, static/scripts/third-party/prettify.min.js
+Copyright: 2011 Mike Samuel et al
+           2020 Robert Di Pardo
+License: Apache-2.0 OR MIT
+
+Files: static/scripts/third-party/popper.js
+Copyright: 2021 Floating UI contributors
+License: LicenseRef-popper
+
+Files: static/scripts/third-party/tippy.js
+Copyright: 2017-present atomiks
+License: LicenseRef-tippy.js
+
+Files: static/scripts/third-party/tocbot.js
+Copyright: 2016 Tim Scanlin
+License: LicenseRef-tocbot
+
+Files: .* *.js *.md *.json tmpl/* static/scripts/*.js static/styles/*.css demo/*
+Copyright: 2019-2022 Ankit Kumar
+           2020-2022 Robert Di Pardo
+License: MIT
+
+Files: tests/* img/* .github/*
+Copyright: 2020-2022 Robert Di Pardo
+License: MIT

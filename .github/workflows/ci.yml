@@ -7,8 +7,16 @@ on:
   pull_request_target:
     types: [opened]
 jobs:
+  license_check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: REUSE Compliance Check
+      uses: fsfe/reuse-action@v1
+
   build:
-    runs-on: ubuntu-20.04
+    needs: license_check
+    runs-on: ubuntu-latest
     steps:
     - name: Set up BrowserStack env
       uses: browserstack/github-actions/setup-env@master
