@@ -6,7 +6,6 @@ const path = require('jsdoc/path');
 const { taffy } = require('@jsdoc/salty');
 const template = require('jsdoc/template');
 const { nanoid } = require('nanoid');
-const babel = require('@babel/core');
 const minify = require('minify');
 
 const { linkto, resolveAuthorLinks } = helper;
@@ -27,8 +26,7 @@ const {
 const {
     SECTION_TYPE,
     defaultSections,
-    minifyOpts,
-    babelOpts
+    minifyOpts
 } = require('./clean-jsdoc-theme-defaults');
 
 const hasOwnProp = Object.prototype.hasOwnProperty;
@@ -710,7 +708,7 @@ exports.publish = function(taffyData, opts, tutorials) {
             fs.mkPath(toDir);
         }
 
-        if ((/(?<!(min))\.((css)|(html))$/iu).test(fileName) && !isThirdParty) {
+        if ((/(?<!(min))\.((m?js*)|(css)|(html))$/iu).test(fileName) && !isThirdParty) {
             minify(fileName, minifyOpts)
                 .then(min => {
                     const minified = path.join(toDir, path.basename(fileName));
@@ -719,19 +717,6 @@ exports.publish = function(taffyData, opts, tutorials) {
                     fs.writeFileSync(minified, min);
                 })
                 .catch(err => logger.error(err.message));
-        } else if ((/(?<!(min))\.(m?js*)$/iu).test(fileName) && !isThirdParty) {
-            const compiled = path.join(toDir, path.basename(fileName));
-
-            babel.transformFile(fileName, babelOpts, (err, out) => {
-                if (err) {
-                    logger.error(err.message);
-
-                    return;
-                }
-
-                logger.info('Compiling: %s', compiled);
-                fs.writeFileSync(compiled, out.code);
-            });
         } else {
             fs.copyFileSync(fileName, toDir);
         }

@@ -28,7 +28,7 @@
     "bugs": {
         "url": "https://github.com/clean-jsdoc/clean-jsdoc/issues"
     },
-    "homepage": "https://rdipardo.github.io/clean-jsdoc-theme",
+    "homepage": "https://clean-jsdoc.github.io/clean-jsdoc",
     "keywords": [
         "jsdoc",
         "template",
@@ -47,10 +47,7 @@
         "express": "^4.17.1"
     },
     "dependencies": {
-        "@babel/core": "^7.12.10",
-        "@babel/preset-env": "^7.12.11",
         "@jsdoc/salty": "^0.2.1",
-        "babel-preset-minify": "^0.5.1",
         "fs-extra": "^10.1.0",
         "glob": "^8.0.3",
         "minify": "^6.0.1",

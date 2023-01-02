@@ -25,50 +25,27 @@ const defaultSections = [
 const minifyOpts = {
     'html': {
         'removeAttributeQuotes': false,
-        'removeComments': false,
+        'removeComments': true,
         'removeCommentsFromCDATA': false,
         'removeCDATASectionsFromCDATA': false,
         'removeEmptyElements': false,
         'removeOptionalTags': false,
-        'useShortDoctype': false,
+        'useShortDoctype': true,
         'removeStyleLinkTypeAttributes': false,
-        'removeScriptTypeAttributes': false,
-        'keepClosingSlash': true,
-        'html5': false
+        'removeScriptTypeAttributes': true,
+        'keepClosingSlash': false,
+        'html5': true
     },
     'css': {
         'compatibility': '*'
     },
     'js': {
-        'ecma': 5
+        'ecma': 6
     }
-};
-
-const babelOpts = {
-    'presets': [
-        [
-            '@babel/preset-env',
-            {
-                'targets': {
-                    'ie': '11'
-                }
-            }
-        ],
-        [
-            'minify', {
-                'evaluate': false,
-                'removeDebugger': true,
-                'removeUndefined': false,
-                'undefinedToVoid': false
-            }
-        ]
-    ],
-    'comments': false
 };
 
 module.exports = {
     SECTION_TYPE,
     defaultSections,
-    minifyOpts,
-    babelOpts
+    minifyOpts
 };
