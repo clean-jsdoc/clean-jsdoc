@@ -297,6 +297,7 @@ function copyFunction(id) {
 function hideTocOnSourcePage() {
   if (isSourcePage()) {
     document.querySelector('.toc-container').style.display = 'none';
+    document.querySelector('.main-content').style.padding = '7rem 0 0 25rem';
   }
 }
 
