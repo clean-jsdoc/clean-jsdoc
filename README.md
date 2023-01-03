@@ -3,7 +3,7 @@
 <h3 align="center">
 
 [![Package Workflow][]][Package]
-[![Chrome, Firefox, IE, Safari on macOS Workflow][]][Chrome, Firefox, IE, Safari on macOS]
+[![Chrome, Firefox, Safari on macOS Workflow][]][Chrome, Firefox, Safari on macOS]
 [![Chrome on Android, Safari on iOS Workflow][]][Chrome on Android, Safari on iOS]
 [![BrowserStack Status Badge][]][BrowserStack Status]
 [![Current Release][]][Releases]
@@ -427,10 +427,10 @@ Distributed under the terms of the [MIT license][Read the MIT].
 <!-- badges -->
 [Package Workflow]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/publish.yml/badge.svg
 [Package]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/publish.yml
-[Chrome, Firefox, IE, Safari on macOS Workflow]: https://github.com/clean-jsdoc/clean-jsdoc/workflows/Chrome,%20Firefox,%20IE,%20Safari%20on%20macOS/badge.svg?branch=develop
-[Chrome, Firefox, IE, Safari on macOS]: https://github.com/clean-jsdoc/clean-jsdoc/actions?query=workflow%3AIE
-[Chrome on Android, Safari on iOS Workflow]: https://github.com/clean-jsdoc/clean-jsdoc/workflows/Chrome%20on%20Android,%20Safari%20on%20iOS/badge.svg?branch=develop
-[Chrome on Android, Safari on iOS]: https://github.com/clean-jsdoc/clean-jsdoc/actions?query=workflow%3AAndroid
+[Chrome, Firefox, Safari on macOS Workflow]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/ci.yml/badge.svg?branch=develop
+[Chrome, Firefox, Safari on macOS]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/ci.yml
+[Chrome on Android, Safari on iOS Workflow]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/ci_mobile.yml/badge.svg?branch=develop
+[Chrome on Android, Safari on iOS]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/ci_mobile.yml
 [BrowserStack Status]: https://automate.browserstack.com/public-build/RkZCVWlFUndVc1c0dHFnLzA2V2pjZCtGTXBFc0N1ek9PeHpqWU1ZU1Z5cz0tLTBXbUxRbXVUQ21CSXRDQkRPcEoweVE9PQ==--2c08531eadafcbbf252ba6fce89db02023862cad
 [BrowserStack Status Badge]: https://automate.browserstack.com/badge.svg?badge_key=RkZCVWlFUndVc1c0dHFnLzA2V2pjZCtGTXBFc0N1ek9PeHpqWU1ZU1Z5cz0tLTBXbUxRbXVUQ21CSXRDQkRPcEoweVE9PQ==--2c08531eadafcbbf252ba6fce89db02023862cad
 [Read the MIT]: https://github.com/clean-jsdoc/clean-jsdoc/blob/master/LICENSE

@@ -1,4 +1,4 @@
-name: Chrome, Firefox, IE, Safari on macOS
+name: Chrome, Firefox, Safari on macOS
 on:
   push:
     branches:

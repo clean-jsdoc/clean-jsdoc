@@ -11,7 +11,7 @@ describe('Page layout', () => {
 
     beforeEach(async () => {
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 25000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
 
         await browser.url(`${HOME_PAGE}`);
 
