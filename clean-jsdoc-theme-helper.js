@@ -123,8 +123,34 @@ function getLayoutOptions(themeOpts, defaultOpts, outdir) {
     const noTOC = themeOpts.toc !== undefined && !themeOpts.toc;
     const wantDate = defaultOpts.includeDate !== false;
     const wantOverlay = overlayScrollbarOptions(themeOpts, outdir) !== undefined;
+    const toAssetLink = src => {
+        const [extension] = (src.href || '').split('.').reverse();
+        const ext = extension.toLowerCase();
+
+        if (ext === 'css') {
+           src.type = 'text/css';
+           src.media = 'screen';
+           src.rel = 'stylesheet';
+        } else if (!src.type || !src.rel &&
+            ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tif', 'tiff', 'ico', 'webp', 'svg'].includes(ext)) {
+            const mime =
+                ['jpg', 'jpeg'].includes(ext) ?
+                'jpeg' :
+                ['tif', 'tiff'].includes(ext) ?
+                    'tiff' :
+                    ext === 'svg' ?
+                        'svg+xml' :
+                        ext;
+
+           src.type = src.type || ext === 'ico' ? 'image/x-icon' : `image/${mime}`;
+           src.rel = src.rel || 'icon';
+        }
+
+        return src;
+    };
 
     return {
+        toAssetLink,
         themeName,
         hideLangNames,
         displayModuleHeader,

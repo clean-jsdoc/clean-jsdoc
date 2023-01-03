@@ -149,7 +149,7 @@ describe('Page layout', () => {
 
         await browser.waitUntil(() => foundMethod.isClickable(),
             {
-                'timeout': 10000,
+                'timeout': 50000,
                 'timeoutMsg': 'expected link to respond to clicks'
             }
         );

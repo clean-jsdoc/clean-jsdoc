@@ -11,29 +11,6 @@
         });
       }
   }
-
-  function toAssetLink(src) {
-    const [extension] = (src.href || '').split('.').reverse()
-    const ext = extension.toLowerCase()
-    if (ext === 'css') {
-       src.type = 'text/css'
-       src.media = 'screen'
-       src.rel = 'stylesheet'
-    } else if (!src.type || !src.rel &&
-        ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tif', 'tiff', 'ico', 'webp', 'svg'].includes(ext)) {
-        const mime =
-            ['jpg', 'jpeg'].includes(ext)
-            ? 'jpeg'
-            : ['tif', 'tiff'].includes(ext)
-                ? 'tiff'
-                : (ext === 'svg')
-                    ? 'svg+xml'
-                    : ext
-       src.type = src.type || (ext === 'ico') ? 'image/x-icon' : `image/${mime}`
-       src.rel = src.rel || 'icon'
-    }
-    return src
-  }
 ?>
 <head>
     <meta charset="utf-8">
@@ -107,7 +84,7 @@
 
     <?js if(this.externalAssets.length) { ?>
       <?js this.externalAssets.forEach(src => { ?>
-        <link <?js=Object.keys(src).map(key => `${key}="${toAssetLink(src)[key]}"`).join(" ") ?>>
+        <link <?js=Object.keys(src).map(key => `${key}="${this.layoutOptions.toAssetLink(src)[key]}"`).join(" ") ?>>
       <?js }) ?>
     <?js } ?>
 
