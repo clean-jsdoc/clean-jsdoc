@@ -150,6 +150,7 @@ _All options must be defined under `opts.theme_opts` in your `.jsdoc.json`_
 |:--------------:|:----------------------------------------------------|:------------:|:----------------------------------:|:---------------------------------------------:|
 | `theme`        | the overall style theme                             | string       | `"light"`                          | `"light"`, `"dark"`, `"dynamic"` &#91;1&#93;  |
 | `search`       | enable fuzzy search using [Fuse.js][]               | bool         | `true`                             | `true`, `false`                               |
+| `toc`          | show a table of contents on wide device screens     | bool         | `true`                             | `true`, `false`                               |
 | `base_url`     | the root domain of your documentation website       | URL          | `/`                                | any valid URL &#91;2&#93;                     |
 | `langNames`    | display language names in code blocks               | bool         | `true`                             | `true`, `false`                               |
 | `moduleNames`  | show the module's name in the page's top heading    | bool         | `false`                            | `true`, `false`                               |

@@ -52,7 +52,9 @@
       <?js= title ?>
       <?js } ?>
     </title>
+    <?js if (!this.layoutOptions.noTOC) { ?>
     <link type="text/css" rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.css">
+    <?js } ?>
     <link type="text/css" rel="stylesheet" media="screen" href="styles/clean-jsdoc-theme-base.css">
     <link type="text/css" rel="stylesheet" media="screen" href="styles/clean-jsdoc-colorscheme.css">
     <link type="text/css" rel="stylesheet" media="screen" href="styles/clean-jsdoc-theme-light.css">
@@ -132,6 +134,22 @@
     </style>
     <?js } ?>
 
+    <?js if (!this.layoutOptions.noTOC) { ?>
+    <style>
+        @media screen and (max-width: 100em) {
+            .toc-container {
+                display: none
+            }
+        }
+    </style>
+    <?js } else { ?>
+    <style>
+        .main-content {
+            padding: 7rem 0 0 25rem !important;
+        }
+    </style>
+    <?js } ?>
+
     <?js if(this.externalScripts.length) { ?>
       <?js this.externalScripts.forEach(function(src){ ?>
         <script <?js=Object.keys(src).map(key => `${key}="${src[key]}"`).join(" ")?>></script>
@@ -155,9 +173,11 @@
   <?js= this.partial('navbar.tmpl') ?>
 </div>
 
+<?js if (!this.layoutOptions.noTOC) { ?>
 <div class="toc-container">
   <?js= this.partial('toc.tmpl') ?>
 </div>
+<?js } ?>
 
 <div class="body-wrapper">
   <div class="main-content">
@@ -241,8 +261,9 @@
 <script src="scripts/third-party/tocbot.js"></script>
 <script src="scripts/third-party/prettify.min.js"></script>
 <script src="scripts/third-party/lang-css.js"></script>
-<script src="scripts/linenumber.js"></script>
+<script src="scripts/linenumber.js" defer></script>
 <script src="scripts/core.js"></script>
+<?js if (!this.layoutOptions.noTOC) { ?>
 <script>
   var tocbotInstance = tocbot.init({
     tocSelector: '#eed4d2a0bfd64539bb9df78095dec881',
@@ -255,5 +276,6 @@
   });
 
 </script>
+<?js } ?>
 </body>
 </html>

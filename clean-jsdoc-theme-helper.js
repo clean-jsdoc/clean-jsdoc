@@ -117,9 +117,10 @@ function getProcessedYield(yields) {
 
 function getLayoutOptions(themeOpts, defaultOpts, outdir) {
     const themeName = themeOpts.theme || 'light';
-    const hideLangNames = themeOpts.langNames !== undefined && !env.opts.theme_opts.langNames;
-    const displayModuleHeader = themeOpts.moduleNames || false;
-    const noSearch = themeOpts.search !== undefined && !env.opts.theme_opts.search;
+    const hideLangNames = themeOpts.langNames !== undefined && !themeOpts.langNames;
+    const displayModuleHeader = themeOpts.moduleNames !== undefined && !themeOpts.moduleNames;
+    const noSearch = themeOpts.search !== undefined && !themeOpts.search;
+    const noTOC = themeOpts.toc !== undefined && !themeOpts.toc;
     const wantDate = defaultOpts.includeDate !== false;
     const wantOverlay = overlayScrollbarOptions(themeOpts, outdir) !== undefined;
 
@@ -128,6 +129,7 @@ function getLayoutOptions(themeOpts, defaultOpts, outdir) {
         hideLangNames,
         displayModuleHeader,
         noSearch,
+        noTOC,
         wantDate,
         wantOverlay
     };

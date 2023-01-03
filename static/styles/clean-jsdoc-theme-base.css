@@ -932,10 +932,6 @@ pre {
 }
 
 @media screen and (max-width: 100em) {
-    .toc-container {
-        display: none
-    }
-
     .main-content {
         padding: 7rem 0 0 25rem
     }
