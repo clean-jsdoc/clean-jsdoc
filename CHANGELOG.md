@@ -1,3 +1,20 @@
+## 5.0.0
+
+### BREAKING CHANGES
+- rename package to `@clean-jsdoc/clean-jsdoc`
+- drop support for ES5 (and IE 11)
+- adopt the modern rounded style of the upstream template
+
+### Ported from upstream
+- optional table of contents listing on documentation pages (requires a wide device screen) [c8580a4]
+- displaying module names in top-level headings is now optional [543b29f]
+
+### Fixed
+- the comma between source files and line references is now hyperlink style
+
+[c8580a4]: https://github.com/clean-jsdoc/clean-jsdoc/commit/c8580a4
+[543b29f]: https://github.com/clean-jsdoc/clean-jsdoc/commit/543b29f
+
 ## 4.3.0
 
 ### Fixed

@@ -24,12 +24,13 @@
         "template": "./",
         "tutorials": "./demo/src/tutorials",
         "theme_opts": {
+            "base_url": "https://clean-jsdoc.github.io/clean-jsdoc/",
             "theme": "dynamic",
             "langNames": false,
             "moduleNames": true,
             "project": {
                 "title": "clean-jsdoc",
-                "version": "4.3.0",
+                "version": "5.0.0",
                 "repo": "https://github.com/clean-jsdoc/clean-jsdoc"
             },
             "sections": [
