@@ -19,12 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Set up BrowserStack env
-      uses: browserstack/github-actions/setup-env@master
+      uses: clean-jsdoc/github-actions/setup-env@master
       with:
         username:  ${{ secrets.BROWSERSTACK_USERNAME }}
         access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
     - name: Start BrowserStackLocal Tunnel
-      uses: browserstack/github-actions/setup-local@master
+      uses: clean-jsdoc/github-actions/setup-local@master
       with:
         local-testing: start
         local-logging-level: false
@@ -50,6 +50,6 @@ jobs:
         npm run bs
         npm run bs:safari
     - name: Stop BrowserStackLocal
-      uses: browserstack/github-actions/setup-local@master
+      uses: clean-jsdoc/github-actions/setup-local@master
       with:
         local-testing: stop
