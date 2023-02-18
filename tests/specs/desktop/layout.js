@@ -144,8 +144,6 @@ describe('Page layout', () => {
             }
         );
 
-/** FIXME: restore search capability
-
         await browser.keys(['c', 'r']);
         const foundMethod = await browser.$('[href="Tree.html#crop"]');
 
@@ -170,7 +168,6 @@ describe('Page layout', () => {
         const title = await browser.getTitle();
 
         expect(title).toContain('Tree');
-*/
     });
 
     afterAll(() => {
