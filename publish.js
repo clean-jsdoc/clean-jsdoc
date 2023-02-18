@@ -31,9 +31,12 @@ const {
 const hasOwnProp = Object.prototype.hasOwnProperty;
 const themeOpts = env && env.opts && env.opts.theme_opts || {};
 const defaultOpts = env && env.conf.templates && env.conf.templates.default || {};
-const searchListArray = [];
 const externalAssets = themeOpts.remote_assets || [];
 
+/**
+ * @type {Array<{title: string, link: string, description: string}>}
+ */
+const searchList = [];
 let outdir = path.resolve(path.normalize(env.opts.destination));
 let data;
 let view;
@@ -217,7 +220,6 @@ function addSignatureReturns(f) {
         )}}`;
     }
 
-
     let signatureOutput = '';
 
     if (f.signature) {
@@ -230,7 +232,6 @@ function addSignatureReturns(f) {
     }
 
     f.signature = signatureOutput;
-
 }
 
 function addSignatureTypes(f) {
@@ -398,14 +399,6 @@ function buildSidebarMembers({ items, itemHeading, itemsSeen, linktoFn, sectionN
                     item.name.replace(/^module:/u, '')
                 );
 
-                if (hasSearch) {
-                    searchListArray.push({
-                        'title': item.name,
-                        'link': linktoFn(item.longname, item.name),
-                        'description': item.description
-                    });
-                }
-
                 if (methods.length) {
                     methods.forEach(method => {
                         const itemChild = {
@@ -414,19 +407,6 @@ function buildSidebarMembers({ items, itemHeading, itemsSeen, linktoFn, sectionN
                         };
 
                         currentItem.children.push(itemChild);
-                        let name = method.longname.split(method.scope === 'static' ? '.' : '#');
-                        const [first, last] = name;
-                        const identifier = last ? ` &rtrif; ${last}` : '';
-
-                        name = `${first.replace(/^(module:)\w+~/iu, '')}${identifier}`;
-
-                        if (hasSearch) {
-                            searchListArray.push({
-                                'title': method.longname,
-                                'link': linktoFn(method.longname, name),
-                                'description': item.classdesc
-                            });
-                        }
                     });
                 }
                 itemsSeen[item.longname] = true;
@@ -437,6 +417,18 @@ function buildSidebarMembers({ items, itemHeading, itemsSeen, linktoFn, sectionN
     }
 
     return navProps;
+}
+
+function buildSearchListForData() {
+    data().each(item => {
+        if (item.kind !== 'package' && !item.inherited) {
+            searchList.push({
+                'title': item.longname,
+                'link': linkto(item.longname, item.name),
+                'description': item.description
+            });
+        }
+    });
 }
 
 function linktoTutorial(longName, name) {
@@ -739,7 +731,7 @@ exports.publish = function(taffyData, opts, tutorials) {
             );
 
             extraStaticFiles.forEach(fileName => {
-                const toPath = sourceToDestination(fromDir, fileName, outdir);
+                const toPath = sourceToDestination(filePath, fileName, outdir);
 
                 mkdirSync(path.dirname(toPath));
                 fs.copyFileSync(fileName, toPath);
@@ -829,17 +821,6 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.codepen = codepen(themeOpts);
     view.baseURL = getBaseURL(themeOpts);
     attachModuleSymbols(find({ 'longname': { 'left': 'module:' } }), members.modules);
-
-    // output search file if search
-    if (hasSearch) {
-        mkdirSync(path.join(outdir, 'data'));
-        fs.writeFileSync(
-            path.join(outdir, 'data', 'search.json'),
-            JSON.stringify({
-                'list': searchListArray
-            })
-        );
-    }
 
     // generate the pretty-printed source files first so other pages can link to them
     if (outputSourceFiles) {
@@ -947,6 +928,46 @@ exports.publish = function(taffyData, opts, tutorials) {
          */
         html = helper.resolveLinks(html);
         fs.writeFileSync(tutorialPath, html, 'utf8');
+
+        // added by clean-jsdoc-theme-devs
+        // adding support for tutorial
+        if (!hasSearch)
+            { return; }
+
+        try {
+            const baseName = path.basename(tutorialPath);
+            let body = (/<body.*?>([\s\S]*)<\/body>/u).exec(tutorialData.content);
+            let description = '';
+
+            if (!Array.isArray(body)) {
+                body = (/<article.*?>([\s\S]*)<\/article>/u).exec(tutorialData.content);
+            }
+
+            if (Array.isArray(body) && typeof body[1] === 'string') {
+                description = body[1]
+                    // Replacing all html tags
+                    .replace(/(<([^>]+)>)/gu, '')
+                    // Replacing all kind of line breaks
+                    .replace(/(\r\n|\n|\r)/gmu, ' ')
+                    // Replacing all multi spaces with single space
+                    .replace(/\s+/gmu, ' ')
+                    // Taking only first 100 characters
+                    .substring(0, 100);
+            }
+
+            if (typeof baseName === 'string' && baseName) {
+                searchList.push({
+                    'title': tutorialData.header,
+                    'link': `<a href="${baseName}">${baseName}</a>`,
+                    description
+                });
+            }
+
+
+        } catch (error) {
+            logger.error('There was some error while creating search array for tutorial.');
+            logger.error(error);
+        }
     }
 
     // tutorials can have only one parent so there is no risk for loops
@@ -962,4 +983,17 @@ exports.publish = function(taffyData, opts, tutorials) {
     }
 
     saveChildren(tutorials);
+
+    // added by clean-jsdoc-theme-devs
+    // output search file if search
+    if (hasSearch) {
+        buildSearchListForData();
+        mkdirSync(path.join(outdir, 'data'));
+        fs.writeFileSync(
+            path.join(outdir, 'data', 'search.json'),
+            JSON.stringify({
+                'list': searchList
+            })
+        );
+    }
 };

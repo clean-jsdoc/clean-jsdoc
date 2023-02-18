@@ -67,7 +67,7 @@ async function fetchAllData() {
   const { hostname, protocol, port } = location;
 
   // eslint-disable-next-line no-undef
-  const base = `${protocol}//${hostname}${port !== '' ? `:${port}` : ''}${baseURL}`;
+  const base = `${protocol}//${hostname}${port !== '' ? `:${port}` : ''}`;
   // eslint-disable-next-line no-undef
   const url = new URL('data/search.json', base);
   const result = await fetch(url);
@@ -101,17 +101,19 @@ function onClickSearchItem(event) {
 
 function buildSearchResult(result) {
   let output = '';
+  const removeHTMLTagsRegExp = /(<([^>]+)>)/igu;
 
   for (const res of result) {
-    const { title, description } = res.item;
+    const { title = '', description = '' } = res.item;
 
-    const link = res.item.link.replace('<a href="', '').replace(/">.*/u, '');
+    const _link = res.item.link.replace('<a href="', '').replace(/">.*/u, '');
+    const _title = title.replace(removeHTMLTagsRegExp, '');
+    const _description = description.replace(removeHTMLTagsRegExp, '');
 
     output += `
-
-    <a onclick="onClickSearchItem(event)" href="${link}" class="search-result-item">
-      <div class="search-result-item-title">${title}</div>
-      <div class="search-result-item-p">${description || 'No description available.'}</div>
+    <a onclick="onClickSearchItem(event)" href="${_link}" class="search-result-item">
+      <div class="search-result-item-title">${_title}</div>
+      <div class="search-result-item-p">${_description || 'No description available.'}</div>
     </a>
     `;
   }
