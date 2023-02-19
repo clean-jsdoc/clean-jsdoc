@@ -64,12 +64,12 @@ function showSearch() {
 
 async function fetchAllData() {
   // eslint-disable-next-line no-undef
-  const { hostname, protocol, port } = location;
+  const { hostname, protocol, port, pathname } = location;
 
   // eslint-disable-next-line no-undef
   const base = `${protocol}//${hostname}${port !== '' ? `:${port}` : ''}`;
   // eslint-disable-next-line no-undef
-  const url = new URL('data/search.json', base);
+  const url = new URL('data/search.json', pathname !== '' ? `${base}${pathname}` : base);
   const result = await fetch(url);
   const { list } = await result.json();
 
