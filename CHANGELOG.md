@@ -1,3 +1,14 @@
+## 5.1.0
+
+### Fixed
+- use only `window.location` attributes to build the URL path to generated search data [f097086]
+
+### Changed
+- bump minimum required node and npm versions to active LTS [798cac2]
+
+[f097086]: https://github.com/clean-jsdoc/clean-jsdoc/commit/f097086
+[798cac2]: https://github.com/clean-jsdoc/clean-jsdoc/commit/798cac2
+
 ## 5.0.0
 
 ### BREAKING CHANGES

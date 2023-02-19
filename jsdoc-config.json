@@ -30,12 +30,13 @@
             "moduleNames": true,
             "project": {
                 "title": "clean-jsdoc",
-                "version": "5.0.0",
+                "version": "5.1.0",
                 "repo": "https://github.com/clean-jsdoc/clean-jsdoc"
             },
             "sections": [
                 "modules",
                 "classes",
+                "namespaces",
                 "events",
                 "global",
                 "tutorials"

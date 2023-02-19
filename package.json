@@ -1,6 +1,6 @@
 {
     "name": "@clean-jsdoc/clean-jsdoc",
-    "version": "5.0.0",
+    "version": "5.1.0",
     "description": "A fork of clean-jsdoc-theme with dynamic theme switching and some backported features",
     "main": "publish.js",
     "scripts": {
@@ -59,7 +59,7 @@
         "**/ua-parser-js": "1.0.33"
     },
     "engines": {
-        "node": ">=v18.12.0",
+        "node": ">=18.12.0",
         "npm": ">=9.0.0"
     },
     "publishConfig": {
