@@ -154,6 +154,7 @@ _All options must be defined under `opts.theme_opts` in your `.jsdoc.json`_
 | `base_url`     | the root domain of your documentation website       | URL          | `/`                                | any valid URL &#91;2&#93;                     |
 | `langNames`    | display language names in code blocks               | bool         | `true`                             | `true`, `false`                               |
 | `moduleNames`  | show the module's name in the page's top heading    | bool         | `false`                            | `true`, `false`                               |
+| `sort`         | sort members/methods/events by name                 | bool         | `true`                             | `true`, `false`                               |
 | `title`        | the name of the home link to display on the nav bar | HTML string  | `"README"`                         | any valid HTML markup, or just a plain string |
 | `footer`       | a footer to display in the page layout              | HTML string  | JSDoc version, date and theme info | any valid HTML markup                         |
 | `inline_style` | inline CSS for the `<head`> of the page layout      | CSS string   | `null`                             | any valid CSS markup                          |
@@ -437,6 +438,6 @@ Distributed under the terms of the [MIT license][Read the MIT].
 [Releases]: https://github.com/clean-jsdoc/clean-jsdoc/releases
 [Current Release]: https://img.shields.io/github/package-json/v/clean-jsdoc/clean-jsdoc?logo=github
 [GitHub Package Registry]: https://docs.github.com/en/packages/guides/configuring-npm-for-use-with-github-packages#authenticating-with-a-personal-access-token
-[currently]: https://github.community/t/download-from-github-package-registry-without-authentication/14407/2
+[currently]: https://github.com/orgs/community/discussions/26634
 [authenticate with the registry]: https://docs.github.com/en/packages/guides/configuring-npm-for-use-with-github-packages#installing-a-package
 [personal access token]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
