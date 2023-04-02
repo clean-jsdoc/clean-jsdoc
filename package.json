@@ -1,6 +1,6 @@
 {
     "name": "@clean-jsdoc/clean-jsdoc",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "description": "A fork of clean-jsdoc-theme with dynamic theme switching and some backported features",
     "main": "publish.js",
     "scripts": {

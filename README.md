@@ -157,7 +157,7 @@ _All options must be defined under `opts.theme_opts` in your `.jsdoc.json`_
 | `sort`         | sort members/methods/events by name                 | bool         | `true`                             | `true`, `false`                               |
 | `title`        | the name of the home link to display on the nav bar | HTML string  | `"README"`                         | any valid HTML markup, or just a plain string |
 | `footer`       | a footer to display in the page layout              | HTML string  | JSDoc version, date and theme info | any valid HTML markup                         |
-| `inline_style` | inline CSS for the `<head`> of the page layout      | CSS string   | `null`                             | any valid CSS markup                          |
+| `inline_style` | inline CSS for the `<head>` of the page layout      | CSS string   | `null`                             | any valid CSS markup                          |
 
 
 <hr/>

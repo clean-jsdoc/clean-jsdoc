@@ -1,3 +1,10 @@
+## 5.1.1
+
+### Added
+- sorting members by name is now optional [3a20844] (ported from upstream)
+
+[3a20844]: https://github.com/clean-jsdoc/clean-jsdoc/commit/3a20844
+
 ## 5.1.0
 
 ### Fixed
