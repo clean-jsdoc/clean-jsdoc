@@ -267,6 +267,36 @@ function getPathFromDoclet({ meta }) {
         meta.filename;
 }
 
+function createPrettyAnchor(elementType, ancestor, name, href) {
+    return `<${elementType} ${href ? `href="${href}"` : ''} class="has-anchor">
+        <span class="ancestors">
+            ${ancestor}~
+        </span>
+        ${name}
+    </${elementType}>`;
+}
+
+function prefixModuleToItemAnchor(item) {
+    const { anchor } = item;
+    const [anchorLink] = anchor.split('href="')[1].split('"');
+    const cleanLink = anchorLink.replace(/\.html$/u, '');
+    let prettyAnchor;
+
+    cleanLink.replace(
+        /module-([^-]+)(?:-|\.)(.*)/u,
+        (_match, modulename, methodname) => {
+            prettyAnchor = createPrettyAnchor(
+                'a',
+                modulename,
+                methodname,
+                anchorLink
+            );
+        }
+    );
+
+    return prettyAnchor || anchor;
+}
+
 function generate(title, docs, filename, resolveLinks) {
     const docData = {
         env,
@@ -825,6 +855,16 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.codepen = codepen(themeOpts);
     view.baseURL = getBaseURL(themeOpts);
     attachModuleSymbols(find({ 'longname': { 'left': 'module:' } }), members.modules);
+
+    if (themeOpts.prefixModuleToSidebarItems_experimental) {
+        view.sidebar.sections.forEach((section, i) => {
+            view.sidebar.sections[i].items = section.items.map(item => {
+                item.anchor = prefixModuleToItemAnchor(item);
+
+                return item;
+            });
+        });
+    }
 
     // generate the pretty-printed source files first so other pages can link to them
     if (outputSourceFiles) {

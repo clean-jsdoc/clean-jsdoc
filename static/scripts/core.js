@@ -12,7 +12,7 @@ function getTheme() {
   return body.getAttribute('data-theme');
 }
 
-function updateTheme(theme) {
+function localUpdateTheme(theme) {
   const { body } = document;
   const svgUse = document.querySelectorAll('.theme-svg-use');
   const iconID = theme === 'dark' ? '#light-theme-icon' : '#dark-theme-icon';
@@ -32,11 +32,15 @@ function updateTheme(theme) {
   body.classList.remove('dark', 'light');
   body.classList.add(theme);
 
+  localStorage.setItem(themeLocalStorageKey, theme);
   svgUse.forEach(svg => {
     svg.setAttribute('xlink:href', iconID);
   });
+}
 
-  localStorage.setItem(themeLocalStorageKey, theme);
+function updateTheme(theme) {
+    localUpdateTheme(theme);
+    localStorage.setItem(themeLocalStorageKey, theme);
 }
 
 function toggleTheme() {
@@ -413,21 +417,26 @@ function getFontSize() {
   return !isNaN(currentFontSize) ? currentFontSize : 16;
 }
 
-function updateFontSize(fontSize) {
-  html.style.fontSize = `${fontSize}px`;
-  localStorage.setItem(fontSizeLocalStorageKey, fontSize);
-  const fontSizeText = document.querySelector(
-    '#b77a68a492f343baabea06fad81f651e'
-  );
+function localUpdateFontSize(fontSize) {
+    html.style.fontSize = `${fontSize}px`;
+
+    const fontSizeText = document.querySelector(
+        '#b77a68a492f343baabea06fad81f651e'
+    );
 
   if (fontSizeText) {
     fontSizeText.innerHTML = fontSize;
   }
 }
 
+function updateFontSize(fontSize) {
+    localUpdateFontSize(fontSize);
+    localStorage.setItem(fontSizeLocalStorageKey, fontSize);
+}
+
 (function() {
-  const fontSize = getFontSize();
-  const fontSizeInLocalStorage = localStorage.getItem(fontSizeLocalStorageKey);
+    const fontSize = getFontSize();
+    const fontSizeInLocalStorage = localStorage.getItem(fontSizeLocalStorageKey);
 
   if (fontSizeInLocalStorage) {
     const n = Number.parseInt(fontSizeInLocalStorage, 10);
@@ -713,4 +722,14 @@ window.addEventListener('hashchange', event => {
   if (url.hash !== '') {
     bringIdToViewOnMount(url.hash);
   }
+});
+
+// eslint-disable-next-line no-undef
+window.addEventListener('storage', event => {
+    if (event.newValue === 'undefined') { return; }
+
+    initTooltip();
+
+    if (event.key === themeLocalStorageKey) { localUpdateTheme(event.newValue); }
+    if (event.key === fontSizeLocalStorageKey) { localUpdateFontSize(event.newValue); }
 });
