@@ -30,7 +30,7 @@
             "moduleNames": true,
             "project": {
                 "title": "clean-jsdoc",
-                "version": "5.1.1",
+                "version": "5.1.2",
                 "repo": "https://github.com/clean-jsdoc/clean-jsdoc"
             },
             "sort": false,

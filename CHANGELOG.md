@@ -1,3 +1,13 @@
+## 5.1.2
+
+### Ported from upstream
+- new option to prefix member names with the containing module's name in the sidebar [9dd5b46] (*experimental*)
+
+### Changed
+- bump overlayscrollbars to 2.2.0
+
+[9dd5b46]: https://github.com/clean-jsdoc/clean-jsdoc/commit/9dd5b46
+
 ## 5.1.1
 
 ### Added
