@@ -5,31 +5,11 @@ const browserstack = require('browserstack-local');
 exports.config = {
     'user': process.env.BROWSERSTACK_USERNAME,
     'key': process.env.BROWSERSTACK_ACCESS_KEY,
-    'specs': ['./tests/specs/desktop/**'],
+    'specs': [
+        `${process.env.PWD}/tests/specs/desktop/layout.js`,
+        `${process.env.PWD}/tests/specs/desktop/line_numbers.js`
+    ],
     'capabilities': [
-/*
-        {
-            'browserName': 'IE',
-            'browserVersion': '11.0',
-            'bstack:options': {
-                'sessionName': 'IE-ui-test',
-                'projectName': 'clean-jsdoc',
-                'buildName': 'clean-jsdoc-ui-testing',
-                'os': 'Windows',
-                'osVersion': '7',
-                'ie': {
-                    'noFlash': true,
-                    "compatibility" : "11001",
-                    'enablePopups': false,
-                },
-                'local': true,
-                'appiumLogs': false,
-                'seleniumLogs': false,
-                'seleniumVersion': '3.5.2',
-                'localIdentifier': process.env.BROWSERSTACK_LOCAL_IDENTIFIER
-            }
-        },
-*/
         {
             'browserName': 'Chrome',
             'browserVersion': 'latest',
@@ -61,6 +41,7 @@ exports.config = {
             }
         }
     ],
+    'runner': 'local',
     'logLevel': 'error',
     'coloredLogs': false,
     'baseUrl': `http://localhost:${process.env.PORT || 3000}`,

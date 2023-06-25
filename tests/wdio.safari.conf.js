@@ -5,23 +5,26 @@ const browserstack = require('browserstack-local');
 exports.config = {
     'user': process.env.BROWSERSTACK_USERNAME,
     'key': process.env.BROWSERSTACK_ACCESS_KEY,
-    'specs': ['./tests/specs/desktop/**'],
+    'specs': [
+        `${process.env.PWD}/tests/specs/desktop/layout.js`,
+        `${process.env.PWD}/tests/specs/desktop/line_numbers.js`
+    ],
     'capabilities': [{
         'browserName': 'Safari',
-        // https://github.com/webdriverio/webdriverio/issues/4565
-        'browserVersion': '12.1',
+        'browserVersion': '15.6',
         'bstack:options': {
             'sessionName': 'Safari-macOS-ui-test',
             'projectName': 'clean-jsdoc',
             'buildName': 'clean-jsdoc-ui-safari-testing',
             'os': 'OS X',
-            'osVersion': 'Mojave',
+            'osVersion': 'Monterey',
             'local': true,
             'appiumLogs': false,
             'seleniumLogs': false,
             'localIdentifier': process.env.BROWSERSTACK_LOCAL_IDENTIFIER
         }
     }],
+    'runner': 'local',
     'logLevel': 'error',
     'coloredLogs': false,
     'baseUrl': `http://bs-local.com:${process.env.PORT || 3000}`,

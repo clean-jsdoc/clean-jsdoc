@@ -39,7 +39,8 @@ describe('Line numbers', () => {
         const lineStyle = await foundLine.getCSSProperty('background-color');
         const plainStyle = await ordinaryLine.getCSSProperty('background-color');
 
-        expect(lineStyle.parsed.hex).not.toEqual(plainStyle.parsed.hex);
+        // https://github.com/webdriverio/webdriverio/issues/10606
+        expect(lineStyle.parsed.hex === plainStyle.parsed.hex).toBe(false);
     });
 
     afterAll(() => {

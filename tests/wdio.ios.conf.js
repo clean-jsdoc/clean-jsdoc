@@ -5,15 +5,15 @@ const browserstack = require('browserstack-local');
 exports.config = {
     'user': process.env.BROWSERSTACK_USERNAME,
     'key': process.env.BROWSERSTACK_ACCESS_KEY,
-    'specs': ['./tests/specs/mobile/**'],
+    'specs': [`${process.env.PWD}/tests/specs/mobile/layout.js`],
     'capabilities': [{
         'browserName': 'iPhone',
         'bstack:options': {
             'sessionName': 'iPhone-ui-test',
             'projectName': 'clean-jsdoc',
             'buildName': 'clean-jsdoc-mobile-ui-testing',
-            'deviceName': 'iPhone XS',
-            'osVersion': '13.3',
+            'deviceName': 'iPhone 14',
+            'osVersion': '16',
             'realMobile': true,
             'local': true,
             'appiumLogs': false,
@@ -21,6 +21,7 @@ exports.config = {
             'localIdentifier': process.env.BROWSERSTACK_LOCAL_IDENTIFIER
         }
     }],
+    'runner': 'local',
     'logLevel': 'error',
     'coloredLogs': false,
     'baseUrl': `http://bs-local.com:${process.env.PORT || 3000}`,

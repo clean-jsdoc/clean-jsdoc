@@ -41,7 +41,8 @@ describe('Mobile page layout', () => {
 
         const classList = await target.getAttribute('class');
 
-        expect(classList).not.toContain('show');
+        // https://github.com/webdriverio/webdriverio/issues/10606
+        expect(classList.indexOf('show') > -1).toBe(false);
     });
 
 /*

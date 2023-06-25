@@ -158,7 +158,7 @@ _All options must be defined under `opts.theme_opts` in your `.jsdoc.json`_
 | `title`        | the name of the home link to display on the nav bar | HTML string  | `"README"`                         | any valid HTML markup, or just a plain string |
 | `footer`       | a footer to display in the page layout              | HTML string  | JSDoc version, date and theme info | any valid HTML markup                         |
 | `inline_style` | inline CSS for the `<head>` of the page layout      | CSS string   | `null`                             | any valid CSS markup                          |
-
+| `prefixModuleToSidebarItems_experimental` | prefix member names with the containing module's name in the sidebar | bool | `undefined`   | `true`, `false`                |
 
 <hr/>
 
@@ -432,8 +432,8 @@ Distributed under the terms of the [MIT license][Read the MIT].
 [Chrome, Firefox, Safari on macOS]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/ci.yml
 [Chrome on Android, Safari on iOS Workflow]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/ci_mobile.yml/badge.svg?branch=develop
 [Chrome on Android, Safari on iOS]: https://github.com/clean-jsdoc/clean-jsdoc/actions/workflows/ci_mobile.yml
-[BrowserStack Status]: https://automate.browserstack.com/public-build/RkZCVWlFUndVc1c0dHFnLzA2V2pjZCtGTXBFc0N1ek9PeHpqWU1ZU1Z5cz0tLTBXbUxRbXVUQ21CSXRDQkRPcEoweVE9PQ==--2c08531eadafcbbf252ba6fce89db02023862cad
-[BrowserStack Status Badge]: https://automate.browserstack.com/badge.svg?badge_key=RkZCVWlFUndVc1c0dHFnLzA2V2pjZCtGTXBFc0N1ek9PeHpqWU1ZU1Z5cz0tLTBXbUxRbXVUQ21CSXRDQkRPcEoweVE9PQ==--2c08531eadafcbbf252ba6fce89db02023862cad
+[BrowserStack Status]: https://automate.browserstack.com/public-build/Z3J3a0Mzc1hEcEcyRVlaNVNJOGRza1EwNkRvR1V4YjdtQWJwazAvTFNVVmRuRmdIaitpU3dQN1c5d1BTR3Yvbi96ZTlEQnZjSUVuQjh3UU8vMHVMeXc9PS0tOURZazByUVpKelJMRUkyd20ra3RTQT09--9458a180c003ba92ed63f2ef4513cc6ddf7be51d
+[BrowserStack Status Badge]: https://automate.browserstack.com/badge.svg?badge_key=Y1BEZDhKTGpoU0w5RXo4cXhYb0JJQkpldi9Lekx2NFdrclF0NTRzTllHRT0tLW03NHdpVkdyYWluVDBBTHlTQnlHT1E9PQ==--da739f0ef376bd1308aea0643169b24ca1de7c06
 [Read the MIT]: https://github.com/clean-jsdoc/clean-jsdoc/blob/master/LICENSE
 [Releases]: https://github.com/clean-jsdoc/clean-jsdoc/releases
 [Current Release]: https://img.shields.io/github/package-json/v/clean-jsdoc/clean-jsdoc?logo=github

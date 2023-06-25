@@ -63,7 +63,8 @@ describe('Page layout', () => {
         let newTheme = await browser.$('#clean-jsdoc-theme');
         let newThemeName = await newTheme.getText();
 
-        expect(oldThemeName).not.toEqual(newThemeName);
+        // https://github.com/webdriverio/webdriverio/issues/10606
+        expect(oldThemeName === newThemeName).toBe(false);
 
         await themeToggle.click();
         newTheme = await browser.$('#clean-jsdoc-theme');
