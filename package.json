@@ -49,7 +49,7 @@
     "dependencies": {
         "@jsdoc/salty": "^0.2.5",
         "fs-extra": "^10.1.0",
-        "glob": "^8.0.3",
+        "glob": "^10.3.3",
         "minify": "^6.0.1",
         "nanoid": "^3.3.4",
         "overlayscrollbars": "^2.2.0",
