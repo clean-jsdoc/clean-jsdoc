@@ -42,7 +42,7 @@
         "@wdio/local-runner": "^8.11.2",
         "browserstack-local": "^1.5.3",
         "concurrently": "^6.5.1",
-        "dotenv": "^8.2.0",
+        "dotenv": "^16.3.1",
         "eslint": "^8.28.0",
         "express": "^4.17.1"
     },
