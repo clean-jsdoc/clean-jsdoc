@@ -11,10 +11,16 @@
 
 <div align="center">
 
-![light_code_example](https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/light_code_example.png)
-![light_doc_page](https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/light_doc_example.png)
-![dark_code_example](https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/dark_code_example.png)
-![dark_doc_page](https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/dark_doc_example.png)
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/light_code_example.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/dark_code_example.png">
+  <img alt="Light theme" src="https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/light_code_example.png">
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/light_doc_example.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/dark_doc_example.png">
+  <img alt="Dark theme" src="https://raw.githubusercontent.com/clean-jsdoc/clean-jsdoc/main/img/dark_doc_example.png">
+</picture>
 </div>
 
 <hr/>
