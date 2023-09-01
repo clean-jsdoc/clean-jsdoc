@@ -39,7 +39,7 @@
         "@jsdoc/eslint-config": "^1.1.4",
         "@wdio/cli": "^8.14.1",
         "@wdio/jasmine-framework": "^8.14.1",
-        "@wdio/local-runner": "^8.15.8",
+        "@wdio/local-runner": "^8.15.10",
         "browserstack-local": "^1.5.4",
         "concurrently": "^8.2.1",
         "dotenv": "^16.3.1",
