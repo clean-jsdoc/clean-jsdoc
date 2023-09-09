@@ -21,7 +21,7 @@ jobs:
         local-testing: start
         local-logging-level: false
         local-identifier: random
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up node env
       uses: actions/setup-node@v3
       with:
