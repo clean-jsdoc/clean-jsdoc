@@ -8,6 +8,9 @@ const MIN_FONT_SIZE = 10;
 
 function getTheme() {
   const { body } = document;
+  const theme = localStorage.getItem(themeLocalStorageKey);
+
+  if (theme) { return theme; }
 
   return body.getAttribute('data-theme');
 }
@@ -52,17 +55,7 @@ function toggleTheme() {
 (function() {
   const theme = getTheme();
 
-  const themeStoredInLocalStorage = localStorage.getItem(themeLocalStorageKey);
-
-  if (themeStoredInLocalStorage) {
-    if (theme === themeStoredInLocalStorage) {
-      return;
-    }
-
-    updateTheme(themeStoredInLocalStorage);
-  } else {
-    localStorage.setItem(themeLocalStorageKey, theme);
-  }
+  updateTheme(theme);
 })();
 
 /**
