@@ -43,7 +43,7 @@
         "browserstack-local": "^1.5.4",
         "concurrently": "^8.2.1",
         "dotenv": "^16.3.1",
-        "eslint": "^8.28.0",
+        "eslint": "^8.50.0",
         "express": "^4.17.1"
     },
     "dependencies": {
