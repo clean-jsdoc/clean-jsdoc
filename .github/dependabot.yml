@@ -3,6 +3,9 @@ updates:
   - package-ecosystem: "npm"
     target-branch: "develop"
     directory: "/"
+    ignore:
+      - dependency-name: "minify"
+      - dependency-name: "nanoid"
     schedule:
       interval: "monthly"
   - package-ecosystem: "github-actions"
