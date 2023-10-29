@@ -56,7 +56,7 @@ function toggleTheme() {
   const theme = getTheme();
 
   updateTheme(theme);
-})();
+}());
 
 /**
  * Function to set accordion id to localStorage.
@@ -361,7 +361,7 @@ function processAllPre() {
       }
 
       return '';
-    })();
+    }());
 
     if (parent && parent.getAttribute('data-skip-pre-process') === 'true') {
       return;
@@ -441,7 +441,7 @@ function updateFontSize(fontSize) {
   } else {
     updateFontSize(fontSize);
   }
-})();
+}());
 
 // eslint-disable-next-line no-unused-vars
 function incrementFont(event) {

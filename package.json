@@ -4,7 +4,8 @@
     "description": "A fork of clean-jsdoc-theme with dynamic theme switching and some backported features",
     "main": "publish.js",
     "scripts": {
-        "lint": "eslint --fix *.js static/scripts tests/specs",
+        "lint:jsdoc": "eslint --no-ignore --fix -c .eslintrc.jsdoc.json demo/src/*.js",
+        "lint": "eslint --fix *.js static/scripts tests/specs && npm run lint:jsdoc",
         "test": "npm run lint && ./demo/clean && npx jsdoc -c jsdoc-config.json --verbose",
         "test:win": "npm run lint && demo\\clean && npx jsdoc -c jsdoc-config.json --verbose",
         "test:ui": "wdio run ./tests/wdio.conf.js",
@@ -36,14 +37,14 @@
         "forks"
     ],
     "devDependencies": {
-        "@jsdoc/eslint-config": "^1.1.4",
-        "@wdio/cli": "^8.16.17",
-        "@wdio/jasmine-framework": "^8.16.17",
-        "@wdio/local-runner": "^8.16.17",
+        "@wdio/cli": "^8.20.5",
+        "@wdio/jasmine-framework": "^8.20.5",
+        "@wdio/local-runner": "^8.20.5",
         "browserstack-local": "^1.5.4",
         "concurrently": "^8.2.1",
         "dotenv": "^16.3.1",
         "eslint": "^8.50.0",
+        "eslint-plugin-jsdoc": "^46.8.2",
         "express": "^4.17.1"
     },
     "dependencies": {

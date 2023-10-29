@@ -7,6 +7,7 @@
  */
 class Energy {
     constructor() {
+
         /**
          * The amount of energy in this unit
          * @type {number}
@@ -22,7 +23,7 @@ class Energy {
 }
 
 /**
- * @typedef {Object} EnergyUnit
- * @property {String} foo kajsdh kajhsd
- * @property {Array<Array<String>>} hello aksjdh kaj shdkj asd
+ * @typedef {object} EnergyUnit
+ * @property {string} foo kajsdh kajhsd
+ * @property {Array<Array<string>>} hello aksjdh kaj shdkj asd
  */

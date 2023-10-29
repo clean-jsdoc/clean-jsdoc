@@ -10,6 +10,7 @@
  */
 class Environment {
     constructor() {
+
       /**
        * All the living things in this {@link Environment}
        * @type {Array<Alive>}
@@ -18,7 +19,7 @@ class Environment {
 
       /**
        * The name of this {@link Environment}
-       * @type {String}
+       * @type {string}
        */
         this.name = null;
     }
@@ -33,9 +34,9 @@ class Environment {
 }
 
 /**
- * @typedef {Object} EnvironmentConfiguration
- * @property {String} name - Name of a living thing
- * @property {Map<String,Number>} attributes - A mapping of attributes
+ * @typedef {object} EnvironmentConfiguration
+ * @property {string} name - Name of a living thing
+ * @property {Map<string, number>} attributes - A mapping of attributes
  */
 
 /**

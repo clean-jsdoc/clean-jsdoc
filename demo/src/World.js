@@ -8,7 +8,7 @@ import * as util from './utils.js'
 
 /**
  * @private
- * @typedef {Object} WorldOptions
+ * @typedef {object} WorldOptions
  * @property {number} minX Min world patch x integer value
  * @property {number} minY Min world patch y integer value
  * @property {number} minZ Min world patch z integer value
@@ -33,32 +33,31 @@ import * as util from './utils.js'
  * }
  */
 class World {
-    maxX = 16
-    minX = -16
-    maxY = 16
-    minY = -16
-    maxZ = 0
-    minZ = 0
-    // maxZ = 16
-    // minZ = -16
+    constructor(minX = -16, maxX = 16, minY = -16, maxY = 16, minZ = 0, maxZ = 0) {
+        this.maxX = maxX
+        this.minX = minX
+        this.maxY = maxY
+        this.minY = minY
+        this.maxZ = maxZ
+        this.minZ = minZ
+    }
 
     /**
      * Return a default options object, origin at center.
-     *
-     * @param {number} [maxX=16] Integer max X value
-     * @param {number} [maxY=maxX] Integer max Y value
-     * @param {number} [maxZ=Math.max(maxX, maxY)] Integer max Z value
-     * @returns WorldOptions
+     * @param {number} [maxX] Integer max X value
+     * @param {number} [maxY] Integer max Y value
+     * @param {number} [maxZ] Integer max Z value
+     * @returns {{minX:number, maxX:number, minY:number, maxY:number, minZ:number, maxZ:number}} WorldOptions
      */
     static defaultOptions(maxX = 16, maxY = maxX, maxZ = Math.max(maxX, maxY)) {
         // static defaultOptions(maxX = 16, maxY = maxX, maxZ = 0) {
         return {
-            minX: -maxX,
-            maxX: maxX,
-            minY: -maxY,
-            maxY: maxY,
-            minZ: maxZ === 0 ? 0 : -maxZ, // don't trust -0 === 0
-            maxZ: maxZ,
+            'minX': -maxX,
+            maxX,
+            'minY': -maxY,
+            maxY,
+            'minZ': maxZ === 0 ? 0 : -maxZ, // don't trust -0 === 0
+            maxZ
         }
     }
 }

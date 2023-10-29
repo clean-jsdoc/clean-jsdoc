@@ -1,0 +1,27 @@
+{
+    "globals": {
+        "Alive": "readonly",
+        "Environment": "readonly",
+        "Energy": "readonly",
+        "TAFFY": "readonly",
+        "Tutorial": "readonly"
+    },
+    "extends": [
+        "plugin:jsdoc/recommended"
+    ],
+    "rules": {
+        "class-methods-use-this": "off",
+        "dot-location": ["error", "property"],
+        "no-empty-function": "off",
+        "no-invalid-this": "off",
+        "operator-linebreak": ["error", "after"],
+        "semi": "off",
+        "space-before-function-paren": ["error", {
+            "asyncArrow": "always",
+            "anonymous": "always",
+            "named": "never"
+        }],
+        "jsdoc/require-param-description": "off",
+        "jsdoc/require-yields-check":"off"
+    }
+}

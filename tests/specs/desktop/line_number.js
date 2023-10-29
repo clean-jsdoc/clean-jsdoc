@@ -5,7 +5,7 @@ if (process.env.SAFARI) {
 }
 
 describe('Line numbers', () => {
-    const SOURCE_LINE = 'line30';
+    const SOURCE_LINE = 'line18';
     let originalTimeout = 10000;
 
     beforeEach(async () => {

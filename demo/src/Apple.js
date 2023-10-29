@@ -3,14 +3,15 @@
  * lectus convallis sagittis. Suspendisse ac lectus dignissim, tincidunt
  * nisi quis, gravida metus.
  * @class
- * @extends Alive
+ * @augments Alive
  */
 class Apple extends Alive {
     constructor() {
         super();
+
         /**
          * Donec imperdiet dignissim
-         * @type {String}
+         * @type {string}
          */
         this.color = null;
     }
@@ -18,7 +19,6 @@ class Apple extends Alive {
 
     /**
      * Generate the Fibonacci sequence of numbers.
-     *
      * @yields {number} The next number in the Fibonacci sequence.
      */
     *fib() { }
@@ -34,7 +34,6 @@ class Apple extends Alive {
 
 /**
  * Generate the Fibonacci sequence of numbers.
- *
  * @yields {number} The next number in the Fibonacci sequence.
  */
-function* fibonacci() { }
+function *fibonacci() { }

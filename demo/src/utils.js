@@ -34,6 +34,8 @@ const fetchWeatherIcon = function (reading) {
 
 /**
  * Prepares weather data for display
+ * @param {WeatherReading} reading
+ * @returns {WeatherReading} A formatted {@link WeatherReading}.
  * @private
  */
 const formatData = function (reading) {
@@ -96,7 +98,7 @@ class WeatherReading {
      * @param {number} [init.snowAmount] - The forecast snow accumulation
      * @param {boolean} init.longRange - Whether or not this {@link WeatherReading} is a long range forecast
      */
-    constructor (init = {}) {
+    constructor(init = {}) {
 
         /** @type {string} */
         this.city = init.city;
