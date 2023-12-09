@@ -7,7 +7,7 @@ exports.config = {
     'key': process.env.BROWSERSTACK_ACCESS_KEY,
     'specs': [
         `${process.env.PWD}/tests/specs/desktop/layout.js`,
-        `${process.env.PWD}/tests/specs/desktop/line_numbers.js`
+        `${process.env.PWD}/tests/specs/desktop/line_number.js`
     ],
     'capabilities': [{
         'browserName': 'Safari',
