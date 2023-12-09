@@ -8,6 +8,10 @@ updates:
       - dependency-name: "nanoid"
     schedule:
       interval: "monthly"
+    groups:
+      webdriverio:
+        patterns:
+          - '@wdio/*'
   - package-ecosystem: "github-actions"
     target-branch: "develop"
     directory: "/"
