@@ -5,8 +5,8 @@ const logger = require('jsdoc/util/logger');
 const path = require('jsdoc/path');
 const { taffy } = require('@jsdoc/salty');
 const template = require('jsdoc/template');
-const { nanoid } = require('nanoid');
-const minify = require('minify');
+const { transform } = require('lightningcss');
+const { minify } = require('terser');
 
 const { linkto, resolveAuthorLinks } = helper;
 const htmlsafe = src => helper.htmlsafe(src).replace(/>/gu, '&gt;');
@@ -398,7 +398,7 @@ function buildSidebarMembers({ items, itemHeading, itemsSeen, linktoFn, sectionN
     const navProps = {
         'name': itemHeading,
         'items': [],
-        'id': nanoid()
+        'id': `sidebar-${itemHeading.toLowerCase()}`,
     };
 
     if (items.length) {
@@ -731,15 +731,30 @@ exports.publish = function(taffyData, opts, tutorials) {
             fs.mkPath(toDir);
         }
 
-        if ((/(?<!(min))\.((m?js*)|(css)|(html))$/iu).test(fileName) && !isThirdParty) {
-            minify(fileName, minifyOpts)
-                .then(min => {
-                    const minified = path.join(toDir, path.basename(fileName));
+        if ((/(?<!(min))\.((m?js*)|(css))$/iu).test(fileName) && !isThirdParty) {
+            const minified = path.join(toDir, path.basename(fileName));
+            const input = fs.readFileSync(fileName, 'utf8');
 
-                    logger.info('Minifying: %s', minified);
-                    fs.writeFileSync(minified, min);
-                })
-                .catch(err => logger.error(err.message));
+            logger.info('Minifying: %s', minified);
+
+            switch (fileName.split('.').pop()) {
+                case 'css':
+                    const { code, _ } = transform({
+                        filename: fileName,
+                        code: Buffer.from(input),
+                        minify: true,
+                        sourceMap: false
+                    });
+                    fs.writeFileSync(minified, code);
+                    break;
+                case 'js':
+                    minify(input, minifyOpts)
+                        .then(min => { fs.writeFileSync(minified, min.code); })
+                        .catch(err => logger.error(err.message));
+                    break;
+                default:
+                    break;
+            }
         } else {
             fs.copyFileSync(fileName, toDir);
         }
@@ -960,7 +975,8 @@ exports.publish = function(taffyData, opts, tutorials) {
             title,
             'header': tutorial.title,
             'content': tutorial.parse(),
-            'children': tutorial.children
+            'children': tutorial.children,
+            filename,
         };
 
         const tutorialPath = path.join(outdir, filename);

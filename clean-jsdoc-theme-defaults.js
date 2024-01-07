@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const SECTION_TYPE = {
     'Classes': 'Classes',
     'Modules': 'Modules',
@@ -7,7 +8,7 @@ const SECTION_TYPE = {
     'Mixins': 'Mixins',
     'Tutorials': 'Tutorials',
     'Interfaces': 'Interfaces',
-    'Global': 'Global'
+    'Global': 'Global',
 };
 
 const defaultSections = [
@@ -23,24 +24,16 @@ const defaultSections = [
 ];
 
 const minifyOpts = {
-    'html': {
-        'removeAttributeQuotes': false,
-        'removeComments': true,
-        'removeCommentsFromCDATA': false,
-        'removeCDATASectionsFromCDATA': false,
-        'removeEmptyElements': false,
-        'removeOptionalTags': false,
-        'useShortDoctype': true,
-        'removeStyleLinkTypeAttributes': false,
-        'removeScriptTypeAttributes': true,
-        'keepClosingSlash': false,
-        'html5': true
+    parse: {
+        bare_returns: true
     },
-    'css': {
-        'compatibility': '*'
+    compress: {
+        drop_console: true,
+        side_effects: false,
+        ecma: 2016,
     },
-    'js': {
-        'ecma': 6
+    mangle: {
+        safari10: true
     }
 };
 
@@ -49,3 +42,4 @@ module.exports = {
     defaultSections,
     minifyOpts
 };
+/* eslint-enable camelcase */

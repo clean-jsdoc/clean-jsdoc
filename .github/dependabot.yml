@@ -3,15 +3,13 @@ updates:
   - package-ecosystem: "npm"
     target-branch: "develop"
     directory: "/"
-    ignore:
-      - dependency-name: "minify"
-      - dependency-name: "nanoid"
     schedule:
       interval: "monthly"
     groups:
       webdriverio:
         patterns:
           - '@wdio/*'
+    open-pull-requests-limit: 3
   - package-ecosystem: "github-actions"
     target-branch: "develop"
     directory: "/"

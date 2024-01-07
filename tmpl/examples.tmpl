@@ -17,11 +17,11 @@
             var jsonString = escape(JSON.stringify(example.code));
             var options = codepen.options || {};
             var optionsString = '';
-            var optionsKey = Object.keys(options);
+            var optionsKey = Object.keys(options).filter((key) => key !== 'js' );
             if (optionsKey.length) {
                 optionsString += ', ';
                 optionsKey.map((key, idx) => {
-                    optionsString += `"${key}": "${options[key]}"`;
+                    optionsString += `"${key}": "${options[key].replace(/"/g, "&quot;").replace(/'/g, "&apos;")}"`;
                     if(idx !== optionsKey.length - 1) {
                         optionsString += ','
                     }
