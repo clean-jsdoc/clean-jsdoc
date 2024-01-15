@@ -61,7 +61,7 @@
               t.media = t.href.split(/\W/).indexOf('light') > -1 ? 'print' : 'screen'
               localStorage.setItem('theme', 'dark');
             }
-            else {
+            else if (localStorage.getItem('theme') !== 'dark') {
               t.media = t.href.split(/\W/).indexOf('dark') > -1 ? 'print' : 'screen'
               localStorage.setItem('theme', 'light');
             }
