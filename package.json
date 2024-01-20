@@ -51,10 +51,16 @@
         "@jsdoc/salty": "^0.2.7",
         "fs-extra": "^11.2.0",
         "glob": "^10.3.10",
-        "lightningcss": "^1.22.1",
+        "lightningcss": "^1.23.0",
         "overlayscrollbars": "^2.4.6",
         "showdown": "^2.1.0",
         "terser": "^5.26.0"
+    },
+    "optionalDependencies": {
+        "lightningcss-darwin-arm64": "^1.23.0",
+        "lightningcss-darwin-x64": "^1.23.0",
+        "lightningcss-linux-arm64-gnu": "^1.23.0",
+        "lightningcss-win32-x64-msvc": "^1.23.0"
     },
     "resolutions": {
         "**/ua-parser-js": "1.0.33"
