@@ -1,6 +1,6 @@
 {
     "name": "@clean-jsdoc/clean-jsdoc",
-    "version": "5.1.2",
+    "version": "5.2.0",
     "description": "A fork of clean-jsdoc-theme with dynamic theme switching and some backported features",
     "main": "publish.js",
     "scripts": {
@@ -37,9 +37,9 @@
         "forks"
     ],
     "devDependencies": {
-        "@wdio/cli": "^8.27.1",
-        "@wdio/jasmine-framework": "^8.27.0",
-        "@wdio/local-runner": "^8.27.0",
+        "@wdio/cli": "^8.28.8",
+        "@wdio/jasmine-framework": "^8.28.8",
+        "@wdio/local-runner": "^8.28.8",
         "browserstack-local": "^1.5.5",
         "concurrently": "^8.2.2",
         "dotenv": "^16.3.1",

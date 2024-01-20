@@ -1,3 +1,16 @@
+## 5.2.0
+
+### Fixed
+- dynamic mode now stays in the dark theme if it was selected via the theme switcher button [349320c]
+
+### Changed
+- the `prefixModuleToSidebarItems_experimental` option is now `modulePrefix`; older configs will still work, but trigger a deprecation warning [423046a]
+- static CSS is now minified by [lightningcss](https://lightningcss.dev)
+- static JavaScript is now  minified by [terser](https://terser.org)
+
+[423046a]: https://github.com/clean-jsdoc/clean-jsdoc/commit/423046a
+[349320c]: https://github.com/clean-jsdoc/clean-jsdoc/commit/349320c
+
 ## 5.1.2
 
 ### Ported from upstream
