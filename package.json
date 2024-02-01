@@ -52,7 +52,7 @@
         "fs-extra": "^11.2.0",
         "glob": "^10.3.10",
         "lightningcss": "^1.23.0",
-        "overlayscrollbars": "^2.4.6",
+        "overlayscrollbars": "^2.5.0",
         "showdown": "^2.1.0",
         "terser": "^5.26.0"
     },
