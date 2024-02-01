@@ -44,7 +44,7 @@
         "concurrently": "^8.2.2",
         "dotenv": "^16.3.1",
         "eslint": "^8.56.0",
-        "eslint-plugin-jsdoc": "^48.0.2",
+        "eslint-plugin-jsdoc": "^48.0.4",
         "express": "^4.17.1"
     },
     "dependencies": {
