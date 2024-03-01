@@ -54,7 +54,7 @@
         "lightningcss": "^1.24.0",
         "overlayscrollbars": "^2.5.0",
         "showdown": "^2.1.0",
-        "terser": "^5.26.0"
+        "terser": "^5.28.1"
     },
     "optionalDependencies": {
         "lightningcss-darwin-arm64": "^1.24.0",
