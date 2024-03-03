@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: REUSE Compliance Check
-      uses: fsfe/reuse-action@v2
+      uses: fsfe/reuse-action@v3
 
   build:
     needs: license_check
@@ -66,12 +66,12 @@ jobs:
         path: ${{ github.workspace }}/demo/output
         merge-multiple: true
     - name: Set up BrowserStack env
-      uses: browserstack/github-actions/setup-env@master
+      uses: clean-jsdoc/github-actions/setup-env@777f8c732a22afb5734c1231dea45646555e44a9
       with:
         username:  ${{ secrets.BROWSERSTACK_USERNAME }}
         access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
     - name: Start BrowserStackLocal Tunnel
-      uses: browserstack/github-actions/setup-local@master
+      uses: clean-jsdoc/github-actions/setup-local@777f8c732a22afb5734c1231dea45646555e44a9
       with:
         local-testing: start
         local-logging-level: false
@@ -85,6 +85,6 @@ jobs:
         npm run bs
         npm run bs:safari
     - name: Stop BrowserStackLocal
-      uses: browserstack/github-actions/setup-local@master
+      uses: clean-jsdoc/github-actions/setup-local@777f8c732a22afb5734c1231dea45646555e44a9
       with:
         local-testing: stop
