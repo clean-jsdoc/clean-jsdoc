@@ -58,7 +58,7 @@
     },
     "optionalDependencies": {
         "lightningcss-darwin-arm64": "^1.24.0",
-        "lightningcss-darwin-x64": "^1.24.0",
+        "lightningcss-darwin-x64": "^1.24.1",
         "lightningcss-linux-arm64-gnu": "^1.24.0",
         "lightningcss-win32-x64-msvc": "^1.24.0"
     },
