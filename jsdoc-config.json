@@ -85,7 +85,7 @@
                     "js_pre_processor": "babel"
                 }
             },
-            "prefixModuleToSidebarItems_experimental": true
+            "modulePrefix": true
         }
     }
 }

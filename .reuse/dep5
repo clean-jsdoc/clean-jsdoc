@@ -15,3 +15,7 @@ License: MIT
 Files: tests/* img/* .github/*
 Copyright: 2020-2022 Robert Di Pardo
 License: MIT
+
+Files: .github/workflows/pages.yml
+Copyright: 2020 GitHub
+License: MIT
