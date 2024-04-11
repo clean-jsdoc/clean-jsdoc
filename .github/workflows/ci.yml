@@ -66,12 +66,12 @@ jobs:
         path: ${{ github.workspace }}/demo/output
         merge-multiple: true
     - name: Set up BrowserStack env
-      uses: clean-jsdoc/github-actions/setup-env@777f8c732a22afb5734c1231dea45646555e44a9
+      uses: clean-jsdoc/github-actions/setup-env@963f81eba6d574e37a9955fb27c6524695807f44
       with:
         username:  ${{ secrets.BROWSERSTACK_USERNAME }}
         access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
     - name: Start BrowserStackLocal Tunnel
-      uses: clean-jsdoc/github-actions/setup-local@777f8c732a22afb5734c1231dea45646555e44a9
+      uses: clean-jsdoc/github-actions/setup-local@963f81eba6d574e37a9955fb27c6524695807f44
       with:
         local-testing: start
         local-logging-level: false
@@ -85,6 +85,6 @@ jobs:
         npm run bs
         npm run bs:safari
     - name: Stop BrowserStackLocal
-      uses: clean-jsdoc/github-actions/setup-local@777f8c732a22afb5734c1231dea45646555e44a9
+      uses: clean-jsdoc/github-actions/setup-local@963f81eba6d574e37a9955fb27c6524695807f44
       with:
         local-testing: stop
