@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Set up BrowserStack env
-      uses: clean-jsdoc/github-actions/setup-env@963f81eba6d574e37a9955fb27c6524695807f44
+      uses: clean-jsdoc/github-actions/setup-env@6d3e62e2f2cbe535056fc26a6068739d44df091b
       with:
         username:  ${{ secrets.BROWSERSTACK_USERNAME }}
         access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
     - name: Start BrowserStackLocal Tunnel
-      uses: clean-jsdoc/github-actions/setup-local@963f81eba6d574e37a9955fb27c6524695807f44
+      uses: clean-jsdoc/github-actions/setup-local@6d3e62e2f2cbe535056fc26a6068739d44df091b
       with:
         local-testing: start
         local-logging-level: false
@@ -42,6 +42,6 @@ jobs:
         npm run bs:android
         npm run bs:ios
     - name: Stop BrowserStackLocal
-      uses: clean-jsdoc/github-actions/setup-local@963f81eba6d574e37a9955fb27c6524695807f44
+      uses: clean-jsdoc/github-actions/setup-local@6d3e62e2f2cbe535056fc26a6068739d44df091b
       with:
         local-testing: stop
