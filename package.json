@@ -37,9 +37,9 @@
         "forks"
     ],
     "devDependencies": {
-        "@wdio/cli": "^8.35.1",
-        "@wdio/jasmine-framework": "^8.35.1",
-        "@wdio/local-runner": "^8.35.1",
+        "@wdio/cli": "^8.36.1",
+        "@wdio/jasmine-framework": "^8.36.1",
+        "@wdio/local-runner": "^8.36.1",
         "browserstack-local": "^1.5.5",
         "concurrently": "^8.2.2",
         "dotenv": "^16.4.5",
