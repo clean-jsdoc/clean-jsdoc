@@ -50,7 +50,7 @@
     "dependencies": {
         "@jsdoc/salty": "^0.2.7",
         "fs-extra": "^11.2.0",
-        "glob": "^10.3.10",
+        "glob": "^10.3.12",
         "lightningcss": "^1.24.1",
         "overlayscrollbars": "^2.5.0",
         "showdown": "^2.1.0",
