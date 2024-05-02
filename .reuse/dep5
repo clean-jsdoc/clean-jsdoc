@@ -7,9 +7,9 @@ Files: static/scripts/third-party/tocbot.js
 Copyright: 2016 Tim Scanlin
 License: LicenseRef-tocbot
 
-Files: .*ignore .*rc *.md *.json tmpl/* clean-jsdoc-*.js static/styles/*.css demo/* publish.js static/scripts/core.js static/scripts/linenumber.js static/scripts/search.js
-Copyright: 2019-2022 Ankit Kumar
-           2020-2022 Robert Di Pardo
+Files: .*ignore .*rc *.md *.json tmpl/* eslint.* clean-jsdoc-*.js static/styles/*.css demo/* publish.js static/scripts/core.js static/scripts/linenumber.js static/scripts/search.js
+Copyright: 2019-2024 Ankit Kumar
+           2020-2024 Robert Di Pardo
 License: MIT
 
 Files: tests/* img/* .github/*

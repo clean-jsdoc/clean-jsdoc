@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+/* eslint camelcase: 0 */
 const SECTION_TYPE = {
     'Classes': 'Classes',
     'Modules': 'Modules',
@@ -42,4 +42,3 @@ module.exports = {
     defaultSections,
     minifyOpts
 };
-/* eslint-enable camelcase */

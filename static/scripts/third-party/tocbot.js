@@ -140,7 +140,7 @@ function ParseContent(options) {
         try {
             return contentElement.querySelectorAll(selectors)
         } catch (e) {
-            console.warn('Headers not found with selector: ' + selectors); // eslint-disable-line
+            console.warn('Headers not found with selector: ' + selectors);  
             return null
         }
     }
@@ -532,7 +532,7 @@ function updateTocScroll(options) {
         try {
             return options.contentElement || document.querySelector(options.contentSelector)
         } catch (e) {
-            console.warn('Contents element not found: ' + options.contentSelector) // eslint-disable-line
+            console.warn('Contents element not found: ' + options.contentSelector)  
             return null
         }
     }
@@ -541,7 +541,7 @@ function updateTocScroll(options) {
         try {
             return options.tocElement || document.querySelector(options.tocSelector)
         } catch (e) {
-            console.warn('TOC element not found: ' + options.tocSelector) // eslint-disable-line
+            console.warn('TOC element not found: ' + options.tocSelector)  
             return null
         }
     }

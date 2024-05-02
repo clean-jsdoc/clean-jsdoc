@@ -11,7 +11,6 @@ app.use(express.static(`${__dirname}/../demo/output`));
 
 const server = http.createServer(app);
 const exit = () => {
-    /* eslint-disable-next-line */
     console.log('Closing HTTP server...');
     server.close();
 };
@@ -19,6 +18,5 @@ const exit = () => {
 process.on('SIGTERM', exit);
 process.on('SIGINT', exit);
 server.listen(port, () => {
-    /* eslint-disable-next-line */
     console.log(`Serving docs from ${root}${url.parse(root).port ? '' : ':' + port }`);
 });

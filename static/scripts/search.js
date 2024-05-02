@@ -11,13 +11,10 @@ function showResultText(text) {
 }
 
 function hideSearch() {
-  // eslint-disable-next-line no-undef
   if (window.location.hash === searchHash) {
-    // eslint-disable-next-line no-undef
     history.go(-1);
   }
 
-  // eslint-disable-next-line no-undef
   window.onhashchange = null;
 
   if (searchContainer) {
@@ -28,7 +25,6 @@ function hideSearch() {
 function listenCloseKey(event) {
   if (event.key === 'Escape') {
     hideSearch();
-    // eslint-disable-next-line no-undef
     window.removeEventListener('keyup', listenCloseKey);
   }
 }
@@ -38,22 +34,17 @@ function showSearch() {
     // Closing mobile menu before opening
     // search box.
     // It is defined in core.js
-    // eslint-disable-next-line no-undef
     hideMobileMenu();
   } catch (_) {}
 
-  // eslint-disable-next-line no-undef
   window.onhashchange = hideSearch;
 
-  // eslint-disable-next-line no-undef
   if (window.location.hash !== searchHash) {
-    // eslint-disable-next-line no-undef
     history.pushState(null, null, searchHash);
   }
 
   if (searchContainer) {
     searchContainer.style.display = 'flex';
-    // eslint-disable-next-line no-undef
     window.addEventListener('keyup', listenCloseKey);
   }
 
@@ -63,12 +54,9 @@ function showSearch() {
 }
 
 async function fetchAllData() {
-  // eslint-disable-next-line no-undef
   const { hostname, protocol, port, pathname } = location;
 
-  // eslint-disable-next-line no-undef
   const base = `${protocol}//${hostname}${port !== '' ? `:${port}` : ''}`;
-  // eslint-disable-next-line no-undef
   const url = new URL('data/search.json', pathname !== '' ? `${base}${pathname}` : base);
   const result = await fetch(url);
   const { list } = await result.json();
@@ -76,7 +64,6 @@ async function fetchAllData() {
   return list;
 }
 
-// eslint-disable-next-line no-unused-vars
 function onClickSearchItem(event) {
   const target = event.currentTarget;
 
@@ -92,7 +79,6 @@ function onClickSearchItem(event) {
 
     if (element) {
       setTimeout(() => {
-        // eslint-disable-next-line no-undef
         bringElementIntoView(element); // defined in core.js
       }, 100);
     }
@@ -134,10 +120,8 @@ function getSearchResult(list, keys, searchKey) {
 
     const options = { ...defaultOptions };
 
-    // eslint-disable-next-line no-undef
     const searchIndex = Fuse.createIndex(options.keys, list);
 
-    // eslint-disable-next-line no-undef
     const fuse = new Fuse(list, options, searchIndex);
 
     const result = fuse.search(searchKey);
@@ -153,27 +137,25 @@ function debounce(func, wait, immediate) {
   let timeout;
 
   return function(...args) {
+    /* eslint no-invalid-this: 0 */
 
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       timeout = null;
       if (!immediate) {
-        // eslint-disable-next-line consistent-this, no-invalid-this
         func.apply(this, args);
       }
     }, wait);
     if (immediate && !timeout) {
-      // eslint-disable-next-line consistent-this, no-invalid-this
       func.apply(this, args);
     }
   };
 }
 
-let searchData;
-
-async function search(event) {
+function search(event) {
   const { value } = event.target;
   const keys = ['title', 'description'];
+  let result = [];
 
   if (!resultBox) {
     return;
@@ -185,29 +167,21 @@ async function search(event) {
     return;
   }
 
-    if (!searchData) {
+    if (!result.length) {
     showResultText('Loading...');
 
-    try {
-      // eslint-disable-next-line require-atomic-updates
-      searchData = await fetchAllData();
-    } catch (e) {
+    fetchAllData().then(data => {
+      result = getSearchResult(data, keys, value);
+      if (!result.length) {
+        showResultText('No result found! Try some different combination.');
+
+        return;
+      }
+      resultBox.innerHTML = buildSearchResult(result);
+    }).catch(_ => {
       showResultText('Failed to load result.');
-
-      return;
-    }
+    });
   }
-
-  const result = getSearchResult(searchData, keys, value);
-
-  if (!result.length) {
-    showResultText('No result found! Try some different combination.');
-
-    return;
-  }
-
-  // eslint-disable-next-line require-atomic-updates
-  resultBox.innerHTML = buildSearchResult(result);
 }
 
 function onDomContentLoaded() {
@@ -238,18 +212,14 @@ function onDomContentLoaded() {
     searchInput.addEventListener('keyup', debouncedSearch);
   }
 
-  // eslint-disable-next-line no-undef
   if (window.location.hash === searchHash) {
     showSearch();
   }
 }
 
-// eslint-disable-next-line no-undef
 window.addEventListener('DOMContentLoaded', onDomContentLoaded);
 
-// eslint-disable-next-line no-undef
 window.addEventListener('hashchange', () => {
-  // eslint-disable-next-line no-undef
   if (window.location.hash === searchHash) {
     showSearch();
   }

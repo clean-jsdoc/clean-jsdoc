@@ -1,24 +1,33 @@
-{
-    "env": {
-        "browser": true,
-        "es6": true,
-        "jasmine": true
-    },
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly",
-        "browser": "readonly",
-        "driver": "readonly",
-        "env": "readonly",
-        "tippy": "readonly",
-        "tocbot": "readonly"
-    },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
+module.exports = [
+  {
+    "files": [
+      "*.js",
+      "static/scripts/*.js",
+      "tests/specs/**"
+    ],
+    "ignores": [
+        "eslint.*",
+        "node_modules/**",
+        "demo/**",
+        "static/scripts/third-party/*.js",
+    ],
+    "languageOptions": {
+      "globals": {
+          "Atomics": "readonly",
+          "SharedArrayBuffer": "readonly",
+          "browser": "readonly",
+          "driver": "readonly",
+          "env": "readonly",
+          "tippy": "readonly",
+          "tocbot": "readonly"
+      },
+      "parserOptions": {
+          "ecmaFeatures": {
+              "jsx": true
+          },
+          "ecmaVersion": 2018,
+          "sourceType": "module"
+      },
     },
     "rules": {
         "accessor-pairs": "error",
@@ -187,4 +196,5 @@
         "vars-on-top": "error",
         "yoda": "error"
     }
-}
+  }
+];
