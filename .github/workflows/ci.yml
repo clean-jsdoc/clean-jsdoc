@@ -25,7 +25,7 @@ jobs:
     - name: Set up node env
       uses: actions/setup-node@v4
       with:
-        node-version: current
+        node-version: '20'
         cache: 'npm'
     - name: Install dependencies
       run: npm i && npm i --save-dev jsdoc
@@ -66,12 +66,12 @@ jobs:
         path: ${{ github.workspace }}/demo/output
         merge-multiple: true
     - name: Set up BrowserStack env
-      uses: clean-jsdoc/github-actions/setup-env@963f81eba6d574e37a9955fb27c6524695807f44
+      uses: clean-jsdoc/github-actions/setup-env@6d3e62e2f2cbe535056fc26a6068739d44df091b
       with:
         username:  ${{ secrets.BROWSERSTACK_USERNAME }}
         access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
     - name: Start BrowserStackLocal Tunnel
-      uses: clean-jsdoc/github-actions/setup-local@963f81eba6d574e37a9955fb27c6524695807f44
+      uses: clean-jsdoc/github-actions/setup-local@6d3e62e2f2cbe535056fc26a6068739d44df091b
       with:
         local-testing: start
         local-logging-level: false
@@ -85,6 +85,6 @@ jobs:
         npm run bs
         npm run bs:safari
     - name: Stop BrowserStackLocal
-      uses: clean-jsdoc/github-actions/setup-local@963f81eba6d574e37a9955fb27c6524695807f44
+      uses: clean-jsdoc/github-actions/setup-local@6d3e62e2f2cbe535056fc26a6068739d44df091b
       with:
         local-testing: stop
