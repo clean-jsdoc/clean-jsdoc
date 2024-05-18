@@ -119,12 +119,10 @@ for(; loopVar < detailsKeys.length; loopVar += 1) {
 
     <?js if (data.deprecated) { ?>
         <div class="details-item-container">
-            <dt></dt>
-            <?js if (data.deprecated) { ?>
-              <dd class="important tag-deprecated bold"><ul><li>Deprecated</li></ul></dd>
-            <?js } else { ?>
-              <dd><ul><li><?js= data.deprecated ?></li></ul></dd>
-            <?js } ?>
+            <dt class="important tag-deprecated bold">Deprecated</dt><?js
+                if (data.deprecated === true) { ?><dd class="tag-deprecated"><ul><li>Yes</li></ul></dd><?js }
+                else { ?><dd><ul><li><?js= data.deprecated ?></li></ul></dd><?js }
+            ?>
         </div>
     <?js } ?>
 

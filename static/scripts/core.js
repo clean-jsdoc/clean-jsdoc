@@ -593,6 +593,27 @@ function addHrefToSidebarTitle() {
   });
 }
 
+function highlightActiveLinkInSidebar() {
+    const list = document.location.href.split('/');
+    const targetURL = decodeURI(list[list.length - 1]);
+    let element = document.querySelector(`.sidebar a[href*='${targetURL}']`);
+
+    if (!element) {
+        try {
+            element = document.querySelector(
+                `.sidebar a[href*='${targetURL.split('#')[0]}']`
+            );
+        } catch (_) {
+          return;
+        }
+    }
+
+    if (!element) {return;}
+
+    element.parentElement.classList.add('active');
+    element.scrollIntoView();
+}
+
 function attachCodePen() {
 
   /**
@@ -684,6 +705,7 @@ function onDomContentLoaded() {
   fixTable();
   attachCodePen();
   addHrefToSidebarTitle();
+  highlightActiveLinkInSidebar();
 }
 
 window.addEventListener('DOMContentLoaded', onDomContentLoaded);

@@ -49,7 +49,8 @@ body.light {
     color: #222;
 }
 
-.light .sidebar-section-title:hover {
+.light .sidebar-section-title:hover,
+.light .sidebar-section-title.active {
     background: #eee;
 }
 
@@ -59,6 +60,10 @@ body.light {
 
 .light .sidebar-section-children-container {
     background: #eee;
+}
+
+.light .sidebar-section-children.active {
+    background: #ccc;
 }
 
 .light .sidebar-section-children a:hover {
@@ -105,8 +110,8 @@ body.light {
 }
 
 .light .navbar-item a:active {
-    color: #333;
     background-color: #eee;
+    color: #333;
 }
 
 .light .navbar-item:hover {
@@ -114,13 +119,14 @@ body.light {
 }
 
 .light .footer {
+    background: #f7f7f7;
     color: #111;
 }
 
 .light .toc-link {
     color: #999;
-    transition: color 0.3s;
     font-size: 0.875rem;
+    transition: color 0.3s;
 }
 
 .light .toc-link.is-active-link {
@@ -156,7 +162,7 @@ body.light {
 }
 
 .light .name,
-.light .name>a {
+.light .name a {
     color: #293a80;
 }
 
@@ -255,12 +261,17 @@ body.light {
 }
 
 .light code {
+    background: #ddd;
     color: #000;
 }
 
 .light .search-container {
     background: rgba(0, 0, 0, 0.1);
     box-shadow: 4px 4px 1px 0 lightslategrey;
+}
+
+.light .search-close-button svg {
+    fill: #f00;
 }
 
 .light .icon-button.search-close-button svg {
@@ -316,12 +327,7 @@ body.light {
     background: #f7f7f7;
 }
 
-/* scroll bar */
-.light ::-webkit-scrollbar-track {
-    background: #ddd;
-}
-
-.light ::-webkit-scrollbar-thumb {
-    background: #aaa;
-    outline: 0.06125rem solid #aaa;
+.light .child-tutorial {
+    border-color: #aaa;
+    color: #222;
 }

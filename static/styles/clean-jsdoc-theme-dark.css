@@ -56,6 +56,10 @@ h6 {
     background: #292929;
 }
 
+.sidebar-section-children.active {
+    background: #444;
+}
+
 .sidebar-section-children a:hover {
     background: #2c2c2c;
 }
@@ -91,8 +95,8 @@ h6 {
 }
 
 .navbar-item a:active {
-    color: #aaa;
     background-color: #222;
+    color: #aaa;
 }
 
 .navbar-item:hover {
@@ -105,8 +109,8 @@ h6 {
 
 .toc-link {
     color: #777;
-    transition: color 0.3s;
     font-size: 0.875rem;
+    transition: color 0.3s;
 }
 
 .toc-link.is-active-link {
@@ -293,12 +297,11 @@ blockquote {
     background: #222;
 }
 
-/* scroll bar */
-::-webkit-scrollbar-track {
-    background: #333;
+.child-tutorial {
+    border-color: #555;
+    color: #f3f3f3;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #555;
-    outline: 0.06125rem solid #555;
+.child-tutorial:hover {
+    background: #222;
 }
