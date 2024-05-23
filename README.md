@@ -159,7 +159,7 @@ _All options must be defined under `opts.theme_opts` in your `.jsdoc.json`_
 | `base_url`     | the root domain of your documentation website       | URL          | `/`                                | any valid URL &#91;2&#93;                     |
 | `langNames`    | display language names in code blocks               | bool         | `true`                             | `true`, `false`                               |
 | `moduleNames`  | show the module's name in the page's top heading    | bool         | `false`                            | `true`, `false`                               |
-| `modulePrefix` &#91;3&#93; | prefix the containing module's name to member links in the sidebar | bool | `undefined`     | `true`, `false`                               |
+| `modulePrefix` | prefix the containing module's name to member links in the sidebar | bool | `undefined`     | `true`, `false`                               |
 | `sort`         | sort members/methods/events by name                 | bool         | `true`                             | `true`, `false`                               |
 | `title`        | the name of the home link to display on the nav bar | HTML string  | `"README"`                         | any valid HTML markup, or just a plain string |
 | `footer`       | a footer to display in the page layout              | HTML string  | JSDoc version, date and theme info | any valid HTML markup                         |
@@ -170,8 +170,6 @@ _All options must be defined under `opts.theme_opts` in your `.jsdoc.json`_
 &#91;1&#93; sets the theme according to the value of the `prefers-color-scheme` `@media` query; it falls back to `"light"`
 
 &#91;2&#93; must begin with the `https://` protocol and end with a trailing slash (`/`)
-
-&#91;3&#93; before v5.2.0, this option was called `prefixModuleToSidebarItems_experimental`
 
 ### Advanced
 

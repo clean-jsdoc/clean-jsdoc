@@ -871,11 +871,6 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.baseURL = getBaseURL(themeOpts);
     attachModuleSymbols(find({ 'longname': { 'left': 'module:' } }), members.modules);
 
-    if (themeOpts.prefixModuleToSidebarItems_experimental) {
-      logger.warn("The 'prefixModuleToSidebarItems_experimental' theme option is deprecated! Use 'modulePrefix' instead.");
-      themeOpts.modulePrefix = true;
-    }
-
     if (themeOpts.modulePrefix) {
         view.sidebar.sections.forEach((section, i) => {
             view.sidebar.sections[i].items = section.items.map(item => {
