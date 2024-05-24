@@ -1,3 +1,13 @@
+## 5.3.0
+
+### Changed
+- default theme styles have been synchronized with upstream [e753e35]
+- the `prefixModuleToSidebarItems_experimental` option is no longer supported;
+  use `modulePrefix` instead [4052f57]
+
+[e753e35]: https://github.com/clean-jsdoc/clean-jsdoc/commit/e753e35#diff-3593baa1f913fbfabfadc2aa86b022ba3fca0e5c909e8535df1fd173943d5a7b
+[4052f57]: https://github.com/clean-jsdoc/clean-jsdoc/commit/4052f57
+
 ## 5.2.0
 
 ### Fixed
